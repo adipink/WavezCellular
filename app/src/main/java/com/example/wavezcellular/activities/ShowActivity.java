@@ -2,18 +2,17 @@ package com.example.wavezcellular.activities;
 
 import static com.example.wavezcellular.utils.User.getGuest;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wavezcellular.R;
 import com.google.android.gms.maps.model.LatLng;
@@ -34,35 +33,83 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class ShowActivity extends AppCompatActivity {
 
     public static final String TEMPKEY = "1253b9205d89a2d8816242c6d731489f";
+    private final double HIGH_VALUE = 3.5;
+    private final double LOW_VALUE = 1.5;
     private MaterialButton show_BTN_back, show_BTN_reports, show_BTN_waze, show_BTN_moovit;
     private ImageView show_IMG_profile;
-    private MaterialButton show_TXT_density,show_TXT_jellyfish,
-            show_TXT_danger,show_TXT_wind, show_TXT_accessible, show_TXT_dog, show_TXT_warmth, show_TXT_hygiene ;
-    private MaterialTextView show_TXT_nameBeach,show_TXT_temperature, show_TXT_distance;
+    private MaterialButton show_TXT_density, show_TXT_jellyfish,
+            show_TXT_danger, show_TXT_wind, show_TXT_accessible, show_TXT_dog, show_TXT_warmth, show_TXT_hygiene;
+    private MaterialTextView show_TXT_nameBeach, show_TXT_temperature, show_TXT_distance;
     private RatingBar show_RB_review;
     private Bundle bundle;
     private String BeachName;
     private double latitude;
     private double longitude;
-    private final double HIGH_VALUE = 3.5;
-    private final double LOW_VALUE = 1.5;
     private FirebaseUser firebaseUserUser;
     private DatabaseReference myRef;
     private Context context;
     private double x;
     private double y;
 
+    public static double getDouble(HashMap<String, Object> hashMap, String valueName) {
+        Object o = hashMap.get(valueName);
+        double val;
+        if (o instanceof Long) {
+            Long l = (Long) o;
+            if (l != null) {
+                val = (double) l;
+                return val;
+            }
+        } else if (o instanceof Double) {
+            return (double) o;
+        } else
+            return 0;
+        return 0;
+    }
+
+    public static double getDouble(Object o) {
+        double val;
+        if (o instanceof Long) {
+            Long l = (Long) o;
+            if (l != null) {
+                val = (double) l;
+                return val;
+            }
+        } else if (o instanceof Double) {
+            return (double) o;
+        } else
+            return 0;
+        return 0;
+    }
+
+    public static double getTemperature(String apikey, double lat, double lon) {
+        String urlString = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apikey + "&units=metric";
+
+        try {
+            URL url = new URL(urlString);
+            Scanner scanner = new Scanner(url.openStream());
+            String response = scanner.nextLine();
+            scanner.close();
+
+            JSONObject jsonObject = new JSONObject(response);
+            double temperature = jsonObject.getJSONObject("main").getDouble("temp");
+
+            return temperature;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Double.NaN;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.context =  this.getApplicationContext();
+        this.context = this.getApplicationContext();
         setContentView(R.layout.activity_show);
         bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -74,7 +121,7 @@ public class ShowActivity extends AppCompatActivity {
             BeachName = "";
         }
         firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        if(firebaseUserUser == null){
+        if (firebaseUserUser == null) {
             getGuest(bundle);
         }
         myRef = FirebaseDatabase.getInstance().getReference("Beaches");
@@ -84,33 +131,29 @@ public class ShowActivity extends AppCompatActivity {
         showInfo();
 
 
-
-
     }
 
-
-
     private void showInfo() {
-        show_TXT_nameBeach.setText(""+ BeachName);
+        show_TXT_nameBeach.setText("" + BeachName);
         myRef.child(BeachName).child("Data").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 HashMap<String, Object> beach = (HashMap<String, Object>) dataSnapshot.getValue();
-                double review = getDouble(beach,"review");
-                double warmth = getDouble(beach,"warmth");
-                double wind = getDouble(beach,"wind");
-                double danger = getDouble(beach,"danger");
-                double accessible = getDouble(beach,"accessible");
-                double density = getDouble(beach,"density");
-                double jellyfish = getDouble(beach,"jellyfish");
-                double hygiene = getDouble(beach,"hygiene");
-                double dog = getDouble(beach,"dog");
-                latitude = getDouble(beach,"latitude");
+                double review = getDouble(beach, "review");
+                double warmth = getDouble(beach, "warmth");
+                double wind = getDouble(beach, "wind");
+                double danger = getDouble(beach, "danger");
+                double accessible = getDouble(beach, "accessible");
+                double density = getDouble(beach, "density");
+                double jellyfish = getDouble(beach, "jellyfish");
+                double hygiene = getDouble(beach, "hygiene");
+                double dog = getDouble(beach, "dog");
+                latitude = getDouble(beach, "latitude");
                 longitude = getDouble(beach, "longitude");
-                LatLng loc = new LatLng(latitude,longitude);
-                LatLng user = new LatLng((Double) bundle.get("x"),(Double)bundle.get("y"));
+                LatLng loc = new LatLng(latitude, longitude);
+                LatLng user = new LatLng((Double) bundle.get("x"), (Double) bundle.get("y"));
                 double distance = getDistance(user, loc);
                 String format = String.format("%.01f", distance);
                 show_TXT_distance.setText(format + "km away from you");
@@ -118,7 +161,7 @@ public class ShowActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         String apiKey = "YOUR_API_KEY";
-                        String urlString = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon=" + longitude+"&appid="+TEMPKEY;
+                        String urlString = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + TEMPKEY;
 
                         try {
                             URL url = new URL(urlString);
@@ -144,44 +187,42 @@ public class ShowActivity extends AppCompatActivity {
 
                 show_RB_review.setRating((float) review);
 
-                if(wind>HIGH_VALUE)
+                if (wind > HIGH_VALUE)
                     show_TXT_wind.setText("Windy");
                 else
                     show_TXT_wind.setText("OK wind");
-                if(danger>HIGH_VALUE)
+                if (danger > HIGH_VALUE)
                     show_TXT_danger.setText("Dangerous");
                 else
                     show_TXT_danger.setText("Not Dangerous");
-                if(accessible>HIGH_VALUE)
+                if (accessible > HIGH_VALUE)
                     show_TXT_accessible.setText("accessible");
                 else
                     show_TXT_accessible.setText("Not accessible");
-                if(density>HIGH_VALUE)
+                if (density > HIGH_VALUE)
                     show_TXT_density.setText("Crowded");
                 else
                     show_TXT_density.setText("Uncrowded");
-                if(jellyfish>HIGH_VALUE)
+                if (jellyfish > HIGH_VALUE)
                     show_TXT_jellyfish.setText("Many Jellyfish");
                 else
                     show_TXT_jellyfish.setText("No Jellyfish");
-                if(dog>HIGH_VALUE)
+                if (dog > HIGH_VALUE)
                     show_TXT_dog.setText("Many Jellyfish");
                 else
                     show_TXT_dog.setText("Uncrowded");
-                if(warmth>HIGH_VALUE)
+                if (warmth > HIGH_VALUE)
                     show_TXT_warmth.setText("It's hot");
-                else if(warmth<LOW_VALUE)
+                else if (warmth < LOW_VALUE)
                     show_TXT_warmth.setText("It's cold");
                 else
                     show_TXT_warmth.setText("OK");
-                if(hygiene>HIGH_VALUE)
+                if (hygiene > HIGH_VALUE)
                     show_TXT_warmth.setText("Very Clean");
-                else if(warmth<LOW_VALUE)
+                else if (warmth < LOW_VALUE)
                     show_TXT_warmth.setText("Very Dirty");
                 else
                     show_TXT_warmth.setText("OK");
-
-
 
 
             }
@@ -191,58 +232,6 @@ public class ShowActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    public static double getDouble(HashMap<String, Object> hashMap, String valueName) {
-        Object o = hashMap.get(valueName);
-        double val;
-        if(o instanceof Long) {
-            Long l = (Long) o;
-            if (l != null) {
-                val = (double) l;
-                return val;
-            }
-        }else if(o instanceof Double) {
-            return (double) o;
-        }
-        else
-            return 0;
-        return 0;
-    }
-
-    public static double getDouble(Object o) {
-        double val;
-        if(o instanceof Long) {
-            Long l = (Long) o;
-            if (l != null) {
-                val = (double) l;
-                return val;
-            }
-        }else if(o instanceof Double) {
-            return (double) o;
-        }
-        else
-            return 0;
-        return 0;
-    }
-
-    public static double getTemperature(String apikey, double lat, double lon) {
-        String urlString = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apikey + "&units=metric";
-
-        try {
-            URL url = new URL(urlString);
-            Scanner scanner = new Scanner(url.openStream());
-            String response = scanner.nextLine();
-            scanner.close();
-
-            JSONObject jsonObject = new JSONObject(response);
-            double temperature = jsonObject.getJSONObject("main").getDouble("temp");
-
-            return temperature;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Double.NaN;
-        }
     }
 
     private void createListeners() {
@@ -304,28 +293,28 @@ public class ShowActivity extends AppCompatActivity {
     }
 
     private void replaceActivity(String mode) {
-            Intent intent;
-            if (mode.equals("Profile")) {
-                intent = new Intent(this, UserActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                finish();
-            }
-            if (mode.equals("Report")) {
-                intent = new Intent(this, UserReportsActivity.class);
-                bundle.putString("BEACH_NAME", BeachName);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                finish();
-            }
-            if (mode.equals("Home")) {
-                intent = new Intent(this, HomeActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                finish();
-            }
-
+        Intent intent;
+        if (mode.equals("Profile")) {
+            intent = new Intent(this, UserActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
         }
+        if (mode.equals("Report")) {
+            intent = new Intent(this, UserReportsActivity.class);
+            bundle.putString("BEACH_NAME", BeachName);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        }
+        if (mode.equals("Home")) {
+            intent = new Intent(this, HomeActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        }
+
+    }
 
 
     private void findViews() {
@@ -348,7 +337,7 @@ public class ShowActivity extends AppCompatActivity {
         show_TXT_hygiene = findViewById(R.id.show_TXT_hygiene);
     }
 
-    private double getDistance(LatLng location1, LatLng location2){
-        return (SphericalUtil.computeDistanceBetween(location1,location2)/1000);
+    private double getDistance(LatLng location1, LatLng location2) {
+        return (SphericalUtil.computeDistanceBetween(location1, location2) / 1000);
     }
 }

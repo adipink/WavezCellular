@@ -1,7 +1,5 @@
 package com.example.wavezcellular.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
@@ -13,19 +11,22 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.wavezcellular.R;
 
 public class SplashActivity extends AppCompatActivity {
-    private ImageView logo;
-    private LottieAnimationView lottie,lottie2;
     private final int ANIM_DURATION = 2000;
     Context context;
+    private ImageView logo;
+    private LottieAnimationView lottie, lottie2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        this.context =  this.getApplicationContext();
+        this.context = this.getApplicationContext();
         logo = findViewById(R.id.logo);
         logo.setVisibility(View.INVISIBLE);
         lottie = findViewById(R.id.lottie);
@@ -45,7 +46,7 @@ public class SplashActivity extends AppCompatActivity {
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
 
-        path.arcTo(0f, 0f, width/2f , height/3f, 270f, -180f, true);
+        path.arcTo(0f, 0f, width / 2f, height / 3f, 270f, -180f, true);
         ObjectAnimator animator = ObjectAnimator.ofFloat(v, View.X, View.Y, path);
         animator.setDuration(ANIM_DURATION);
         animator.start();

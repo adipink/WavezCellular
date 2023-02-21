@@ -2,15 +2,15 @@ package com.example.wavezcellular.activities;
 
 import static com.example.wavezcellular.utils.User.getGuest;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wavezcellular.R;
 import com.example.wavezcellular.utils.User;
@@ -26,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UserActivity extends AppCompatActivity {
 
-    private MaterialButton user_BTN_back,user_BTN_change,user_BTN_signout;
+    private MaterialButton user_BTN_back, user_BTN_change, user_BTN_signout;
     private MaterialTextView user_TXT_name, user_TXT_email;
 
     //fireBase
@@ -37,13 +37,12 @@ public class UserActivity extends AppCompatActivity {
     private Bundle bundle;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
         bundle = getIntent().getExtras();
-        if (bundle == null){
+        if (bundle == null) {
             bundle = new Bundle();
         }
         findViews();
@@ -99,8 +98,8 @@ public class UserActivity extends AppCompatActivity {
         });
     }
 
-    public void saveData(){
-        if(!user.getName().contains("guest")) {
+    public void saveData() {
+        if (!user.getName().contains("guest")) {
             FirebaseDatabase.getInstance().getReference("Users")
                     .child(userID)
                     .setValue(user);
@@ -109,16 +108,13 @@ public class UserActivity extends AppCompatActivity {
     }
 
 
-
-
-
     public void getCurrentUsersData() {
         firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        if(firebaseUserUser == null){
+        if (firebaseUserUser == null) {
             String guest = getGuest(bundle);
-            user = new User(guest,"No Email Available");
+            user = new User(guest, "No Email Available");
             setUserInfo();
-        }else {
+        } else {
             myRef = FirebaseDatabase.getInstance().getReference("Users");
             userID = firebaseUserUser.getUid();
             myRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -140,8 +136,8 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private void setUserInfo() {
-        user_TXT_name.setText(user.getName().toString());
-        user_TXT_email.setText(user.getEmail().toString());
+        user_TXT_name.setText(user.getName());
+        user_TXT_email.setText(user.getEmail());
     }
 
     private void findViews() {

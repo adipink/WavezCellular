@@ -2,23 +2,17 @@ package com.example.wavezcellular.activities;
 
 import static com.example.wavezcellular.utils.User.getGuest;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wavezcellular.R;
 import com.example.wavezcellular.utils.User;
@@ -31,13 +25,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-
 public class ReportActivity extends AppCompatActivity {
     private TextView report_TXT_nameBeach;
     private MaterialButton report_BTN_back, report_BTN_submit;
     private RatingBar report_RB_review;
-    private SeekBar report_SB_density, report_SB_danger,report_SB_wind,report_SB_dog,report_SB_warmth,report_SB_accessible,report_SB_jellyfish, report_SB_hygiene;
+    private SeekBar report_SB_density, report_SB_danger, report_SB_wind, report_SB_dog, report_SB_warmth, report_SB_accessible, report_SB_jellyfish, report_SB_hygiene;
     private EditText report_EditTXT_comment;
     private ImageView report_IMG_profile;
     private Bundle bundle;
@@ -64,7 +56,7 @@ public class ReportActivity extends AppCompatActivity {
         findViews();
         getCurrentUsersData();
         createListeners();
-        report_TXT_nameBeach.setText(""+ BeachName);
+        report_TXT_nameBeach.setText("" + BeachName);
     }
 
     private void createListeners() {
@@ -91,7 +83,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addSubmiterData();
-                Intent intent = new Intent( ReportActivity.this, ShowActivity.class);
+                Intent intent = new Intent(ReportActivity.this, ShowActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
@@ -101,10 +93,10 @@ public class ReportActivity extends AppCompatActivity {
 
     public void getCurrentUsersData() {
         firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        if(firebaseUserUser == null){
+        if (firebaseUserUser == null) {
             String guest = getGuest(bundle);
-            user = new User(guest,"No Email Available");
-        }else {
+            user = new User(guest, "No Email Available");
+        } else {
             myRef = FirebaseDatabase.getInstance().getReference("Users");
             userID = firebaseUserUser.getUid();
             myRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -128,30 +120,28 @@ public class ReportActivity extends AppCompatActivity {
         String username = user.getName();
         myRef = FirebaseDatabase.getInstance().getReference("Beaches").child(BeachName).child("Reports").child(username);
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    // This method is called once with the initial value and again
-                    // whenever data at this location is updated.
-                    myRef.child("review").setValue(report_RB_review.getRating());
-                    myRef.child("density").setValue(report_SB_density.getProgress()/20);
-                    myRef.child("jellyfish").setValue(report_SB_jellyfish.getProgress()/20);
-                    myRef.child("accessible").setValue(report_SB_accessible.getProgress()/20);
-                    myRef.child("danger").setValue(report_SB_danger.getProgress()/20);
-                    myRef.child("dog").setValue(report_SB_dog.getProgress()/20);
-                    myRef.child("hygiene").setValue(report_SB_hygiene.getProgress()/20);
-                    myRef.child("warmth").setValue(report_SB_warmth.getProgress()/20);
-                    myRef.child("wind").setValue(report_SB_wind.getProgress()/20);
-                    myRef.child("comment").setValue(report_EditTXT_comment.getText().toString());
-                }
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                myRef.child("review").setValue(report_RB_review.getRating());
+                myRef.child("density").setValue(report_SB_density.getProgress() / 20);
+                myRef.child("jellyfish").setValue(report_SB_jellyfish.getProgress() / 20);
+                myRef.child("accessible").setValue(report_SB_accessible.getProgress() / 20);
+                myRef.child("danger").setValue(report_SB_danger.getProgress() / 20);
+                myRef.child("dog").setValue(report_SB_dog.getProgress() / 20);
+                myRef.child("hygiene").setValue(report_SB_hygiene.getProgress() / 20);
+                myRef.child("warmth").setValue(report_SB_warmth.getProgress() / 20);
+                myRef.child("wind").setValue(report_SB_wind.getProgress() / 20);
+                myRef.child("comment").setValue(report_EditTXT_comment.getText().toString());
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            });
-        }
-
-
+            }
+        });
+    }
 
 
     private void findViews() {

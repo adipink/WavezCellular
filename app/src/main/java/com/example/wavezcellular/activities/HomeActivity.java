@@ -3,15 +3,9 @@ package com.example.wavezcellular.activities;
 import static com.example.wavezcellular.activities.ShowActivity.getDouble;
 import static com.example.wavezcellular.utils.User.getGuest;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +14,10 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.wavezcellular.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -37,19 +35,18 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.maps.android.SphericalUtil;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private final int DEF_VAL = 50;
     private final double DEF_REVIEW_VAL = 3.0;
+    private final int MAX_SEARCH = 5;
+    String value = "Distance";
     private ImageView home_IMG_profile;
     //private MaterialButton home_BTN_show;
     private MaterialButton home_BTN_switch;
@@ -60,18 +57,14 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private Spinner home_SP_listOfBeaches;
     private ArrayAdapter<CharSequence> adapter;
     private FusedLocationProviderClient fusedLocationProviderClient;
-    String value = "Distance";
     //firebase
     private FirebaseUser firebaseUserUser;
-    private DatabaseReference myRef;
 
     //map
-
+    private DatabaseReference myRef;
     private int orderBy = 1;
     private String beachName;
     private Bundle bundle = null;
-    private final int MAX_SEARCH = 5;
-
     private boolean hasPremission;
 
     @Override
@@ -79,7 +72,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         checkPermission();
         bundle = getIntent().getExtras();
-        if (bundle == null){
+        if (bundle == null) {
             bundle = new Bundle();
         }
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -101,7 +94,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_home_upgrade);
         findViews();
         firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        if(firebaseUserUser == null){
+        if (firebaseUserUser == null) {
             getGuest(bundle);
         }
         myRef = FirebaseDatabase.getInstance().getReference("Beaches");
@@ -110,13 +103,14 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         createListener();
 
     }
-    private void createBeaches(ArrayList<Map.Entry<String,Double>> list) {
-        if(orderBy == 0)
+
+    private void createBeaches(ArrayList<Map.Entry<String, Double>> list) {
+        if (orderBy == 0)
             Collections.reverse(list);
-        for (int i = 0; i< MAX_SEARCH; i++){
+        for (int i = 0; i < MAX_SEARCH; i++) {
             String format = String.format("%.01f", list.get(i).getValue());
-            String result =   format ;
-            String beachName = list.get(i).getKey().toString();
+            String result = format;
+            String beachName = list.get(i).getKey();
             home_BTN_searches[i].setText(beachName);
             home_BTN_results[i].setText(result);
             home_BTN_searches[i].setVisibility(View.VISIBLE);
@@ -125,12 +119,12 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void createBeaches(String parameter, ArrayList<String> list) {
         int max = MAX_SEARCH;
-        if(orderBy == 0)
+        if (orderBy == 0)
             Collections.reverse(list);
-        if(list.size()<MAX_SEARCH)
+        if (list.size() < MAX_SEARCH)
             max = list.size();
-        for (int i = 0; i< max; i++){
-            String beachName = list.get(i).toString();
+        for (int i = 0; i < max; i++) {
+            String beachName = list.get(i);
             home_BTN_searches[i].setText(beachName);
             home_BTN_results[i].setText("");
             home_BTN_searches[i].setVisibility(View.VISIBLE);
@@ -143,50 +137,49 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                HashMap<String,Double> beachesSort = new HashMap<>();
-                HashMap<String, HashMap<String,HashMap<String,Object>>> beaches = (HashMap) dataSnapshot.getValue(Object.class);
-                if(value.equalsIgnoreCase("distance")) {
+                HashMap<String, Double> beachesSort = new HashMap<>();
+                HashMap<String, HashMap<String, HashMap<String, Object>>> beaches = (HashMap) dataSnapshot.getValue(Object.class);
+                if (value.equalsIgnoreCase("distance")) {
                     double userLat = (double) bundle.get("x");
                     double userLon = (double) bundle.get("y");
-                    LatLng user = new LatLng(userLat,userLon);
-                    for (Map.Entry<String, HashMap<String, HashMap<String,Object>>> set :
+                    LatLng user = new LatLng(userLat, userLon);
+                    for (Map.Entry<String, HashMap<String, HashMap<String, Object>>> set :
                             beaches.entrySet()) {
                         String beachName = (String) set.getValue().get("Data").get("name");
-                        LatLng loc = new LatLng( getDouble(set.getValue().get("Data").get("latitude")), getDouble(set.getValue().get("Data").get("longitude")));
-                        Double val = getDistance(user,loc);
+                        LatLng loc = new LatLng(getDouble(set.getValue().get("Data").get("latitude")), getDouble(set.getValue().get("Data").get("longitude")));
+                        Double val = getDistance(user, loc);
                         beachesSort.put(beachName, val);
                     }
-                }else if(value.equalsIgnoreCase("name")){
+                } else if (value.equalsIgnoreCase("name")) {
                     ArrayList<String> nameList = new ArrayList<>();
                     ArrayList<String> sortnameList = new ArrayList<>();
-                    for (Map.Entry<String, HashMap<String, HashMap<String,Object>>> set :
+                    for (Map.Entry<String, HashMap<String, HashMap<String, Object>>> set :
                             beaches.entrySet()) {
 
                         String beachName = (String) set.getValue().get("Data").get("name");
                         nameList.add(beachName);
                     }
-                    if(home_EditTXT_byName.getText().length()>0){
+                    if (home_EditTXT_byName.getText().length() > 0) {
                         sortnameList = (ArrayList<String>) findSimilarStrings(nameList, home_EditTXT_byName.getText().toString());
-                        createBeaches(value,sortnameList);
-                    }else {
+                        createBeaches(value, sortnameList);
+                    } else {
                         Collections.sort(nameList);
                         createBeaches(value, nameList);
                     }
-                }
-                else{
+                } else {
                     //If value is not distance or name
-                    for (Map.Entry<String, HashMap<String, HashMap<String,Object>>> set :
+                    for (Map.Entry<String, HashMap<String, HashMap<String, Object>>> set :
                             beaches.entrySet()) {
                         String beachName = (String) set.getValue().get("Data").get("name");
                         double val = DEF_REVIEW_VAL;
-                        if(set.getValue().get("Reports")!= null) {
+                        if (set.getValue().get("Reports") != null) {
                             val = calcAVG(set.getValue().get("Reports"), value);
                             myRef.child(beachName).child("Data").child(value).setValue(val);
                         }
                         beachesSort.put(beachName, val);
                     }
                 }
-                if(!value.equalsIgnoreCase("name")) {
+                if (!value.equalsIgnoreCase("name")) {
                     ArrayList<Map.Entry<String, Double>> list = new ArrayList<>(beachesSort.entrySet());
 
                     Comparator<Map.Entry<String, Double>> valueComparator = new Comparator<Map.Entry<String, Double>>() {
@@ -199,7 +192,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                     Collections.sort(list, valueComparator);
                     createBeaches(list);
                 }
-                }
+            }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -211,35 +204,35 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private double calcAVG(HashMap<String, Object> reports, String value) {
         double sum = 0;
         int numObjects = 0;
-        for (Map.Entry<String,Object> set :
+        for (Map.Entry<String, Object> set :
                 reports.entrySet()) {
             HashMap<String, Object> entry = (HashMap<String, Object>) set.getValue();
             numObjects++;
             double val = getDouble(entry.get(value));
             sum += val;
         }
-        return sum/numObjects;
+        return sum / numObjects;
     }
 
 
-    private void createListener(){
+    private void createListener() {
         home_IMG_profile.setOnClickListener(view -> replaceActivity("Profile"));
         home_BTN_switch.setOnClickListener(view -> switchMode());
         home_BTN_name.setOnClickListener(view -> getBeaches("name"));
 
-        for (int i =0; i<MAX_SEARCH;i++){
+        for (int i = 0; i < MAX_SEARCH; i++) {
             int pressed = i;
             home_BTN_searches[i].setOnClickListener(view -> clickedBeach(pressed));
         }
 
- }
+    }
 
     private void switchMode() {
-        if(orderBy == 0)
-            orderBy =1;
+        if (orderBy == 0)
+            orderBy = 1;
         else
-            orderBy =0;
-        if(home_BTN_switch.getText().toString().equalsIgnoreCase("Ascending"))
+            orderBy = 0;
+        if (home_BTN_switch.getText().toString().equalsIgnoreCase("Ascending"))
             home_BTN_switch.setText("Descending");
         else
             home_BTN_switch.setText("Ascending");
@@ -253,29 +246,28 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-
     private void replaceActivity(String mode) {
         Intent intent;
-        if(mode.equals("Profile")){
+        if (mode.equals("Profile")) {
             intent = new Intent(this, UserActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
-        }else if(mode.equals("Report")){
+        } else if (mode.equals("Report")) {
             intent = new Intent(this, ReportActivity.class);
-            bundle.putString("BEACH_NAME",beachName);
+            bundle.putString("BEACH_NAME", beachName);
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
-        }else if(mode.contains("beach")){
+        } else if (mode.contains("beach")) {
             intent = new Intent(this, ShowActivity.class);
-            bundle.putString("BEACH_NAME",beachName);
+            bundle.putString("BEACH_NAME", beachName);
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
-        }else{
+        } else {
             intent = new Intent(this, ShowActivity.class);
-            bundle.putString("BEACH_NAME",beachName);
+            bundle.putString("BEACH_NAME", beachName);
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
@@ -284,7 +276,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void createSpinner() {
-        adapter = ArrayAdapter.createFromResource(this,R.array.categories, android.R.layout.simple_spinner_item);
+        adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         home_SP_listOfBeaches.setAdapter(adapter);
         home_SP_listOfBeaches.setOnItemSelectedListener(this);
@@ -330,7 +322,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -356,10 +347,9 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    private double getDistance(LatLng location1, LatLng location2){
-        return (SphericalUtil.computeDistanceBetween(location1,location2)/1000);
+    private double getDistance(LatLng location1, LatLng location2) {
+        return (SphericalUtil.computeDistanceBetween(location1, location2) / 1000);
     }
-
 
 
     public List<String> findSimilarStrings(ArrayList<String> strings, String target) {
@@ -372,7 +362,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         }
 
         // Sort the array of strings by similarity score in descending order
-        strings.sort( (s1, s2) -> scores.get(s2) - scores.get(s1));
+        strings.sort((s1, s2) -> scores.get(s2) - scores.get(s1));
 
         // Add the sorted strings to the list of similar strings
         for (String s : strings) {
@@ -395,10 +385,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         return score;
     }
-
-
-
-
 
 
 //    public void setItemsForDemo() {

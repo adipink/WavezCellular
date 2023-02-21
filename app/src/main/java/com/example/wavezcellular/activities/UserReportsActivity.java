@@ -2,15 +2,15 @@ package com.example.wavezcellular.activities;
 
 import static com.example.wavezcellular.utils.User.getGuest;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wavezcellular.R;
 import com.google.android.material.button.MaterialButton;
@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserReportsActivity extends AppCompatActivity {
+    private final int MAX_NUM = 5;
     private TextView userReports_TXT_nameBeach;
     private MaterialButton userReports_BTN_back, userReports_BTN_report;
     private RatingBar[] userReports_RB_reviews;
@@ -39,7 +40,37 @@ public class UserReportsActivity extends AppCompatActivity {
     private FirebaseUser firebaseUserUser;
     private DatabaseReference myRef;
     private String user;
-    private final int MAX_NUM =5;
+
+    public static double getDouble(Map.Entry<String, HashMap<String, Object>> set) {
+        Object o = set.getValue().get("review");
+        double val;
+        if (o instanceof Long) {
+            Long l = (Long) o;
+            if (l != null) {
+                val = (double) l;
+                return val;
+            }
+        } else if (o instanceof Double) {
+            return (double) o;
+        } else
+            return 0;
+        return 0;
+    }
+
+    public static double getDouble(Object o) {
+        double val;
+        if (o instanceof Long) {
+            Long l = (Long) o;
+            if (l != null) {
+                val = (double) l;
+                return val;
+            }
+        } else if (o instanceof Double) {
+            return (double) o;
+        } else
+            return 0;
+        return 0;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,15 +84,15 @@ public class UserReportsActivity extends AppCompatActivity {
             BeachName = "";
         }
         firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        if(firebaseUserUser == null){
+        if (firebaseUserUser == null) {
             user = getGuest(bundle);
-        }else
+        } else
             user = firebaseUserUser.getDisplayName();
         myRef = FirebaseDatabase.getInstance().getReference("Beaches").child(BeachName).child("Reports");
 
         findViews();
         createListeners();
-        userReports_TXT_nameBeach.setText(""+ BeachName);
+        userReports_TXT_nameBeach.setText("" + BeachName);
         getReports();
     }
 
@@ -89,7 +120,7 @@ public class UserReportsActivity extends AppCompatActivity {
         userReports_BTN_report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent( UserReportsActivity.this, ReportActivity.class);
+                Intent intent = new Intent(UserReportsActivity.this, ReportActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
@@ -104,15 +135,14 @@ public class UserReportsActivity extends AppCompatActivity {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 ArrayList<Map.Entry<String, HashMap<String, Object>>> list = new ArrayList<>();
-                HashMap<String, HashMap<String,Object>> data = (HashMap) dataSnapshot.getValue(Object.class);
-                if(data != null) {
+                HashMap<String, HashMap<String, Object>> data = (HashMap) dataSnapshot.getValue(Object.class);
+                if (data != null) {
                     for (Map.Entry<String, HashMap<String, Object>> set :
                             data.entrySet()) {
                         list.add(set);
                     }
                 }
                 createReports(list);
-
 
 
             }
@@ -125,23 +155,22 @@ public class UserReportsActivity extends AppCompatActivity {
     }
 
     private void createReports(ArrayList<Map.Entry<String, HashMap<String, Object>>> list) {
-            int j = 0;
-            for (int i = 0; i < list.size() && j < MAX_NUM; i++) {
-                String username = list.get(i).getKey();
-                double review = getDouble(list.get(i));
-                String blurb = (String) list.get(i).getValue().get("comment");
-                if(blurb != null && blurb.length()>0) {
-                    userReports_RB_reviews[j].setRating((float) review);
-                    userReports_TXT_username[j].setText(username);
-                    userReports_TXT_blurb[j].setText(blurb);
-                    userReports_LinearLayout_reports[j].setVisibility(View.VISIBLE);
-                    j++;
-                }
+        int j = 0;
+        for (int i = 0; i < list.size() && j < MAX_NUM; i++) {
+            String username = list.get(i).getKey();
+            double review = getDouble(list.get(i));
+            String blurb = (String) list.get(i).getValue().get("comment");
+            if (blurb != null && blurb.length() > 0) {
+                userReports_RB_reviews[j].setRating((float) review);
+                userReports_TXT_username[j].setText(username);
+                userReports_TXT_blurb[j].setText(blurb);
+                userReports_LinearLayout_reports[j].setVisibility(View.VISIBLE);
+                j++;
+            }
         }
-            if(j==0)
-                userReports_TXT_headline.setText("No reports with comments found");
+        if (j == 0)
+            userReports_TXT_headline.setText("No reports with comments found");
     }
-
 
     private void findViews() {
         userReports_BTN_back = findViewById(R.id.userReports_BTN_back);
@@ -183,39 +212,5 @@ public class UserReportsActivity extends AppCompatActivity {
                 findViewById(R.id.userReports_LinearLayout_report5)
 
         };
-    }
-
-
-    public static double getDouble(Map.Entry<String, HashMap<String, Object>> set) {
-        Object o = set.getValue().get("review");
-        double val;
-        if(o instanceof Long) {
-            Long l = (Long) o;
-            if (l != null) {
-                val = (double) l;
-                return val;
-            }
-        }else if(o instanceof Double) {
-            return (double) o;
-        }
-        else
-            return 0;
-        return 0;
-    }
-
-    public static double getDouble(Object o) {
-        double val;
-        if(o instanceof Long) {
-            Long l = (Long) o;
-            if (l != null) {
-                val = (double) l;
-                return val;
-            }
-        }else if(o instanceof Double) {
-            return (double) o;
-        }
-        else
-            return 0;
-        return 0;
     }
 }
