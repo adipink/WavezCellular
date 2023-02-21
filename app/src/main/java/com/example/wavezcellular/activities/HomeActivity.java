@@ -157,19 +157,20 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                         beachesSort.put(beachName, val);
                     }
                 }else if(value.equalsIgnoreCase("name")){
-                    ArrayList<String> list = new ArrayList<>();
+                    ArrayList<String> nameList = new ArrayList<>();
+                    ArrayList<String> sortnameList = new ArrayList<>();
                     for (Map.Entry<String, HashMap<String, HashMap<String,Object>>> set :
                             beaches.entrySet()) {
 
                         String beachName = (String) set.getValue().get("Data").get("name");
-                        list.add(beachName);
+                        nameList.add(beachName);
                     }
                     if(home_EditTXT_byName.getText().length()>0){
-                        list = (ArrayList<String>) findSimilarStrings(list, home_EditTXT_byName.getText().toString());
-                        createBeaches(value,list);
+                        sortnameList = (ArrayList<String>) findSimilarStrings(nameList, home_EditTXT_byName.getText().toString());
+                        createBeaches(value,sortnameList);
                     }else {
-                        Collections.sort(list);
-                        createBeaches(value, list);
+                        Collections.sort(nameList);
+                        createBeaches(value, nameList);
                     }
                 }
                 else{

@@ -104,7 +104,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/user_BTN_signout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:text="@string/user_signout"
@@ -112,6 +112,7 @@
                 android:textColor="@color/white"
                 app:backgroundTint="@color/sea"
                 app:cornerRadius="40dp">
+
 
             </com.google.android.material.button.MaterialButton>
 

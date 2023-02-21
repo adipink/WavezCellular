@@ -91,7 +91,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 addSubmiterData();
-                Intent intent = new Intent( ReportActivity.this, HomeActivity.class);
+                Intent intent = new Intent( ReportActivity.this, ShowActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
