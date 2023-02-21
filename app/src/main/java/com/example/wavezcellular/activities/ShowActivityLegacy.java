@@ -177,7 +177,6 @@ public class ShowActivityLegacy extends AppCompatActivity {
         show_IMG_profile = findViewById(R.id.show_IMG_profile);
         show_TXT_nameBeach = findViewById(R.id.show_TXT_nameBeach);
         show_TXT_density = findViewById(R.id.show_TXT_density);
-        show_TXT_wave = findViewById(R.id.show_TXT_wave);
         show_TXT_jellyfish = findViewById(R.id.show_TXT_jellyfish);
         show_TXT_temperature = findViewById(R.id.show_TXT_temperature);
         show_TXT_flag = findViewById(R.id.show_TXT_danger);

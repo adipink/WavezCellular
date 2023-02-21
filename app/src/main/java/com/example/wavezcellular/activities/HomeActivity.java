@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -38,6 +39,7 @@ import com.google.maps.android.SphericalUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -51,8 +53,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private ImageView home_IMG_profile;
     //private MaterialButton home_BTN_show;
     private MaterialButton home_BTN_switch;
+    private MaterialButton home_BTN_name;
     private MaterialButton[] home_BTN_searches;
     private MaterialButton[] home_BTN_results;
+    private EditText home_EditTXT_byName;
     private Spinner home_SP_listOfBeaches;
     private ArrayAdapter<CharSequence> adapter;
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -69,10 +73,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private final int MAX_SEARCH = 5;
 
     private boolean hasPremission;
-
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +110,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         createListener();
 
     }
-
     private void createBeaches(ArrayList<Map.Entry<String,Double>> list) {
         if(orderBy == 0)
             Collections.reverse(list);
@@ -125,11 +124,15 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void createBeaches(String parameter, ArrayList<String> list) {
+        int max = MAX_SEARCH;
         if(orderBy == 0)
             Collections.reverse(list);
-        for (int i = 0; i< MAX_SEARCH; i++){
+        if(list.size()<MAX_SEARCH)
+            max = list.size();
+        for (int i = 0; i< max; i++){
             String beachName = list.get(i).toString();
             home_BTN_searches[i].setText(beachName);
+            home_BTN_results[i].setText("");
             home_BTN_searches[i].setVisibility(View.VISIBLE);
         }
     }
@@ -161,8 +164,13 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                         String beachName = (String) set.getValue().get("Data").get("name");
                         list.add(beachName);
                     }
-                    Collections.sort(list);
-                    createBeaches(value,list);
+                    if(home_EditTXT_byName.getText().length()>0){
+                        list = (ArrayList<String>) findSimilarStrings(list, home_EditTXT_byName.getText().toString());
+                        createBeaches(value,list);
+                    }else {
+                        Collections.sort(list);
+                        createBeaches(value, list);
+                    }
                 }
                 else{
                     //If value is not distance or name
@@ -216,26 +224,14 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private void createListener(){
         home_IMG_profile.setOnClickListener(view -> replaceActivity("Profile"));
         home_BTN_switch.setOnClickListener(view -> switchMode());
+        home_BTN_name.setOnClickListener(view -> getBeaches("name"));
 
         for (int i =0; i<MAX_SEARCH;i++){
             int pressed = i;
             home_BTN_searches[i].setOnClickListener(view -> clickedBeach(pressed));
         }
 
-//        home_BTN_report.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                replaceActivity("Report");
-//            }
-//        });
-
-//        home_BTN_show.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                replaceActivity("Show");
-//            }
-//        });
-    }
+ }
 
     private void switchMode() {
         if(orderBy == 0)
@@ -254,6 +250,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         beachName = (String) home_BTN_searches[i].getText();
         replaceActivity(beachName);
     }
+
 
 
     private void replaceActivity(String mode) {
@@ -317,7 +314,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 findViewById(R.id.home_BTN_result5)
 
         };
-
+        home_EditTXT_byName = findViewById(R.id.home_EditTXT_byName);
+        home_BTN_name = findViewById(R.id.home_BTN_name);
     }
 
     @Override
@@ -330,53 +328,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         getBeaches(word);
     }
 
-
-
-
-
-    public void setItemsForDemo() {
-        adapter = ArrayAdapter.createFromResource(this,R.array.beaches, android.R.layout.simple_spinner_item);
-        for (int i=0;i<adapter.getCount();i++) {
-            String location = adapter.getItem(i).toString();
-            beachName = location;
-            Geocoder geocoder = new Geocoder(HomeActivity.this, Locale.getDefault());
-            try {
-                List<Address> listAddress = geocoder.getFromLocationName(location, 1);
-                if (listAddress.size() > 0) {
-                    double latit = listAddress.get(0).getLatitude();
-                    double logi = listAddress.get(0).getLongitude();
-                    myRef.child(location).child("Data").child("latitude").setValue(latit);
-                    myRef.child(location).child("Data").child("longitude").setValue(logi);
-                    myRef.child(location).child("Data").child("name").setValue(beachName);
-                    myRef.child(location).child("Data").child("review").setValue(DEF_REVIEW_VAL);
-                    myRef.child(location).child("Data").child("warmth").setValue(DEF_REVIEW_VAL);
-                    myRef.child(location).child("Data").child("danger").setValue(DEF_REVIEW_VAL);
-                    myRef.child(location).child("Data").child("wind").setValue(DEF_REVIEW_VAL);
-                    myRef.child(location).child("Data").child("jellyfish").setValue(DEF_REVIEW_VAL);
-                    myRef.child(location).child("Data").child("density").setValue(DEF_REVIEW_VAL);
-                    myRef.child(location).child("Data").child("dog").setValue(DEF_REVIEW_VAL);
-                    myRef.child(location).child("Data").child("accessible").setValue(DEF_REVIEW_VAL);
-                    myRef.child(location).child("Data").child("hygiene").setValue(DEF_REVIEW_VAL);
-                    for (int j=0;j<3;j++) {
-                        double num = (Math.random()*4 + 1);
-                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("review").setValue(num);
-                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("density").setValue(num);
-                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("jellyfish").setValue(num);
-                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("accessible").setValue(num);
-                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("danger").setValue(num);
-                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("dog").setValue(num);
-                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("hygiene").setValue(num);
-                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("warmth").setValue(num);
-                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("wind").setValue(num);
-                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("comment").setValue("Great Beach and even better demo");
-                    }
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
 
     @Override
@@ -409,4 +360,87 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
+
+    public List<String> findSimilarStrings(ArrayList<String> strings, String target) {
+        List<String> similarStrings = new ArrayList<>();
+
+        // Compute the similarity score between the target string and each string in the array
+        Map<String, Integer> scores = new HashMap<>();
+        for (String s : strings) {
+            scores.put(s, getSimilarityScore(s, target));
+        }
+
+        // Sort the array of strings by similarity score in descending order
+        strings.sort( (s1, s2) -> scores.get(s2) - scores.get(s1));
+
+        // Add the sorted strings to the list of similar strings
+        for (String s : strings) {
+            if (scores.get(s) > 0) {
+                similarStrings.add(s);
+            }
+        }
+
+        return similarStrings;
+    }
+
+    private int getSimilarityScore(String s1, String s2) {
+        // Compute the similarity score between two strings using the compareTo() method
+        int score = 0;
+        int length = Math.min(s1.length(), s2.length());
+        for (int i = 0; i < length; i++) {
+            if (s1.charAt(i) == s2.charAt(i)) {
+                score++;
+            }
+        }
+        return score;
+    }
+
+
+
+
+
+
+//    public void setItemsForDemo() {
+//        adapter = ArrayAdapter.createFromResource(this,R.array.beaches, android.R.layout.simple_spinner_item);
+//        for (int i=0;i<adapter.getCount();i++) {
+//            String location = adapter.getItem(i).toString();
+//            beachName = location;
+//            Geocoder geocoder = new Geocoder(HomeActivity.this, Locale.getDefault());
+//            try {
+//                List<Address> listAddress = geocoder.getFromLocationName(location, 1);
+//                if (listAddress.size() > 0) {
+//                    double latit = listAddress.get(0).getLatitude();
+//                    double logi = listAddress.get(0).getLongitude();
+//                    myRef.child(location).child("Data").child("latitude").setValue(latit);
+//                    myRef.child(location).child("Data").child("longitude").setValue(logi);
+//                    myRef.child(location).child("Data").child("name").setValue(beachName);
+//                    myRef.child(location).child("Data").child("review").setValue(DEF_REVIEW_VAL);
+//                    myRef.child(location).child("Data").child("warmth").setValue(DEF_REVIEW_VAL);
+//                    myRef.child(location).child("Data").child("danger").setValue(DEF_REVIEW_VAL);
+//                    myRef.child(location).child("Data").child("wind").setValue(DEF_REVIEW_VAL);
+//                    myRef.child(location).child("Data").child("jellyfish").setValue(DEF_REVIEW_VAL);
+//                    myRef.child(location).child("Data").child("density").setValue(DEF_REVIEW_VAL);
+//                    myRef.child(location).child("Data").child("dog").setValue(DEF_REVIEW_VAL);
+//                    myRef.child(location).child("Data").child("accessible").setValue(DEF_REVIEW_VAL);
+//                    myRef.child(location).child("Data").child("hygiene").setValue(DEF_REVIEW_VAL);
+//                    for (int j=0;j<3;j++) {
+//                        double num = (Math.random()*4 + 1);
+//                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("review").setValue(num);
+//                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("density").setValue(num);
+//                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("jellyfish").setValue(num);
+//                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("accessible").setValue(num);
+//                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("danger").setValue(num);
+//                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("dog").setValue(num);
+//                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("hygiene").setValue(num);
+//                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("warmth").setValue(num);
+//                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("wind").setValue(num);
+//                        myRef.child(location).child("Reports").child("Guest_Demo_"+j).child("comment").setValue("Great Beach and even better demo");
+//                    }
+//                }
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }

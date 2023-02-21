@@ -3,8 +3,10 @@ package com.example.wavezcellular.activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Path;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
@@ -18,12 +20,12 @@ public class SplashActivity extends AppCompatActivity {
     private ImageView logo;
     private LottieAnimationView lottie,lottie2;
     private final int ANIM_DURATION = 2000;
-
+    Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
+        this.context =  this.getApplicationContext();
         logo = findViewById(R.id.logo);
         logo.setVisibility(View.INVISIBLE);
         lottie = findViewById(R.id.lottie);
@@ -34,7 +36,10 @@ public class SplashActivity extends AppCompatActivity {
     public void showViewSlideDown(final View v) {
         v.setVisibility(View.VISIBLE);
         Path path = new Path();
-
+        MediaPlayer player = MediaPlayer.create(this.context, R.raw.wave);
+        player.setLooping(false); // Set looping
+        player.setVolume(1.0f, 1.0f);
+        player.start();
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
@@ -49,6 +54,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 animator.cancel();
+                player.stop();
                 replaceActivity();
             }
         }, 5000);

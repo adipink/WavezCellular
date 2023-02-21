@@ -5,13 +5,18 @@ import static com.example.wavezcellular.utils.User.getGuest;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 
 import com.example.wavezcellular.R;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,31 +26,49 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.maps.android.SphericalUtil;
 
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class ShowActivity extends AppCompatActivity {
 
-    private MaterialButton show_BTN_back, show_BTN_reports;
+    public static final String TEMPKEY = "1253b9205d89a2d8816242c6d731489f";
+    private MaterialButton show_BTN_back, show_BTN_reports, show_BTN_waze, show_BTN_moovit;
     private ImageView show_IMG_profile;
-    private MaterialButton show_TXT_density,show_TXT_wave,show_TXT_jellyfish,
-            show_TXT_danger,show_TXT_wind, show_TXT_accessible, show_TXT_dog;
-    private MaterialTextView show_TXT_nameBeach,show_TXT_temperature;
+    private MaterialButton show_TXT_density,show_TXT_jellyfish,
+            show_TXT_danger,show_TXT_wind, show_TXT_accessible, show_TXT_dog, show_TXT_warmth, show_TXT_hygiene ;
+    private MaterialTextView show_TXT_nameBeach,show_TXT_temperature, show_TXT_distance;
     private RatingBar show_RB_review;
     private Bundle bundle;
     private String BeachName;
+    private double latitude;
+    private double longitude;
     private final double HIGH_VALUE = 3.5;
+    private final double LOW_VALUE = 1.5;
     private FirebaseUser firebaseUserUser;
     private DatabaseReference myRef;
+    private Context context;
+    private double x;
+    private double y;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.context =  this.getApplicationContext();
         setContentView(R.layout.activity_show);
         bundle = getIntent().getExtras();
         if (bundle != null) {
             BeachName = bundle.getString("BEACH_NAME");
+            x = (double) bundle.get("x");
+            y = (double) bundle.get("y");
         } else {
             this.bundle = new Bundle();
             BeachName = "";
@@ -56,10 +79,11 @@ public class ShowActivity extends AppCompatActivity {
         }
         myRef = FirebaseDatabase.getInstance().getReference("Beaches");
 
-
         findViews();
         createListeners();
         showInfo();
+
+
 
 
     }
@@ -81,9 +105,45 @@ public class ShowActivity extends AppCompatActivity {
                 double accessible = getDouble(beach,"accessible");
                 double density = getDouble(beach,"density");
                 double jellyfish = getDouble(beach,"jellyfish");
+                double hygiene = getDouble(beach,"hygiene");
                 double dog = getDouble(beach,"dog");
+                latitude = getDouble(beach,"latitude");
+                longitude = getDouble(beach, "longitude");
+                LatLng loc = new LatLng(latitude,longitude);
+                LatLng user = new LatLng((Double) bundle.get("x"),(Double)bundle.get("y"));
+                double distance = getDistance(user, loc);
+                String format = String.format("%.01f", distance);
+                show_TXT_distance.setText(format + "km away from you");
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String apiKey = "YOUR_API_KEY";
+                        String urlString = "https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon=" + longitude+"&appid="+TEMPKEY;
+
+                        try {
+                            URL url = new URL(urlString);
+                            Scanner scanner = new Scanner(url.openStream());
+                            String response = scanner.nextLine();
+                            scanner.close();
+
+                            JSONObject jsonObject = new JSONObject(response);
+                            double temperature = (jsonObject.getJSONObject("main").getDouble("temp")) - 273.15;
+
+                            // Update UI with temperature using runOnUiThread()
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    show_TXT_temperature.setText((String.format("%.1f °C", temperature)));
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
 
                 show_RB_review.setRating((float) review);
+
                 if(wind>HIGH_VALUE)
                     show_TXT_wind.setText("Windy");
                 else
@@ -109,9 +169,18 @@ public class ShowActivity extends AppCompatActivity {
                 else
                     show_TXT_dog.setText("Uncrowded");
                 if(warmth>HIGH_VALUE)
-                    show_TXT_dog.setText("Many Jellyfish");
+                    show_TXT_warmth.setText("It's hot");
+                else if(warmth<LOW_VALUE)
+                    show_TXT_warmth.setText("It's cold");
                 else
-                    show_TXT_dog.setText("Uncrowded");
+                    show_TXT_warmth.setText("OK");
+                if(hygiene>HIGH_VALUE)
+                    show_TXT_warmth.setText("Very Clean");
+                else if(warmth<LOW_VALUE)
+                    show_TXT_warmth.setText("Very Dirty");
+                else
+                    show_TXT_warmth.setText("OK");
+
 
 
 
@@ -157,6 +226,24 @@ public class ShowActivity extends AppCompatActivity {
         return 0;
     }
 
+    public static double getTemperature(String apikey, double lat, double lon) {
+        String urlString = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apikey + "&units=metric";
+
+        try {
+            URL url = new URL(urlString);
+            Scanner scanner = new Scanner(url.openStream());
+            String response = scanner.nextLine();
+            scanner.close();
+
+            JSONObject jsonObject = new JSONObject(response);
+            double temperature = jsonObject.getJSONObject("main").getDouble("temp");
+
+            return temperature;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Double.NaN;
+        }
+    }
 
     private void createListeners() {
         show_BTN_back.setOnClickListener(new View.OnClickListener() {
@@ -177,9 +264,46 @@ public class ShowActivity extends AppCompatActivity {
                 replaceActivity("Report");
             }
         });
+        show_BTN_waze.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickOnWaze();
+            }
+        });
+        show_BTN_moovit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openMoovitDirections(latitude, longitude, BeachName);
+            }
+        });
     }
 
-        private void replaceActivity(String mode) {
+    private void clickOnWaze() {
+        try {
+
+            String url = "https://waze.com/ul?q=" + BeachName + "&ll=" + latitude + "," + longitude + "&navigate=yes" + BeachName.replace(" ", "%20");
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            startActivity(intent);
+        } catch (ActivityNotFoundException ex) {
+            // If Waze is not installed, open it in Google Play:
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=com.waze"));
+            startActivity(intent);
+        }
+    }
+
+    public void openMoovitDirections(double latitude, double longitude, String placeName) {
+        try {
+            String uri = String.format("moovit://directions?dest_lat=%f&dest_lon=%f&dest_name=%s",
+                    latitude, longitude, URLEncoder.encode(BeachName, "UTF-8"));
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void replaceActivity(String mode) {
             Intent intent;
             if (mode.equals("Profile")) {
                 intent = new Intent(this, UserActivity.class);
@@ -210,7 +334,6 @@ public class ShowActivity extends AppCompatActivity {
         show_IMG_profile = findViewById(R.id.show_IMG_profile);
         show_TXT_nameBeach = findViewById(R.id.show_TXT_nameBeach);
         show_TXT_density = findViewById(R.id.show_TXT_density);
-        show_TXT_wave = findViewById(R.id.show_TXT_wave);
         show_TXT_jellyfish = findViewById(R.id.show_TXT_jellyfish);
         show_TXT_temperature = findViewById(R.id.show_TXT_temperature);
         show_TXT_danger = findViewById(R.id.show_TXT_danger);
@@ -218,5 +341,14 @@ public class ShowActivity extends AppCompatActivity {
         show_RB_review = findViewById(R.id.show_RB_review);
         show_TXT_accessible = findViewById(R.id.show_TXT_accessible);
         show_TXT_dog = findViewById(R.id.show_TXT_dogs);
+        show_BTN_waze = findViewById(R.id.show_BTN_waze);
+        show_BTN_moovit = findViewById(R.id.show_BTN_moovit);
+        show_TXT_distance = findViewById(R.id.show_TXT_distance);
+        show_TXT_warmth = findViewById(R.id.show_TXT_warmth);
+        show_TXT_hygiene = findViewById(R.id.show_TXT_hygiene);
+    }
+
+    private double getDistance(LatLng location1, LatLng location2){
+        return (SphericalUtil.computeDistanceBetween(location1,location2)/1000);
     }
 }
