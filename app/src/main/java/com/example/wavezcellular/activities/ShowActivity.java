@@ -56,55 +56,7 @@ public class ShowActivity extends AppCompatActivity {
     private double x;
     private double y;
 
-    public static double getDouble(HashMap<String, Object> hashMap, String valueName) {
-        Object o = hashMap.get(valueName);
-        double val;
-        if (o instanceof Long) {
-            Long l = (Long) o;
-            if (l != null) {
-                val = (double) l;
-                return val;
-            }
-        } else if (o instanceof Double) {
-            return (double) o;
-        } else
-            return 0;
-        return 0;
-    }
 
-    public static double getDouble(Object o) {
-        double val;
-        if (o instanceof Long) {
-            Long l = (Long) o;
-            if (l != null) {
-                val = (double) l;
-                return val;
-            }
-        } else if (o instanceof Double) {
-            return (double) o;
-        } else
-            return 0;
-        return 0;
-    }
-
-    public static double getTemperature(String apikey, double lat, double lon) {
-        String urlString = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apikey + "&units=metric";
-
-        try {
-            URL url = new URL(urlString);
-            Scanner scanner = new Scanner(url.openStream());
-            String response = scanner.nextLine();
-            scanner.close();
-
-            JSONObject jsonObject = new JSONObject(response);
-            double temperature = jsonObject.getJSONObject("main").getDouble("temp");
-
-            return temperature;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Double.NaN;
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -339,5 +291,55 @@ public class ShowActivity extends AppCompatActivity {
 
     private double getDistance(LatLng location1, LatLng location2) {
         return (SphericalUtil.computeDistanceBetween(location1, location2) / 1000);
+    }
+
+    public static double getDouble(HashMap<String, Object> hashMap, String valueName) {
+        Object o = hashMap.get(valueName);
+        double val;
+        if (o instanceof Long) {
+            Long l = (Long) o;
+            if (l != null) {
+                val = (double) l;
+                return val;
+            }
+        } else if (o instanceof Double) {
+            return (double) o;
+        } else
+            return 0;
+        return 0;
+    }
+
+    public static double getDouble(Object o) {
+        double val;
+        if (o instanceof Long) {
+            Long l = (Long) o;
+            if (l != null) {
+                val = (double) l;
+                return val;
+            }
+        } else if (o instanceof Double) {
+            return (double) o;
+        } else
+            return 0;
+        return 0;
+    }
+
+    public static double getTemperature(String apikey, double lat, double lon) {
+        String urlString = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=" + apikey + "&units=metric";
+
+        try {
+            URL url = new URL(urlString);
+            Scanner scanner = new Scanner(url.openStream());
+            String response = scanner.nextLine();
+            scanner.close();
+
+            JSONObject jsonObject = new JSONObject(response);
+            double temperature = jsonObject.getJSONObject("main").getDouble("temp");
+
+            return temperature;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Double.NaN;
+        }
     }
 }

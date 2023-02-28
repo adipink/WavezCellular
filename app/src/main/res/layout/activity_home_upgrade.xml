@@ -77,7 +77,6 @@
         </LinearLayout>
 
 
-
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/home_TXT_parameterTXT"
             android:layout_width="wrap_content"
@@ -87,201 +86,51 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
 
-        <ScrollView
+        <LinearLayout
+            android:id="@+id/home_LinearLayout_beachData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/home_TXT_beachName"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:text="Beach name"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:visibility="visible"
+                app:backgroundTint="@color/sea" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/home_TXT_result"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Value"
+                android:textAlignment="textEnd"
+                android:textAllCaps="false"
+                android:textColor="@color/blue_text_card"
+                android:textSize="20sp"
+                android:visibility="visible"
+                app:backgroundTint="@color/white" />
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/home_RecyclerView_rec"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="7">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="4">
+            android:layout_weight="6">
 
 
+        </androidx.recyclerview.widget.RecyclerView>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/home_BTN_searchBeach1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:text="Beach name"
-                    android:textAlignment="textStart"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="25sp"
-                    app:backgroundTint="@color/sea"
-                    android:visibility="visible"
-                    android:layout_weight="3"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/home_BTN_result1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:text="2.7km"
-                    android:textAlignment="textEnd"
-                    android:textAllCaps="false"
-                    android:textColor="@color/blue_text_card"
-                    android:textSize="20sp"
-                    app:backgroundTint="@color/white"
-                    android:visibility="visible"
-                    android:layout_weight="1"/>
-            </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="4">
-
-
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/home_BTN_searchBeach2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text="Beach name"
-                        android:textAlignment="textStart"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="25sp"
-                        app:backgroundTint="@color/sea"
-                        android:visibility="visible"
-                        android:layout_weight="3"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/home_BTN_result2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text="2.7km"
-                        android:textAlignment="textEnd"
-                        android:textAllCaps="false"
-                        android:textColor="@color/blue_text_card"
-                        android:textSize="20sp"
-                        app:backgroundTint="@color/white"
-                        android:visibility="visible"
-                        android:layout_weight="1"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="4">
-
-
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/home_BTN_searchBeach3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text="Beach name"
-                        android:textAlignment="textStart"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="25sp"
-                        app:backgroundTint="@color/sea"
-                        android:visibility="visible"
-                        android:layout_weight="3"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/home_BTN_result3"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text="2.7km"
-                        android:textAlignment="textEnd"
-                        android:textAllCaps="false"
-                        android:textColor="@color/blue_text_card"
-                        android:textSize="20sp"
-                        app:backgroundTint="@color/white"
-                        android:visibility="visible"
-                        android:layout_weight="1"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="4">
-
-
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/home_BTN_searchBeach4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text="Beach name"
-                        android:textAlignment="textStart"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="25sp"
-                        app:backgroundTint="@color/sea"
-                        android:visibility="visible"
-                        android:layout_weight="3"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/home_BTN_result4"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text="2.7km"
-                        android:textAlignment="textEnd"
-                        android:textAllCaps="false"
-                        android:textColor="@color/blue_text_card"
-                        android:textSize="20sp"
-                        app:backgroundTint="@color/white"
-                        android:visibility="visible"
-                        android:layout_weight="1"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:weightSum="4">
-
-
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/home_BTN_searchBeach5"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text="Beach name"
-                        android:textAlignment="textStart"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white"
-                        android:textSize="25sp"
-                        app:backgroundTint="@color/sea"
-                        android:visibility="visible"
-                        android:layout_weight="3"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/home_BTN_result5"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:text="2.7km"
-                        android:textAlignment="textEnd"
-                        android:textAllCaps="false"
-                        android:textColor="@color/blue_text_card"
-                        android:textSize="20sp"
-                        app:backgroundTint="@color/white"
-                        android:visibility="visible"
-                        android:layout_weight="1"/>
-                </LinearLayout>
-
-
-
-
-
-
-
-
-
-            </LinearLayout>
-        </ScrollView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -298,6 +147,7 @@
                 android:orientation="horizontal"
                 android:visibility="visible"
                 android:weightSum="4">
+
                 <EditText
                     android:id="@+id/home_EditTXT_byName"
                     android:layout_width="match_parent"
@@ -314,44 +164,39 @@
                 android:weightSum="4">
 
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/home_BTN_switch"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:text="Ascending"
-                android:layout_gravity="start"
-                android:textAllCaps="false"
-                app:backgroundTint="@color/sea"
-                app:cornerRadius="40dp"
-                android:visibility="visible"
-                android:layout_weight="2">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/home_BTN_switch"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_weight="2"
+                    android:text="Ascending"
+                    android:textAllCaps="false"
+                    android:visibility="visible"
+                    app:backgroundTint="@color/sea"
+                    app:cornerRadius="40dp">
 
-            </com.google.android.material.button.MaterialButton>
+                </com.google.android.material.button.MaterialButton>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/home_BTN_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="By name"
                     android:layout_gravity="start"
+                    android:layout_weight="2"
+                    android:text="By name"
                     android:textAllCaps="false"
-                    app:backgroundTint="@color/sea"
-                    app:cornerRadius="40dp"
                     android:visibility="visible"
-                    android:layout_weight="2"></com.google.android.material.button.MaterialButton>
+                    app:backgroundTint="@color/sea"
+                    app:cornerRadius="40dp"></com.google.android.material.button.MaterialButton>
             </LinearLayout>
-
-
-
 
 
         </LinearLayout>
     </LinearLayout>
 
 
-
-
-    </RelativeLayout>
+</RelativeLayout>
 
 
 

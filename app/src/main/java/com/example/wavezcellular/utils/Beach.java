@@ -1,6 +1,10 @@
 package com.example.wavezcellular.utils;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.SphericalUtil;
+
 import java.util.Comparator;
+import java.util.HashMap;
 
 public class Beach {
     private String name;
@@ -16,9 +20,16 @@ public class Beach {
     private double dog;
     private double accessible;
     private double review;
+    private HashMap<String, Object> parameters;
+    private LatLng userLoc;
 
     public Beach(){
 
+    }
+
+    public Beach(HashMap<String, Object> parameters, LatLng userLoc){
+        this.name = (String) parameters.get("name");
+        this.parameters = parameters;
     }
 
     public Beach(String name, double lon, double lat){
@@ -36,7 +47,11 @@ public class Beach {
         accessible = 3;
         warmth = 3;
     }
-
+    public Object getValue(String value){
+        if(value.equalsIgnoreCase("distance"))
+            return getDistance();
+        return parameters.get(value);
+    }
 
     public double getWarmth() {
         return warmth;
@@ -142,4 +157,12 @@ public class Beach {
     public double getLatitude() {
         return latitude;
     }
+
+    public double getDistance(){
+        double latitude = (double) getValue("latitude");
+        double longitude = (double) getValue("longitude");
+        LatLng beachLoc = new LatLng(latitude,longitude);
+        return (SphericalUtil.computeDistanceBetween(userLoc, beachLoc) / 1000);
+    }
+
 }

@@ -18,8 +18,14 @@ import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wavezcellular.R;
+import com.example.wavezcellular.adapters_holders.BeachHomeAdapter;
+import com.example.wavezcellular.adapters_holders.UserReportAdapter;
+import com.example.wavezcellular.utils.Beach;
+import com.example.wavezcellular.utils.UserReport;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
@@ -35,6 +41,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.maps.android.SphericalUtil;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,7 +52,6 @@ import java.util.Map;
 public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private final int DEF_VAL = 50;
     private final double DEF_REVIEW_VAL = 3.0;
-    private final int MAX_SEARCH = 5;
     String value = "Distance";
     private ImageView home_IMG_profile;
     //private MaterialButton home_BTN_show;
@@ -53,6 +59,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private MaterialButton home_BTN_name;
     private MaterialButton[] home_BTN_searches;
     private MaterialButton[] home_BTN_results;
+    private RecyclerView home_RecyclerView_beachData;
     private EditText home_EditTXT_byName;
     private Spinner home_SP_listOfBeaches;
     private ArrayAdapter<CharSequence> adapter;
@@ -107,29 +114,82 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private void createBeaches(ArrayList<Map.Entry<String, Double>> list) {
         if (orderBy == 0)
             Collections.reverse(list);
-        for (int i = 0; i < MAX_SEARCH; i++) {
+        ArrayList<Map.Entry<String, String>> beachesSort = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
             String format = String.format("%.01f", list.get(i).getValue());
             String result = format;
-            String beachName = list.get(i).getKey();
-            home_BTN_searches[i].setText(beachName);
-            home_BTN_results[i].setText(result);
-            home_BTN_searches[i].setVisibility(View.VISIBLE);
+            String name = list.get(i).getKey();
+            Map.Entry<String, String> entry = new AbstractMap.SimpleEntry<>(name, result);
+            beachesSort.add(entry);
         }
+        createBeachRec(beachesSort);
     }
 
     private void createBeaches(String parameter, ArrayList<String> list) {
-        int max = MAX_SEARCH;
         if (orderBy == 0)
             Collections.reverse(list);
-        if (list.size() < MAX_SEARCH)
-            max = list.size();
-        for (int i = 0; i < max; i++) {
-            String beachName = list.get(i);
-            home_BTN_searches[i].setText(beachName);
-            home_BTN_results[i].setText("");
-            home_BTN_searches[i].setVisibility(View.VISIBLE);
+        ArrayList<Map.Entry<String, String>> beachesSort = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            String name = list.get(i);
+            Map.Entry<String, String> entry = new AbstractMap.SimpleEntry<>(name, "");
+            beachesSort.add(entry);
         }
+        createBeachRec(beachesSort);
     }
+
+    private void createBeachRec(ArrayList<Map.Entry<String, String>> list) {
+        home_RecyclerView_beachData.setLayoutManager(new LinearLayoutManager(this));
+        home_RecyclerView_beachData.setAdapter(new BeachHomeAdapter(getApplicationContext(), list));
+    }
+
+//    private void getBeaches(String value) {
+//        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                // This method is called once with the initial value and again
+//                // whenever data at this location is updated.
+//                double userLat = (double) bundle.get("x");
+//                double userLon = (double) bundle.get("y");
+//                LatLng user = new LatLng(userLat, userLon);
+//                ArrayList<Beach> list = new ArrayList<>();
+//                HashMap<String, HashMap<String, HashMap<String, Object>>> beaches = (HashMap) dataSnapshot.getValue(Object.class);
+//                    for (Map.Entry<String, HashMap<String, HashMap<String, Object>>> set :
+//                            beaches.entrySet()) {
+//                        Beach beach = new Beach( set.getValue().get("Data"), user);
+//                        if (set.getValue().get("Reports") != null ) {
+//                            if(!value.equalsIgnoreCase("name") && !value.equalsIgnoreCase("distance")) {
+//                                double val = calcAVG(set.getValue().get("Reports"), value);
+//                                myRef.child(beachName).child("Data").child(value).setValue(val);
+//                            }
+//                        }
+//                        list.add(beach);
+//                    }
+//
+//                    Comparator<Beach> valueComparator = new Comparator<Beach>() {
+//                        @Override
+//                        public int compare(Beach o1, Beach o2) {
+//                            Object o = o1.getValue(value);
+//                            if(o instanceof String)
+//                                return ((String)o1.getValue(value)).compareTo((String)o2.getValue(value));
+//                            else if(o instanceof Double)
+//                                return ((Double)o1.getValue(value)).compareTo((Double) o2.getValue(value));
+//                            else
+//                                return 0;
+//                        }
+//
+//                    };
+//
+//
+//                    Collections.sort(list, valueComparator);
+//                    createBeaches(list);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//    }
 
     private void getBeaches(String value) {
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -214,16 +274,16 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         return sum / numObjects;
     }
 
+    private void createReportsRec(ArrayList<UserReport> list) {
+        home_RecyclerView_beachData.setLayoutManager(new LinearLayoutManager(this));
+        home_RecyclerView_beachData.setAdapter(new UserReportAdapter(getApplicationContext(), list));
+    }
+
 
     private void createListener() {
         home_IMG_profile.setOnClickListener(view -> replaceActivity("Profile"));
         home_BTN_switch.setOnClickListener(view -> switchMode());
         home_BTN_name.setOnClickListener(view -> getBeaches("name"));
-
-        for (int i = 0; i < MAX_SEARCH; i++) {
-            int pressed = i;
-            home_BTN_searches[i].setOnClickListener(view -> clickedBeach(pressed));
-        }
 
     }
 
@@ -290,23 +350,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 //        home_BTN_show = findViewById(R.id.home_BTN_show);
         home_BTN_switch = findViewById(R.id.home_BTN_switch);
         home_SP_listOfBeaches = findViewById(R.id.home_SP_listOfBeaches);
-        home_BTN_searches = new MaterialButton[]{
-                findViewById(R.id.home_BTN_searchBeach1),
-                findViewById(R.id.home_BTN_searchBeach2),
-                findViewById(R.id.home_BTN_searchBeach3),
-                findViewById(R.id.home_BTN_searchBeach4),
-                findViewById(R.id.home_BTN_searchBeach5)
-
-        };
-
-        home_BTN_results = new MaterialButton[]{
-                findViewById(R.id.home_BTN_result1),
-                findViewById(R.id.home_BTN_result2),
-                findViewById(R.id.home_BTN_result3),
-                findViewById(R.id.home_BTN_result4),
-                findViewById(R.id.home_BTN_result5)
-
-        };
+        home_RecyclerView_beachData = findViewById(R.id.home_RecyclerView_rec);
         home_EditTXT_byName = findViewById(R.id.home_EditTXT_byName);
         home_BTN_name = findViewById(R.id.home_BTN_name);
     }
