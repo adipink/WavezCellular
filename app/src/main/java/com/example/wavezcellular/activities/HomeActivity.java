@@ -21,10 +21,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wavezcellular.Interfaces.BeachListener;
 import com.example.wavezcellular.R;
 import com.example.wavezcellular.adapters_holders.BeachHomeAdapter;
 import com.example.wavezcellular.adapters_holders.UserReportAdapter;
-import com.example.wavezcellular.utils.Beach;
 import com.example.wavezcellular.utils.UserReport;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -49,7 +49,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class HomeActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener, BeachListener {
     private final int DEF_VAL = 50;
     private final double DEF_REVIEW_VAL = 3.0;
     String value = "Distance";
@@ -139,7 +139,13 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private void createBeachRec(ArrayList<Map.Entry<String, String>> list) {
         home_RecyclerView_beachData.setLayoutManager(new LinearLayoutManager(this));
-        home_RecyclerView_beachData.setAdapter(new BeachHomeAdapter(getApplicationContext(), list));
+        home_RecyclerView_beachData.setAdapter(new BeachHomeAdapter(getApplicationContext(), list, this ));
+    }
+
+
+    @Override
+    public void onBeachClicked(String entry) {
+        replaceActivity(entry);
     }
 
 //    private void getBeaches(String value) {
@@ -300,11 +306,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         getBeaches(value);
     }
 
-    private void clickedBeach(int i) {
-        beachName = (String) home_BTN_searches[i].getText();
-        replaceActivity(beachName);
-    }
-
 
     private void replaceActivity(String mode) {
         Intent intent;
@@ -321,7 +322,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             finish();
         } else if (mode.contains("beach")) {
             intent = new Intent(this, ShowActivity.class);
-            bundle.putString("BEACH_NAME", beachName);
+            bundle.putString("BEACH_NAME", mode);
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
@@ -429,6 +430,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         return score;
     }
+
 
 
 //    public void setItemsForDemo() {
