@@ -140,41 +140,41 @@ public class ShowActivity extends AppCompatActivity {
                 show_RB_review.setRating((float) review);
 
                 if (wind > HIGH_VALUE)
-                    show_TXT_wind.setText("Windy");
+                    show_TXT_wind.setText("Wind: Windy");
                 else
-                    show_TXT_wind.setText("OK wind");
+                    show_TXT_wind.setText("Wind: OK wind");
                 if (danger > HIGH_VALUE)
-                    show_TXT_danger.setText("Dangerous");
+                    show_TXT_danger.setText("Danger: Dangerous");
                 else
-                    show_TXT_danger.setText("Not Dangerous");
+                    show_TXT_danger.setText("Danger: Not Dangerous");
                 if (accessible > HIGH_VALUE)
-                    show_TXT_accessible.setText("accessible");
+                    show_TXT_accessible.setText("Accessibility: accessible");
                 else
-                    show_TXT_accessible.setText("Not accessible");
+                    show_TXT_accessible.setText("Accessibility: Not accessible");
                 if (density > HIGH_VALUE)
-                    show_TXT_density.setText("Crowded");
+                    show_TXT_density.setText("Density: Crowded");
                 else
-                    show_TXT_density.setText("Uncrowded");
+                    show_TXT_density.setText("Density: Uncrowded");
                 if (jellyfish > HIGH_VALUE)
-                    show_TXT_jellyfish.setText("Many Jellyfish");
+                    show_TXT_jellyfish.setText("Jellyfish: Many Jellyfish");
                 else
-                    show_TXT_jellyfish.setText("No Jellyfish");
+                    show_TXT_jellyfish.setText("Jellyfish: No Jellyfish");
                 if (dog > HIGH_VALUE)
-                    show_TXT_dog.setText("Many Jellyfish");
+                    show_TXT_dog.setText("Pet Friendly");
                 else
-                    show_TXT_dog.setText("Uncrowded");
+                    show_TXT_dog.setText("No Pets allowed");
                 if (warmth > HIGH_VALUE)
-                    show_TXT_warmth.setText("It's hot");
+                    show_TXT_warmth.setText("Warmth: It's hot");
                 else if (warmth < LOW_VALUE)
-                    show_TXT_warmth.setText("It's cold");
+                    show_TXT_warmth.setText("Warmth: It's cold");
                 else
-                    show_TXT_warmth.setText("OK");
+                    show_TXT_warmth.setText("Warmth: OK");
                 if (hygiene > HIGH_VALUE)
-                    show_TXT_warmth.setText("Very Clean");
+                    show_TXT_hygiene.setText("Hygiene: Very Clean");
                 else if (warmth < LOW_VALUE)
-                    show_TXT_warmth.setText("Very Dirty");
+                    show_TXT_hygiene.setText("Hygiene: Very Dirty");
                 else
-                    show_TXT_warmth.setText("OK");
+                    show_TXT_hygiene.setText("Hygiene: OK");
 
 
             }
