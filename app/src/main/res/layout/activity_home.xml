@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.HomeActivity"
-    android:background="@drawable/ic_background">
+    android:background="@color/water">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,6 +59,8 @@
             </ImageView>
 
         </LinearLayout>
+
+
 
         <LinearLayout
             android:layout_width="wrap_content"

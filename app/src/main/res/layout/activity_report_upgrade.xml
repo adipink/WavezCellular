@@ -1,0 +1,1233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ReportActivityLegacy"
+    android:background="@color/water">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:background="@color/water"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/report_LOGO_wavez"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/wave_icon"
+                tools:ignore="MissingConstraints" />
+
+            <ImageView
+                android:id="@+id/report_IMG_profile"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_user"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="MissingConstraints" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.8"
+            android:background="@color/water"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/report_BTN_back"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="0.5"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/water"
+                android:background="@color/transparent"
+                app:icon="@drawable/ic_baseline_arrow_back_24"
+                app:iconTint="@color/white"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/report_TXT_nameBeach"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_weight="4.5"
+                android:gravity="center"
+                android:text="Gils Beach"
+                android:textColor="@color/sand"
+                android:textColorHighlight="@color/white"
+                android:textSize="30sp"
+                android:textStyle="bold"></com.google.android.material.textview.MaterialTextView>
+
+
+        </LinearLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/show_TXT_parameterTXT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
+            android:text="Report"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:background="@drawable/shapes"
+        android:backgroundTint="@color/blue_text_card"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:id="@+id/report_IMG_comment"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:weightSum="6.5">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/conversation">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Comment"
+                    android:textStyle="bold">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Write what's on your mind">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+
+                <EditText
+                    android:id="@+id/report_EditTXT_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
+
+                </EditText>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:weightSum="6.5">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/star">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Review"
+                    android:textStyle="bold">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Give your opinion on the beach">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    >
+
+
+
+
+
+                        <RatingBar
+                            android:id="@+id/report_RB_review"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="20dp"
+                            android:numStars="5"
+                            android:rating="3.5"
+                            android:scaleX="1"
+                            android:scaleY="1"
+                            android:transformPivotX="0dp"
+                            android:transformPivotY="0dp" />
+<!--                        style="@style/Widget.AppCompat.RatingBar.Small"-->
+
+
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:weightSum="6.5">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_fewpeople">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Density"
+                    android:textStyle="bold">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="How crowded is the beach?">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="6"
+                    >
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        android:text="Uncrowded">
+
+                    </com.google.android.material.textview.MaterialTextView>
+
+
+                    <SeekBar
+                        android:id="@+id/report_SB_density"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="3"
+                        android:progress="50"
+                        android:secondaryProgress="50"
+                        android:progressTint="@color/transparent"
+                        android:secondaryProgressTint="@color/transparent"
+                        android:thumbTint="@color/white"
+                        android:progressBackgroundTint="@color/water"
+                        android:layout_gravity="center" />
+
+                    <!--                        style="@style/Widget.AppCompat.RatingBar.Small"-->
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Very Crowded"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        android:layout_marginVertical="5dp"
+                        >
+
+                    </com.google.android.material.textview.MaterialTextView>
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:weightSum="6.5">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_temperatures">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Warmth"
+                    android:textStyle="bold">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="How cold is it?">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="6"
+                    >
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Very Cold"
+                        android:layout_weight="1.5"
+                        android:layout_marginVertical="5dp"
+                        android:layout_gravity="center"
+                        >
+
+                    </com.google.android.material.textview.MaterialTextView>
+
+
+
+                        <SeekBar
+                            android:id="@+id/report_SB_warmth"
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="3"
+                            android:progress="50"
+                            android:secondaryProgress="50"
+                            android:progressTint="@color/transparent"
+                            android:secondaryProgressTint="@color/transparent"
+                            android:thumbTint="@color/white"
+                            android:progressBackgroundTint="@color/water"
+                            android:layout_gravity="center" />
+                    <!--                        style="@style/Widget.AppCompat.RatingBar.Small"-->
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Very Hot"
+                        android:layout_weight="1.5"
+                        android:layout_marginVertical="5dp"
+                        android:layout_gravity="center"
+                        >
+
+                    </com.google.android.material.textview.MaterialTextView>
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:weightSum="6.5">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_wind">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Windy"
+                    android:textStyle="bold">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="How windy is it?">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="6"
+                    >
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        android:text="No wind">
+
+                    </com.google.android.material.textview.MaterialTextView>
+
+
+                    <SeekBar
+                        android:id="@+id/report_SB_wind"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="3"
+                        android:progress="50"
+                        android:secondaryProgress="50"
+                        android:progressTint="@color/transparent"
+                        android:secondaryProgressTint="@color/transparent"
+                        android:thumbTint="@color/white"
+                        android:progressBackgroundTint="@color/water"
+                        android:layout_gravity="center" />
+
+                    <!--                        style="@style/Widget.AppCompat.RatingBar.Small"-->
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Very Windy"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        android:layout_marginVertical="5dp"
+                        >
+
+                    </com.google.android.material.textview.MaterialTextView>
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:weightSum="6.5">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/accessible">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Accessibility"
+                    android:textStyle="bold">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Is the beach accessible to everyone?">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="6"
+                    >
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        android:text="Not accessible">
+
+                    </com.google.android.material.textview.MaterialTextView>
+
+
+                    <SeekBar
+                        android:id="@+id/report_SB_accessible"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="3"
+                        android:progress="50"
+                        android:secondaryProgress="50"
+                        android:progressTint="@color/transparent"
+                        android:secondaryProgressTint="@color/transparent"
+                        android:thumbTint="@color/white"
+                        android:progressBackgroundTint="@color/water"
+                        android:layout_gravity="center" />
+
+                    <!--                        style="@style/Widget.AppCompat.RatingBar.Small"-->
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Very Accessible"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        android:layout_marginVertical="5dp"
+                        >
+
+                    </com.google.android.material.textview.MaterialTextView>
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:weightSum="6.5">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_jellyfish">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Jellyfish"
+                    android:textStyle="bold">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Are there alot of jellyfishes?">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="6"
+                    >
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        android:text="Not at all">
+
+                    </com.google.android.material.textview.MaterialTextView>
+
+
+                    <SeekBar
+                        android:id="@+id/report_SB_jellyfish"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="3"
+                        android:progress="50"
+                        android:secondaryProgress="50"
+                        android:progressTint="@color/transparent"
+                        android:secondaryProgressTint="@color/transparent"
+                        android:thumbTint="@color/white"
+                        android:progressBackgroundTint="@color/water"
+                        android:layout_gravity="center" />
+
+                    <!--                        style="@style/Widget.AppCompat.RatingBar.Small"-->
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Too many"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        android:layout_marginVertical="5dp"
+                        >
+
+                    </com.google.android.material.textview.MaterialTextView>
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:weightSum="6.5">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/toilet">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hygiene"
+                    android:textStyle="bold">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Is the beach clean and with good facilities?">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="6"
+                    >
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        android:text="Very dirty">
+
+                    </com.google.android.material.textview.MaterialTextView>
+
+
+                    <SeekBar
+                        android:id="@+id/report_SB_Hygiene"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="3"
+                        android:progress="50"
+                        android:secondaryProgress="50"
+                        android:progressTint="@color/transparent"
+                        android:secondaryProgressTint="@color/transparent"
+                        android:thumbTint="@color/white"
+                        android:progressBackgroundTint="@color/water"
+                        android:layout_gravity="center" />
+
+                    <!--                        style="@style/Widget.AppCompat.RatingBar.Small"-->
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Very Clean"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        android:layout_marginVertical="5dp"
+                        >
+
+                    </com.google.android.material.textview.MaterialTextView>
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:weightSum="6.5">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/dog">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Pet Friendly"
+                    android:textStyle="bold">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Is the beach pet friendly?">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="6"
+                    >
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        android:text="No pets allowed">
+
+                    </com.google.android.material.textview.MaterialTextView>
+
+
+                    <SeekBar
+                        android:id="@+id/report_SB_dog"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="3"
+                        android:progress="50"
+                        android:secondaryProgress="50"
+                        android:progressTint="@color/transparent"
+                        android:secondaryProgressTint="@color/transparent"
+                        android:thumbTint="@color/white"
+                        android:progressBackgroundTint="@color/water"
+                        android:layout_gravity="center" />
+
+                    <!--                        style="@style/Widget.AppCompat.RatingBar.Small"-->
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Very friendy towards pets"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        android:layout_marginVertical="5dp"
+                        >
+
+                    </com.google.android.material.textview.MaterialTextView>
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:orientation="horizontal"
+            android:weightSum="6.5">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_wave">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="5.5"
+                android:orientation="vertical">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Danger"
+                    android:textStyle="bold">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Is the sea mostly calm or dangerous?">
+
+                </com.google.android.material.textview.MaterialTextView>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:weightSum="6"
+                    >
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        android:text="calm">
+
+                    </com.google.android.material.textview.MaterialTextView>
+
+
+                    <SeekBar
+                        android:id="@+id/report_SB_danger"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="3"
+                        android:progress="50"
+                        android:secondaryProgress="50"
+                        android:progressTint="@color/transparent"
+                        android:secondaryProgressTint="@color/transparent"
+                        android:thumbTint="@color/white"
+                        android:progressBackgroundTint="@color/water"
+                        android:layout_gravity="center" />
+
+                    <!--                        style="@style/Widget.AppCompat.RatingBar.Small"-->
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Very Dangerous"
+                        android:layout_gravity="center"
+                        android:layout_weight="1.5"
+                        android:layout_marginVertical="5dp"
+                        >
+
+                    </com.google.android.material.textview.MaterialTextView>
+
+
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+    </LinearLayout>
+
+    </ScrollView>
+
+
+<!--            <GridLayout-->
+<!--                android:id="@+id/main_GRD_gridLayout"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_marginLeft="20dp"-->
+<!--                android:layout_marginRight="20dp"-->
+<!--                android:layout_marginBottom="20dp"-->
+<!--                android:columnCount="2"-->
+<!--                android:rowCount="3">-->
+
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:id="@+id/record_CRD_density"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_row="0"-->
+<!--                    android:layout_rowWeight="1"-->
+<!--                    android:layout_column="0"-->
+<!--                    android:layout_columnWeight="1"-->
+<!--                    android:layout_gravity="fill"-->
+<!--                    android:layout_margin="8dp"-->
+<!--                    app:cardBackgroundColor="@color/blue_card"-->
+<!--                    app:cardCornerRadius="25dp">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center_vertical|center_horizontal"-->
+<!--                        android:gravity="center"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="70dp"-->
+<!--                            android:layout_height="70dp"-->
+<!--                            android:src="@drawable/ic_density"-->
+<!--                            ></ImageView>-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/report_density"-->
+<!--                            android:textAlignment="center"-->
+<!--                            android:textColor="@color/blue_text_card"-->
+<!--                            android:textSize="20dp"-->
+<!--                            android:textStyle="bold"></TextView>-->
+<!--                    </LinearLayout>-->
+
+<!--                </androidx.cardview.widget.CardView>-->
+
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:id="@+id/report_CRD_wave"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_row="0"-->
+<!--                    android:layout_rowWeight="1"-->
+<!--                    android:layout_column="1"-->
+<!--                    android:layout_columnWeight="1"-->
+<!--                    android:layout_gravity="fill"-->
+<!--                    android:layout_margin="8dp"-->
+<!--                    app:cardBackgroundColor="@color/blue_card"-->
+<!--                    app:cardCornerRadius="25dp">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center_vertical|center_horizontal"-->
+<!--                        android:gravity="center"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="70dp"-->
+<!--                            android:layout_height="70dp"-->
+<!--                            android:src="@drawable/ic_wave"></ImageView>-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/report_wave"-->
+<!--                            android:textAlignment="center"-->
+<!--                            android:textColor="@color/blue_text_card"-->
+<!--                            android:textSize="20dp"-->
+<!--                            android:textStyle="bold"></TextView>-->
+<!--                    </LinearLayout>-->
+
+<!--                </androidx.cardview.widget.CardView>-->
+
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:id="@+id/record_CRD_jellyfish"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_row="1"-->
+<!--                    android:layout_rowWeight="1"-->
+<!--                    android:layout_column="0"-->
+<!--                    android:layout_columnWeight="1"-->
+<!--                    android:layout_gravity="fill"-->
+<!--                    android:layout_margin="8dp"-->
+<!--                    android:layout_marginTop="50dp"-->
+<!--                    app:cardBackgroundColor="@color/blue_card"-->
+<!--                    app:cardCornerRadius="25dp">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center_vertical|center_horizontal"-->
+<!--                        android:gravity="center"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="70dp"-->
+<!--                            android:layout_height="70dp"-->
+<!--                            android:src="@drawable/ic_jellyfish"></ImageView>-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/report_jellyfish"-->
+<!--                            android:textAlignment="center"-->
+<!--                            android:textColor="@color/blue_text_card"-->
+<!--                            android:textSize="20dp"-->
+<!--                            android:textStyle="bold"></TextView>-->
+<!--                    </LinearLayout>-->
+
+<!--                </androidx.cardview.widget.CardView>-->
+
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:id="@+id/record_CRD_temperature"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_row="1"-->
+<!--                    android:layout_rowWeight="1"-->
+<!--                    android:layout_column="1"-->
+<!--                    android:layout_columnWeight="1"-->
+<!--                    android:layout_gravity="fill"-->
+<!--                    android:layout_margin="8dp"-->
+<!--                    android:layout_marginTop="50dp"-->
+<!--                    app:cardBackgroundColor="@color/blue_card"-->
+<!--                    app:cardCornerRadius="25dp">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center_vertical|center_horizontal"-->
+<!--                        android:gravity="center"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="70dp"-->
+<!--                            android:layout_height="70dp"-->
+<!--                            android:src="@drawable/ic_temperatures"></ImageView>-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/report_temperature"-->
+<!--                            android:textAlignment="center"-->
+<!--                            android:textColor="@color/blue_text_card"-->
+<!--                            android:textSize="20dp"-->
+<!--                            android:textStyle="bold"></TextView>-->
+<!--                    </LinearLayout>-->
+<!--                </androidx.cardview.widget.CardView>-->
+
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:id="@+id/record_CRD_flag"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_row="2"-->
+<!--                    android:layout_rowWeight="1"-->
+<!--                    android:layout_column="0"-->
+<!--                    android:layout_columnWeight="1"-->
+<!--                    android:layout_gravity="fill"-->
+<!--                    android:layout_margin="8dp"-->
+<!--                    android:layout_marginTop="50dp"-->
+<!--                    android:outlineAmbientShadowColor="@color/black"-->
+<!--                    app:cardBackgroundColor="@color/blue_card"-->
+<!--                    app:cardCornerRadius="25dp">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center_vertical|center_horizontal"-->
+<!--                        android:gravity="center"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="70dp"-->
+<!--                            android:layout_height="70dp"-->
+<!--                            android:src="@drawable/ic_flag"></ImageView>-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/report_flag"-->
+<!--                            android:textAlignment="center"-->
+<!--                            android:textColor="@color/blue_text_card"-->
+<!--                            android:textSize="20dp"-->
+<!--                            android:textStyle="bold"></TextView>-->
+<!--                    </LinearLayout>-->
+
+<!--                </androidx.cardview.widget.CardView>-->
+
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:id="@+id/report_CRD_wind"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_row="2"-->
+<!--                    android:layout_rowWeight="1"-->
+<!--                    android:layout_column="1"-->
+<!--                    android:layout_columnWeight="1"-->
+<!--                    android:layout_gravity="fill"-->
+<!--                    android:layout_margin="8dp"-->
+<!--                    android:layout_marginTop="50dp"-->
+<!--                    app:cardBackgroundColor="@color/blue_card"-->
+<!--                    app:cardCornerRadius="25dp">-->
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_gravity="center_vertical|center_horizontal"-->
+<!--                        android:gravity="center"-->
+<!--                        android:orientation="vertical">-->
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="70dp"-->
+<!--                            android:layout_height="70dp"-->
+<!--                            android:src="@drawable/ic_wind"-->
+<!--                            ></ImageView>-->
+
+<!--                        <TextView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:text="@string/report_wind"-->
+<!--                            android:textAlignment="center"-->
+<!--                            android:textColor="@color/blue_text_card"-->
+<!--                            android:textSize="20dp"-->
+<!--                            android:textStyle="bold"></TextView>-->
+<!--                    </LinearLayout>-->
+<!--                </androidx.cardview.widget.CardView>-->
+<!--            </GridLayout>-->
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/report_BTN_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Submit"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/sea"
+                android:textColor="@color/white"
+                app:cornerRadius="40dp">
+
+            </com.google.android.material.button.MaterialButton>
+
+
+        </LinearLayout>
+        </LinearLayout>
+
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

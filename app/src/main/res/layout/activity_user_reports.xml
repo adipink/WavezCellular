@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ShowActivity"
+    android:background="@color/water">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:weightSum="16">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/water"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/userReports_LOGO_wavez"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/wave_icon"
+                tools:ignore="MissingConstraints" />
+
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/show_IMG_profile"-->
+            <!--                android:layout_width="50dp"-->
+            <!--                android:layout_height="50dp"-->
+            <!--                android:src="@drawable/ic_user"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                tools:ignore="MissingConstraints" />-->
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/water"
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/userReports_BTN_back"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                app:backgroundTint="@color/water"
+                android:background="@color/transparent"
+                app:icon="@drawable/ic_baseline_arrow_back_24"
+                app:iconTint="@color/white"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/userReports_TXT_nameBeach"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="4"
+                android:gravity="start"
+                android:text="Gils Beach"
+                android:textColor="@color/sand"
+                android:textColorHighlight="@color/white"
+                android:textSize="30sp"
+                android:textStyle="bold"></com.google.android.material.textview.MaterialTextView>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/water"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/userReports_TXT_headline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Reports"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/userReports_RecyclerView_reports"
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="0dp"
+            android:layout_weight="12">
+
+
+        </androidx.recyclerview.widget.RecyclerView>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/userReports_BTN_report"
+            android:layout_width="wrap_content"
+            android:layout_height="75dp"
+            android:text="Create Report"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/sea"
+            android:textColor="@color/white"
+            app:cornerRadius="40dp">
+
+        </com.google.android.material.button.MaterialButton></LinearLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

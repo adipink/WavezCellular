@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/userReports_IMG_profile"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_weight="1"
+        android:layout_marginTop="10dp"
+        app:srcCompat="@drawable/ic_user">
+
+    </com.google.android.material.imageview.ShapeableImageView>
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/userReports_TXT_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_toEndOf="@+id/userReports_IMG_profile"
+        android:text="Nick Name"
+        android:textStyle="bold">
+
+    </com.google.android.material.textview.MaterialTextView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/userReports_TXT_blurb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:text="This beach is the best"
+
+                android:layout_below="@+id/userReports_TXT_username"
+                android:layout_toEndOf="@+id/userReports_IMG_profile">
+
+            </com.google.android.material.textview.MaterialTextView>
+
+    <RatingBar
+        android:id="@+id/userReports_RB_review"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:layout_gravity="top"
+        android:numStars="5"
+        android:rating="5"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:isIndicator="true"
+        android:layout_below="@+id/userReports_TXT_blurb"
+        android:layout_toEndOf="@+id/userReports_IMG_profile" />
+
+<!--    <LinearLayout-->
+<!--        android:id="@+id/userReports_LinearLayout_report"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="150dp"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:weightSum="6.5"-->
+<!--        android:visibility="visible">-->
+
+<!--        <com.google.android.material.imageview.ShapeableImageView-->
+<!--            android:id="@+id/userReports_IMG_profile"-->
+<!--            android:layout_width="25dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_weight="1"-->
+<!--            app:srcCompat="@drawable/ic_user">-->
+
+<!--        </com.google.android.material.imageview.ShapeableImageView>-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="5"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:id="@+id/userReports_TXT_username"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Nick Name"-->
+<!--                android:textStyle="bold">-->
+
+<!--            </com.google.android.material.textview.MaterialTextView>-->
+
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:id="@+id/userReports_TXT_blurb"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:text="This beach is the best">-->
+
+<!--            </com.google.android.material.textview.MaterialTextView>-->
+
+<!--            <RatingBar-->
+<!--                android:id="@+id/userReports_RB_review"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:numStars="5"-->
+<!--                android:rating="5"-->
+<!--                android:scaleX="1"-->
+<!--                android:scaleY="1"-->
+<!--                android:isIndicator="true"></RatingBar>-->
+<!--        </LinearLayout>-->
+
+<!--    </LinearLayout>-->
+
+
+</RelativeLayout>

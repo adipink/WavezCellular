@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ReportActivity"
+    tools:context=".activities.ReportActivityLegacy"
     android:background="@drawable/ic_background">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -181,7 +182,7 @@
                         <ImageView
                             android:layout_width="70dp"
                             android:layout_height="70dp"
-                            android:src="@drawable/ic_jellyfish"></ImageView>
+                            android:src="@drawable/ic_jellyfish" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -190,7 +191,7 @@
                             android:textAlignment="center"
                             android:textColor="@color/blue_text_card"
                             android:textSize="20dp"
-                            android:textStyle="bold"></TextView>
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>

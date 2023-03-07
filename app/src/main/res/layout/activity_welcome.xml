@@ -5,16 +5,53 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.WelcomeActivity"
-    android:background="@drawable/ic_background">
+    android:background="@color/water">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="23dp"
-        android:layout_marginTop="25dp"
-        android:background="@drawable/shapes"
-        android:gravity="center_horizontal"
+        android:layout_margin="10dp"
         android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/water"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/welcome_LOGO_wavez"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/wave_icon"
+                tools:ignore="MissingConstraints" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/welcome_BTN_back"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.5"
+            android:background="@color/transparent"
+            android:textAlignment="viewStart"
+            android:textAllCaps="false"
+            app:backgroundTint="@color/water"
+            app:icon="@drawable/ic_baseline_arrow_back_24"
+            app:iconTint="@color/white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="200dp"
+        android:orientation="vertical">
+
 
 
         <com.google.android.material.textview.MaterialTextView
@@ -23,8 +60,9 @@
             android:layout_height="wrap_content"
             android:shadowColor="@color/black"
             android:text="@string/welcome_title"
-            android:textColor="@color/blue_back"
-            android:textSize="40dp"
+            android:layout_margin="10dp"
+            android:textColor="@color/sea"
+            android:textSize="32sp"
             android:textStyle="bold"></com.google.android.material.textview.MaterialTextView>
 
 
@@ -38,13 +76,15 @@
                 android:id="@+id/welcome_EDT_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:gravity="center"
                 android:hint="@string/welcome_name"
                 android:inputType="textWebEditText"
-                android:textColor="@color/blue_text"
-                android:textColorHint="@color/blue_text"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:textStyle="bold"
-                android:visibility="invisible">
+                android:visibility="invisible"
+                >
 
             </EditText>
 
@@ -52,13 +92,13 @@
             <EditText
                 android:id="@+id/welcome_EDT_email"
                 android:layout_width="match_parent"
+                android:layout_margin="10dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:hint="@string/welcome_email"
                 android:inputType="textWebEmailAddress"
-                android:textColor="@color/blue_text"
-                android:textColorHint="@color/blue_text"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:textStyle="bold"
                 android:visibility="invisible">
 
@@ -68,25 +108,26 @@
                 android:id="@+id/welcome_EDT_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_margin="10dp"
                 android:gravity="center"
                 android:hint="@string/welcome_password"
                 android:inputType="textWebPassword"
-                android:textColor="@color/blue_text"
-                android:textColorHint="@color/blue_text"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:textStyle="bold"
-                android:visibility="invisible"></EditText>
+                android:visibility="invisible"
+                ></EditText>
 
         </LinearLayout>
 
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/welcome_BTN_signIn"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="#1D31CD"
+            android:backgroundTint="@color/sea"
             android:text="@string/welcome_signin"
-            android:textColor="@color/beige_back"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold">
 
@@ -94,11 +135,11 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/welcome_BTN_signUp"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/blue_logo"
+            android:backgroundTint="@color/sea"
             android:text="@string/welcome_signup"
-            android:textColor="@color/beige_back"
+            android:textColor="@color/white"
             android:textSize="20dp"
             android:textStyle="bold">
 
@@ -140,7 +181,8 @@
                     android:textColor="@color/beige_back"
                     android:textSize="10dp"
                     android:textStyle="bold"
-                    android:visibility="invisible">
+                    android:visibility="invisible"
+                    >
 
                 </com.google.android.material.button.MaterialButton>
 
@@ -158,7 +200,8 @@
                 android:textAllCaps="false"
                 android:textSize="10dp"
                 android:textStyle="bold"
-                android:visibility="invisible">
+                android:visibility="invisible"
+                >
 
             </com.google.android.material.button.MaterialButton>
 
@@ -167,19 +210,6 @@
 
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/welcome_BTN_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:backgroundTint="@color/blue_logo"
-            android:text="@string/welcome_back"
-            android:textColor="@color/beige_back"
-            android:textSize="20dp"
-            android:textStyle="bold"
-            android:visibility="invisible">
-
-        </com.google.android.material.button.MaterialButton>
     </LinearLayout>
 
 

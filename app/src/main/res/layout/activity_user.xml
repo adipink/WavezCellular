@@ -5,45 +5,70 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.UserActivity"
-    android:background="@drawable/ic_background">
+    android:background="@color/water">
+
 
     <LinearLayout
+        android:id="@+id/back_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/shapes"
-            android:layout_margin="5dp">
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/water"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/welcome_LOGO_wavez"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/wave_icon"
+                    tools:ignore="MissingConstraints" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/user_BTN_back"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/welcome_back"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_weight="0.5"
+                android:background="@color/transparent"
+                android:textAlignment="viewStart"
                 android:textAllCaps="false"
-                app:cornerRadius="40dp"/>
+                app:backgroundTint="@color/water"
+                app:icon="@drawable/ic_baseline_arrow_back_24"
+                app:iconTint="@color/white" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:background="@drawable/shapes"
             android:gravity="center"
-            android:background="@drawable/shapes">
+            android:orientation="vertical">
+
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/user_TXT_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@color/blue_back"
                 android:gravity="center"
-                android:textSize="30dp">
+                android:textColor="@color/blue_back"
+                android:textSize="30dp"
+                android:textStyle="bold">
 
             </com.google.android.material.textview.MaterialTextView>
 
@@ -51,10 +76,10 @@
                 android:id="@+id/user_TXT_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textColor="@color/blue_back"
                 android:gravity="center"
-                android:textSize="25dp">
+                android:textColor="@color/blue_back"
+                android:textSize="25dp"
+                android:textStyle="bold">
 
             </com.google.android.material.textview.MaterialTextView>
         </LinearLayout>
@@ -62,8 +87,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center">
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/user_BTN_change"
@@ -71,18 +96,23 @@
                 android:layout_height="match_parent"
                 android:text="@string/user_change_name"
                 android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/sea"
                 app:cornerRadius="40dp">
 
             </com.google.android.material.button.MaterialButton>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/user_BTN_signout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/user_signout"
                 android:layout_gravity="center"
+                android:text="@string/user_signout"
                 android:textAllCaps="false"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/sea"
                 app:cornerRadius="40dp">
+
 
             </com.google.android.material.button.MaterialButton>
 

@@ -1,73 +1,50 @@
 package com.example.wavezcellular.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
+import static com.example.wavezcellular.utils.User.getGuest;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RatingBar;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.wavezcellular.R;
+import com.example.wavezcellular.utils.User;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ReportActivity extends AppCompatActivity {
     private TextView report_TXT_nameBeach;
-    private MaterialButton report_BTN_back;
+    private MaterialButton report_BTN_back, report_BTN_submit;
+    private RatingBar report_RB_review;
+    private SeekBar report_SB_density, report_SB_danger, report_SB_wind, report_SB_dog, report_SB_warmth, report_SB_accessible, report_SB_jellyfish, report_SB_hygiene;
+    private EditText report_EditTXT_comment;
     private ImageView report_IMG_profile;
-    private CardView record_CRD_density,report_CRD_wave,record_CRD_jellyfish,record_CRD_temperature,record_CRD_flag,report_CRD_wind;
-
     private Bundle bundle;
     private String BeachName;
-
-
     private FirebaseUser firebaseUserUser;
     private DatabaseReference myRef;
-
-    private AlertDialog alertDialog;
-
-    //density
-    private String density = "";
-    ImageView density_IMG_toocrowded,density_IMG_fewpeople,density_IMG_empty;
-    TextView density_TXT_toocrowded,density_TXT_fewpeople,density_TXT_empty;
-    LinearLayout density_LinLay_toocrowded,density_LinLay_fewpeople,density_LinLay_empty;
-    MaterialButton density_BTN_cancel,density_BTN_ok;
-
-    //flag
-    private String flag;
-    ImageView flag_IMG_red,flag_IMG_white,flag_IMG_black;
-    TextView flag_TXT_red,flag_TXT_white,flag_TXT_black;
-    LinearLayout flag_LinLay_red,flag_LinLay_white,flag_LinLay_black;
-    MaterialButton flag_BTN_cancel,flag_BTN_ok;
-
-    //temperature
-    private String temperature;
-    private MaterialButton temperature_BTN_toohot,temperature_BTN_hot,temperature_BTN_pleasant,
-            temperature_BTN_cold,temperature_BTN_misty,temperature_BTN_windy,
-            temperature_BTN_cancel,temperature_BTN_ok;
+    private String guest;
+    private String userID;
+    private User user;
+    //private String user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_report);
-
-        firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        myRef = FirebaseDatabase.getInstance().getReference("Beaches");
-
+        setContentView(R.layout.activity_report_upgrade);
         bundle = getIntent().getExtras();
         if (bundle != null) {
             BeachName = bundle.getString("BEACH_NAME");
@@ -75,9 +52,11 @@ public class ReportActivity extends AppCompatActivity {
             this.bundle = new Bundle();
             BeachName = "";
         }
+
         findViews();
+        getCurrentUsersData();
         createListeners();
-        report_TXT_nameBeach.setText(""+ BeachName);
+        report_TXT_nameBeach.setText("" + BeachName);
     }
 
     private void createListeners() {
@@ -85,6 +64,7 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ReportActivity.this, HomeActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
             }
@@ -93,335 +73,72 @@ public class ReportActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ReportActivity.this, UserActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
             }
         });
-        record_CRD_density.setOnClickListener(new View.OnClickListener() {
+
+        report_BTN_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createAlertDensity();
-            }
-        });
-        report_CRD_wave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createAlertWave(view);
-            }
-        });
-        record_CRD_jellyfish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createAlertJellyfish(view);
-            }
-        });
-        report_CRD_wind.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createAlertWind(view);
-            }
-        });
-        record_CRD_flag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createAlertFlag();
-            }
-        });
-        record_CRD_temperature.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createAlertTemperature();
+                addSubmiterData();
+                Intent intent = new Intent(ReportActivity.this, ShowActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                finish();
             }
         });
     }
 
-    private void createAlertTemperature() {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View temperatureView = inflater.inflate(R.layout.alert_temperature,null);
-        dialogBuilder.setView(temperatureView);
+    public void getCurrentUsersData() {
+        firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUserUser == null) {
+            String guest = getGuest(bundle);
+            user = new User(guest, "No Email Available");
+        } else {
+            myRef = FirebaseDatabase.getInstance().getReference("Users");
+            userID = firebaseUserUser.getUid();
+            myRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    user = dataSnapshot.getValue(User.class);
+                }
 
-        TextView temperature_TXT_title = (TextView) temperatureView.findViewById(R.id.temperature_TXT_title);
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-        temperature_BTN_toohot = (MaterialButton) temperatureView.findViewById(R.id.temperature_BTN_toohot);
-        temperature_BTN_hot = (MaterialButton) temperatureView.findViewById(R.id.temperature_BTN_hot);
-        temperature_BTN_pleasant = (MaterialButton) temperatureView.findViewById(R.id.temperature_BTN_pleasant);
-        temperature_BTN_cold = (MaterialButton) temperatureView.findViewById(R.id.temperature_BTN_cold);
-        temperature_BTN_misty = (MaterialButton) temperatureView.findViewById(R.id.temperature_BTN_misty);
-        temperature_BTN_windy = (MaterialButton) temperatureView.findViewById(R.id.temperature_BTN_windy);
-        temperature_BTN_cancel = (MaterialButton) temperatureView.findViewById(R.id.temperature_BTN_cancel);
-        temperature_BTN_ok = (MaterialButton) temperatureView.findViewById(R.id.temperature_BTN_ok);
+                }
+            });
+        }
 
-        alertDialog = dialogBuilder.create();
-
-        int width = (int)(getResources().getDisplayMetrics().widthPixels*1);
-        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.50);
-
-        alertDialog.show();
-        alertDialog.getWindow().setLayout(width, height);
-        createTemperatureListeners();
     }
 
-    private void createTemperatureListeners() {
-        temperature_BTN_toohot.setOnClickListener(new View.OnClickListener() {
+    public void addSubmiterData() {
+        String username = user.getName();
+        myRef = FirebaseDatabase.getInstance().getReference("Beaches").child(BeachName).child("Reports").child(username);
+        myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
-                temperature = "The beach is too hot";
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                myRef.child("review").setValue(report_RB_review.getRating());
+                myRef.child("density").setValue(report_SB_density.getProgress() / 20);
+                myRef.child("jellyfish").setValue(report_SB_jellyfish.getProgress() / 20);
+                myRef.child("accessible").setValue(report_SB_accessible.getProgress() / 20);
+                myRef.child("danger").setValue(report_SB_danger.getProgress() / 20);
+                myRef.child("dog").setValue(report_SB_dog.getProgress() / 20);
+                myRef.child("hygiene").setValue(report_SB_hygiene.getProgress() / 20);
+                myRef.child("warmth").setValue(report_SB_warmth.getProgress() / 20);
+                myRef.child("wind").setValue(report_SB_wind.getProgress() / 20);
+                myRef.child("comment").setValue(report_EditTXT_comment.getText().toString());
             }
-        });
-        temperature_BTN_hot.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onClick(View view) {
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                temperature = "The beach is hot";
-            }
-        });
-        temperature_BTN_pleasant.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                temperature = "The beach is pleasant";
-            }
-        });
-        temperature_BTN_cold.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                temperature = "The beach is cold";
-            }
-        });
-        temperature_BTN_misty.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                temperature = "The beach is misty";
-            }
-        });
-        temperature_BTN_windy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                temperature = "The beach is windy";
-            }
-        });
-
-        temperature_BTN_ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myRef.child(BeachName).child("temperature").setValue(temperature);
-                alertDialog.dismiss();
-            }
-        });
-        temperature_BTN_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
-    }
-
-    private void createAlertFlag() {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View flagView = inflater.inflate(R.layout.alert_flag,null);
-        dialogBuilder.setView(flagView);
-
-        flag_IMG_red = (ImageView) flagView.findViewById(R.id.flag_IMG_red);
-        flag_IMG_white = (ImageView) flagView.findViewById(R.id.flag_IMG_white);
-        flag_IMG_black = (ImageView) flagView.findViewById(R.id.flag_IMG_black);
-
-        flag_TXT_red = (TextView) flagView.findViewById(R.id.flag_TXT_red);
-        flag_TXT_white = (TextView) flagView.findViewById(R.id.flag_TXT_white);
-        flag_TXT_black = (TextView) flagView.findViewById(R.id.flag_TXT_black);
-
-        flag_LinLay_red = (LinearLayout) flagView.findViewById(R.id.flag_LinLay_red);
-        flag_LinLay_white = (LinearLayout) flagView.findViewById(R.id.flag_LinLay_white);
-        flag_LinLay_black = (LinearLayout) flagView.findViewById(R.id.flag_LinLay_black);
-
-        flag_BTN_ok = (MaterialButton) flagView.findViewById(R.id.flag_BTN_ok);
-        flag_BTN_cancel = (MaterialButton) flagView.findViewById(R.id.flag_BTN_cancel);
-
-        alertDialog = dialogBuilder.create();
-
-        int width = (int)(getResources().getDisplayMetrics().widthPixels*1);
-        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.50);
-
-        alertDialog.show();
-        alertDialog.getWindow().setLayout(width, height);
-        createFlagListeners();
-    }
-
-    private void createFlagListeners() {
-        flag_IMG_red.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                flag_LinLay_red.setBackgroundColor(Color.parseColor("#597af2"));
-                flag_LinLay_white.setBackgroundColor(Color.parseColor("#F7ECDE"));
-                flag_LinLay_black.setBackgroundColor(Color.parseColor("#F7ECDE"));
-                flag = "The flag on the beach is red";
-            }
-        });
-        flag_IMG_white.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                flag_LinLay_red.setBackgroundColor(Color.parseColor("#F7ECDE"));
-                flag_LinLay_white.setBackgroundColor(Color.parseColor("#597af2"));
-                flag_LinLay_black.setBackgroundColor(Color.parseColor("#F7ECDE"));
-                flag = "The flag on the beach is white";
-            }
-        });
-        flag_IMG_black.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                flag_LinLay_red.setBackgroundColor(Color.parseColor("#F7ECDE"));
-                flag_LinLay_white.setBackgroundColor(Color.parseColor("#F7ECDE"));
-                flag_LinLay_black.setBackgroundColor(Color.parseColor("#597af2"));
-                flag = "The flag on the beach is black";
-            }
-        });
-
-        myRef.child(BeachName).child("flag").setValue(flag);
-
-        flag_BTN_ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myRef.child(BeachName).child("flag").setValue(flag);
-                alertDialog.dismiss();
-            }
-        });
-        flag_BTN_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
-            }
-        });
-    }
-
-    private void createAlertWind(View view) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
-        alert.setTitle("Wind's Report: ");
-        final EditText input = new EditText(view.getContext());
-        alert.setView(input);
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                myRef.child(BeachName).child("wind").setValue(input.getText().toString());
-            }
-        });
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-        alert.show();
-    }
-
-    private void createAlertJellyfish(View view) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
-        alert.setTitle("Jellyfish's Report: ");
-        final EditText input = new EditText(view.getContext());
-        alert.setView(input);
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                myRef.child(BeachName).child("jellyfish").setValue(input.getText().toString());
-            }
-        });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-        alert.show();
-    }
-
-    private void createAlertWave(View view) {
-        AlertDialog.Builder alert = new AlertDialog.Builder(view.getContext());
-        alert.setTitle("Wave's Report: ");
-        final EditText input = new EditText(view.getContext());
-        alert.setView(input);
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                myRef.child(BeachName).child("wave").setValue(input.getText().toString());
-            }
-        });
-
-        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Canceled.
-            }
-        });
-        alert.show();
-    }
-
-
-    //density
-    private void createAlertDensity() {
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        View densityView = inflater.inflate(R.layout.alert_density,null);
-        dialogBuilder.setView(densityView);
-        density_IMG_toocrowded = (ImageView) densityView.findViewById(R.id.density_IMG_toocrowded);
-        density_IMG_fewpeople = (ImageView) densityView.findViewById(R.id.density_IMG_fewpeople);
-        density_IMG_empty = (ImageView) densityView.findViewById(R.id.density_IMG_empty);
-
-        density_TXT_toocrowded = (TextView) densityView.findViewById(R.id.density_TXT_toocrowded);
-        density_TXT_fewpeople = (TextView) densityView.findViewById(R.id.density_TXT_fewpeople);
-        density_TXT_empty = (TextView) densityView.findViewById(R.id.density_TXT_empty);
-
-        density_LinLay_toocrowded = (LinearLayout) densityView.findViewById(R.id.density_LinLay_toocrowded);
-        density_LinLay_fewpeople = (LinearLayout) densityView.findViewById(R.id.density_LinLay_fewpeople);
-        density_LinLay_empty = (LinearLayout) densityView.findViewById(R.id.density_LinLay_empty);
-
-        density_BTN_ok = (MaterialButton) densityView.findViewById(R.id.density_BTN_ok);
-        density_BTN_cancel = (MaterialButton) densityView.findViewById(R.id.density_BTN_cancel);
-
-        alertDialog = dialogBuilder.create();
-
-        int width = (int)(getResources().getDisplayMetrics().widthPixels*1);
-        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.50);
-
-        alertDialog.show();
-        alertDialog.getWindow().setLayout(width, height);
-        createDensityListeners();
-    }
-
-    //density
-    private void createDensityListeners() {
-       density_IMG_toocrowded.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               density_LinLay_toocrowded.setBackgroundColor(Color.parseColor("#597af2"));
-               density_LinLay_fewpeople.setBackgroundColor(Color.parseColor("#F7ECDE"));
-               density_LinLay_empty.setBackgroundColor(Color.parseColor("#F7ECDE"));
-               density = "The beach is too Crowded";
-           }
-       });
-        density_IMG_fewpeople.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               density_LinLay_toocrowded.setBackgroundColor(Color.parseColor("#F7ECDE"));
-               density_LinLay_fewpeople.setBackgroundColor(Color.parseColor("#597af2"));
-               density_LinLay_empty.setBackgroundColor(Color.parseColor("#F7ECDE"));
-               density = "There are few people on the beach";
-           }
-       });
-        density_IMG_empty.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               density_LinLay_toocrowded.setBackgroundColor(Color.parseColor("#F7ECDE"));
-               density_LinLay_fewpeople.setBackgroundColor(Color.parseColor("#F7ECDE"));
-               density_LinLay_empty.setBackgroundColor(Color.parseColor("#597af2"));
-               density = "The beach is empty";
-           }
-       });
-
-        density_BTN_ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                myRef.child(BeachName).child("density").setValue(density);
-                alertDialog.dismiss();
-            }
-        });
-        density_BTN_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                alertDialog.dismiss();
             }
         });
     }
@@ -430,13 +147,17 @@ public class ReportActivity extends AppCompatActivity {
     private void findViews() {
         report_BTN_back = findViewById(R.id.report_BTN_back);
         report_IMG_profile = findViewById(R.id.report_IMG_profile);
-        record_CRD_density = findViewById(R.id.record_CRD_density);
-        report_CRD_wave = findViewById(R.id.report_CRD_wave);
-        record_CRD_jellyfish = findViewById(R.id.record_CRD_jellyfish);
-        record_CRD_temperature = findViewById(R.id.record_CRD_temperature);
-        record_CRD_flag = findViewById(R.id.record_CRD_flag);
-        report_CRD_wind = findViewById(R.id.report_CRD_wind);
         report_TXT_nameBeach = findViewById(R.id.report_TXT_nameBeach);
-
+        report_RB_review = findViewById(R.id.report_RB_review);
+        report_SB_density = findViewById(R.id.report_SB_density);
+        report_SB_jellyfish = findViewById(R.id.report_SB_jellyfish);
+        report_SB_accessible = findViewById(R.id.report_SB_accessible);
+        report_SB_danger = findViewById(R.id.report_SB_danger);
+        report_SB_dog = findViewById(R.id.report_SB_dog);
+        report_SB_hygiene = findViewById(R.id.report_SB_Hygiene);
+        report_SB_warmth = findViewById(R.id.report_SB_warmth);
+        report_SB_wind = findViewById(R.id.report_SB_wind);
+        report_BTN_submit = findViewById(R.id.report_BTN_submit);
+        report_EditTXT_comment = findViewById(R.id.report_EditTXT_comment);
     }
 }

@@ -1,15 +1,16 @@
 package com.example.wavezcellular.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import static com.example.wavezcellular.utils.User.getGuest;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wavezcellular.R;
 import com.example.wavezcellular.utils.User;
@@ -25,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UserActivity extends AppCompatActivity {
 
-    private MaterialButton user_BTN_back,user_BTN_change,user_BTN_signout;
+    private MaterialButton user_BTN_back, user_BTN_change, user_BTN_signout;
     private MaterialTextView user_TXT_name, user_TXT_email;
 
     //fireBase
@@ -33,13 +34,17 @@ public class UserActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     private String userID;
     private User user;
-
+    private Bundle bundle;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+        bundle = getIntent().getExtras();
+        if (bundle == null) {
+            bundle = new Bundle();
+        }
         findViews();
         createListener();
         getCurrentUsersData();
@@ -51,6 +56,7 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(UserActivity.this, HomeActivity.class);
+                intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
             }
@@ -92,41 +98,46 @@ public class UserActivity extends AppCompatActivity {
         });
     }
 
-    public void saveData(){
-        FirebaseDatabase.getInstance().getReference("Users")
-                .child(userID)
-                .setValue(user);
-        setUserInfo();
+    public void saveData() {
+        if (!user.getName().contains("guest")) {
+            FirebaseDatabase.getInstance().getReference("Users")
+                    .child(userID)
+                    .setValue(user);
+            setUserInfo();
+        }
     }
-
-
-
 
 
     public void getCurrentUsersData() {
         firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        myRef = FirebaseDatabase.getInstance().getReference("Users");
-        userID = firebaseUserUser.getUid();
-        myRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                user = dataSnapshot.getValue(User.class);
-                setUserInfo();
+        if (firebaseUserUser == null) {
+            String guest = getGuest(bundle);
+            user = new User(guest, "No Email Available");
+            setUserInfo();
+        } else {
+            myRef = FirebaseDatabase.getInstance().getReference("Users");
+            userID = firebaseUserUser.getUid();
+            myRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // This method is called once with the initial value and again
+                    // whenever data at this location is updated.
+                    user = dataSnapshot.getValue(User.class);
+                    setUserInfo();
+                }
 
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        }
 
-            }
-        });
     }
 
     private void setUserInfo() {
-        user_TXT_name.setText(user.getName().toString());
-        user_TXT_email.setText(user.getEmail().toString());
+        user_TXT_name.setText(user.getName());
+        user_TXT_email.setText(user.getEmail());
     }
 
     private void findViews() {

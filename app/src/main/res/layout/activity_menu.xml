@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:weightSum="6"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            >
+            <View
+                android:layout_width="220dp"
+                android:layout_height="180dp"
+                android:background="@drawable/logo_3"
+                android:layout_gravity="center"
+                android:layout_margin="50dp"></View>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="4"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:weightSum="6"
+            >
+            <View
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/wave"
+                android:layout_weight="1">
+            </View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:background="@color/water"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:id="@+id/welcome_TXT_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="We found the best beach for you:"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    >
+
+                </TextView>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/menu_BTN_beachFound"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_gravity="center_horizontal"
+                    android:textAllCaps="false"
+                    android:text=" "
+                    app:backgroundTint="@color/white"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/menu_TXT_Distance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Beach is   km from you"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    >
+
+                </TextView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/menu_BTN_beachdetails"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_gravity="center_horizontal"
+                    android:textAllCaps="false"
+                    android:text="View Beach details"
+                    app:backgroundTint="@color/sea"
+                    android:textColor="@color/white"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/menu_BTN_searchBeach"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_gravity="center_horizontal"
+                    android:textAllCaps="false"
+                    android:text="Search Another"
+                    app:backgroundTint="@color/sea"
+                    app:icon="@drawable/looking_glass"
+                    android:textColor="@color/white"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:background="@color/water"
+                android:orientation="vertical"
+                >
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/menu_BTN_signIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Sign In/Sign Up"
+                    android:layout_margin="50dp"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    app:backgroundTint="@color/sea"
+                    />
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+</RelativeLayout>

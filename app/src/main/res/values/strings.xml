@@ -24,6 +24,26 @@
         <item>Yud Alef beach Ashdod</item>
         <item>Gils beach Ashdod</item>
         <item>Separate beach Ashdod</item>
+        <item>Jerusalem beach Tel Aviv</item>
+        <item>Bugrashov beach Tel Aviv</item>
+        <item>Hilton beach Tel Aviv</item>
+        <item>Metzitzim beach Tel Aviv</item>
+        <item>Metzitzim beach Tel Aviv</item>Charles Clore Beach
+        <item>Charles Clore Beach Tel Aviv</item>
+    </string-array>
+
+    <string-array name="categories">
+        <item>distance from the beach</item>
+        <item>name of the Beach</item>
+        <item>review of the beach</item>
+        <item>warmth rating</item>
+        <item>wind rating</item>
+        <item>danger at sea rating</item>
+        <item>accessible rating</item>
+        <item>density rating</item>
+        <item>hygiene rating</item>
+        <item>jellyfish rating</item>
+        <item>dog friendly rating</item>
     </string-array>
 
     <string name="user_change_name">Change Name</string>

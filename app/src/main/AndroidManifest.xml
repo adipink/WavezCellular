@@ -22,10 +22,17 @@
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
         <activity
+            android:name=".activities.ReportActivityLegacy"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+        <activity
             android:name=".activities.ReportActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
-
+        <activity
+            android:name=".activities.UserReportsActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
         <activity
             android:name=".activities.UserActivity"
             android:exported="true"
@@ -36,6 +43,14 @@
             android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
         <activity
             android:name=".activities.HomeActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+        <activity
+            android:name=".activities.HomeActivityLegacy"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+        <activity
+            android:name=".activities.MenuActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
         <activity
