@@ -337,8 +337,11 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     private void createSpinner() {
-        adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        //adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        adapter = ArrayAdapter.createFromResource(this, R.array.categories, R.layout.spinner_list);
+        adapter.setDropDownViewResource(R.layout.spinner_list);
         home_SP_listOfBeaches.setAdapter(adapter);
         home_SP_listOfBeaches.setOnItemSelectedListener(this);
 

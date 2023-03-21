@@ -20,7 +20,7 @@
             <View
                 android:layout_width="220dp"
                 android:layout_height="180dp"
-                android:background="@drawable/logo_3"
+                android:background="@drawable/logo5"
                 android:layout_gravity="center"
                 android:layout_margin="50dp"></View>
         </LinearLayout>
