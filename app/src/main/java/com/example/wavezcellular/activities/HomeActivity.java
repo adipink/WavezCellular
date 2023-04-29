@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -64,6 +65,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private Spinner home_SP_listOfBeaches;
     private ArrayAdapter<CharSequence> adapter;
     private FusedLocationProviderClient fusedLocationProviderClient;
+    private boolean isGuest;
     //firebase
     private FirebaseUser firebaseUserUser;
 
@@ -100,10 +102,21 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         });
         setContentView(R.layout.activity_home_upgrade);
         findViews();
-        firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (firebaseUserUser == null) {
+
+        String name = bundle.getString("UserName");
+        if(name.contains("Guest")){
+            isGuest = true;
+            //Toast.makeText(ShowActivity.this, "guest", Toast.LENGTH_SHORT).show();
+        }else{
+            isGuest = false;
+            //Toast.makeText(ShowActivity.this, "user", Toast.LENGTH_SHORT).show();
+            firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
+        }
+       /*
+        if (firebaseUserUser.getDisplayName().equals("")) {
             getGuest(bundle);
         }
+        */
         myRef = FirebaseDatabase.getInstance().getReference("Beaches");
         //setItemsForDemo();
         createSpinner();
@@ -142,9 +155,9 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         home_RecyclerView_beachData.setAdapter(new BeachHomeAdapter(getApplicationContext(), list, this ));
     }
 
-
     @Override
     public void onBeachClicked(String entry) {
+        Log.d("myTag", "Im here");
         replaceActivity(entry);
     }
 
@@ -170,7 +183,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 //                        }
 //                        list.add(beach);
 //                    }
-//
 //                    Comparator<Beach> valueComparator = new Comparator<Beach>() {
 //                        @Override
 //                        public int compare(Beach o1, Beach o2) {
@@ -182,17 +194,12 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 //                            else
 //                                return 0;
 //                        }
-//
 //                    };
-//
-//
 //                    Collections.sort(list, valueComparator);
 //                    createBeaches(list);
 //            }
-//
 //            @Override
 //            public void onCancelled(@NonNull DatabaseError error) {
-//
 //            }
 //        });
 //    }
@@ -221,7 +228,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                     ArrayList<String> sortnameList = new ArrayList<>();
                     for (Map.Entry<String, HashMap<String, HashMap<String, Object>>> set :
                             beaches.entrySet()) {
-
                         String beachName = (String) set.getValue().get("Data").get("name");
                         nameList.add(beachName);
                     }
@@ -259,7 +265,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                     createBeaches(list);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -285,12 +290,19 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         home_RecyclerView_beachData.setAdapter(new UserReportAdapter(getApplicationContext(), list));
     }
 
-
     private void createListener() {
-        home_IMG_profile.setOnClickListener(view -> replaceActivity("Profile"));
+        home_IMG_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isGuest){
+                    replaceActivity("Welcome");
+                }else{
+                    replaceActivity("Profile");
+                }
+            }
+        });
         home_BTN_switch.setOnClickListener(view -> switchMode());
         home_BTN_name.setOnClickListener(view -> getBeaches("name"));
-
     }
 
     private void switchMode() {
@@ -305,7 +317,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
 
         getBeaches(value);
     }
-
 
     private void replaceActivity(String mode) {
         Intent intent;
@@ -327,27 +338,26 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             startActivity(intent);
             finish();
         } else {
-            intent = new Intent(this, ShowActivity.class);
+            /*intent = new Intent(this, ShowActivity.class);
             bundle.putString("BEACH_NAME", beachName);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();*/
+            intent = new Intent(this, WelcomeActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
         }
-
     }
 
     private void createSpinner() {
         //adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
         //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
         adapter = ArrayAdapter.createFromResource(this, R.array.categories, R.layout.spinner_list);
         adapter.setDropDownViewResource(R.layout.spinner_list);
         home_SP_listOfBeaches.setAdapter(adapter);
         home_SP_listOfBeaches.setOnItemSelectedListener(this);
-
-
     }
-
 
     private void findViews() {
         home_IMG_profile = findViewById(R.id.home_IMG_profile);
@@ -369,10 +379,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         getBeaches(word);
     }
 
-
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
-
     }
 
     private void checkPermission() {
@@ -392,13 +400,11 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         } else {
             hasPremission = true;
         }
-
     }
 
     private double getDistance(LatLng location1, LatLng location2) {
         return (SphericalUtil.computeDistanceBetween(location1, location2) / 1000);
     }
-
 
     public List<String> findSimilarStrings(ArrayList<String> strings, String target) {
         List<String> similarStrings = new ArrayList<>();
@@ -418,7 +424,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 similarStrings.add(s);
             }
         }
-
         return similarStrings;
     }
 
@@ -433,8 +438,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         return score;
     }
-
-
 
 //    public void setItemsForDemo() {
 //        adapter = ArrayAdapter.createFromResource(this,R.array.beaches, android.R.layout.simple_spinner_item);

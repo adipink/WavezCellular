@@ -110,7 +110,7 @@ public class UserActivity extends AppCompatActivity {
 
     public void getCurrentUsersData() {
         firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (firebaseUserUser == null) {
+        if (firebaseUserUser.getDisplayName().equals("")) {
             String guest = getGuest(bundle);
             user = new User(guest, "No Email Available");
             setUserInfo();

@@ -60,12 +60,13 @@ public class MenuActivity extends AppCompatActivity {
     private final int firstTime = 1;
     private FirebaseUser firebaseUserUser;
     private DatabaseReference myRef;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkPermission();
         setContentView(R.layout.activity_menu);
+        checkPermission();
         findViews();
         setListeners();
         bundle = getIntent().getExtras();
@@ -74,9 +75,7 @@ public class MenuActivity extends AppCompatActivity {
         }
 
         firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (firebaseUserUser == null) {
-            getGuest(bundle);
-        }
+
         myRef = FirebaseDatabase.getInstance().getReference("Beaches");
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -144,6 +143,15 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
+    private void getUser(){
+        if (firebaseUserUser == null) {
+            userName = getGuest(bundle);
+        }else{
+            userName = firebaseUserUser.getDisplayName();
+        }
+        bundle.putString("UserName",userName);
+    }
+
     private void setListeners() {
         menu_BTN_beachdetails.setOnClickListener(view -> {
             replaceActivityShow();
@@ -157,6 +165,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void replaceActivitySearch() {
+        getUser();
         Intent intent;
         intent = new Intent(this, HomeActivity.class);
         intent.putExtras(bundle);
@@ -166,10 +175,16 @@ public class MenuActivity extends AppCompatActivity {
 
 
     private void replaceActivityShow() {
+        getUser();
         Intent intent;
         bundle.putString("BEACH_NAME", menu_BTN_beachFound.getText().toString());
         intent = new Intent(this, ShowActivity.class);
         intent.putExtras(bundle);
+        startActivity(intent);
+        finish();
+    }
+    private void replaceActivityWelcome() {
+        Intent intent = new Intent(this, WelcomeActivity.class);
         startActivity(intent);
         finish();
     }
@@ -182,11 +197,7 @@ public class MenuActivity extends AppCompatActivity {
         menu_TXT_Distance = findViewById(R.id.menu_TXT_Distance);
     }
 
-    private void replaceActivityWelcome() {
-        Intent intent = new Intent(this, WelcomeActivity.class);
-        startActivity(intent);
-        finish();
-    }
+
 
     private void checkPermission() {
         int fineLocationStatus = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
