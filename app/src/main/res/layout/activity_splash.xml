@@ -22,34 +22,36 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginBottom="380dp"
-        android:background="@drawable/ic_wave__10_"
+        android:layout_height="500dp"
+        android:layout_marginBottom="675dp"
+        android:background="@drawable/wave21"
+        android:rotation="180"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </ImageView>
-
-
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginTop="350dp"
-        android:background="@drawable/ic_wave__9_"
+        android:layout_height="500dp"
+        android:layout_marginTop="670dp"
+        android:background="@drawable/wave20"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.473">
     </ImageView>
+
+
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:src="@drawable/logo2"
+        android:src="@drawable/logo5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

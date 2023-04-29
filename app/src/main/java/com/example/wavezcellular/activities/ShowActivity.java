@@ -4,14 +4,18 @@ import static com.example.wavezcellular.utils.User.getGuest;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.wavezcellular.R;
@@ -55,14 +59,16 @@ public class ShowActivity extends AppCompatActivity {
     private Context context;
     private double x;
     private double y;
+    private String user;
+    private boolean isGuest;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.context = this.getApplicationContext();
         setContentView(R.layout.activity_show);
+        this.context = this.getApplicationContext();
         bundle = getIntent().getExtras();
         if (bundle != null) {
             BeachName = bundle.getString("BEACH_NAME");
@@ -72,10 +78,26 @@ public class ShowActivity extends AppCompatActivity {
             this.bundle = new Bundle();
             BeachName = "";
         }
-        firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (firebaseUserUser == null) {
-            getGuest(bundle);
+
+        String name = bundle.getString("UserName");
+        if(name.contains("Guest")){
+            isGuest = true;
+            //Toast.makeText(ShowActivity.this, "guest", Toast.LENGTH_SHORT).show();
+            user = name;
+        }else{
+            isGuest = false;
+            //Toast.makeText(ShowActivity.this, "user", Toast.LENGTH_SHORT).show();
+            firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
+            user = firebaseUserUser.getDisplayName();
         }
+       // firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
+        // String name = firebaseUserUser.getDisplayName();
+
+        /*if (name.equals("")) {
+            user = getGuest(bundle);
+        }else{
+            user = firebaseUserUser.getDisplayName();
+        }*/
         myRef = FirebaseDatabase.getInstance().getReference("Beaches");
 
         findViews();
@@ -175,8 +197,6 @@ public class ShowActivity extends AppCompatActivity {
                     show_TXT_hygiene.setText("Hygiene: Very Dirty");
                 else
                     show_TXT_hygiene.setText("Hygiene: OK");
-
-
             }
 
             @Override
@@ -196,14 +216,16 @@ public class ShowActivity extends AppCompatActivity {
         show_IMG_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                replaceActivity("Profile");
+                if(isGuest){
+                    replaceActivity("Welcome");
+                }else{
+                    replaceActivity("Profile");
+                }
             }
         });
         show_BTN_reports.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                replaceActivity("Report");
-            }
+            public void onClick(View view) {clickOnReports(); }
         });
         show_BTN_waze.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,6 +239,31 @@ public class ShowActivity extends AppCompatActivity {
                 openMoovitDirections(latitude, longitude, BeachName);
             }
         });
+    }
+
+    private void clickOnReports(){
+        if(isGuest){ // user who are not registered cannot report
+            AlertDialog.Builder builder = new AlertDialog.Builder(ShowActivity.this);
+            builder.setTitle("Do you want to add report to this beach ?");
+            builder.setMessage("You need to register or login first");
+            builder.setCancelable(false);
+            builder.setPositiveButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+                // If user click no then dialog box is canceled.
+                dialog.cancel();
+            });
+            builder.setNegativeButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
+                // When the user click yes button then app will take it to the register/login page
+                replaceActivity("Welcome");
+
+            });
+
+            // Create the Alert dialog
+            AlertDialog alertDialog = builder.create();
+            // Show the Alert Dialog box
+            alertDialog.show();
+        }else{
+            replaceActivity("Report");
+        }
     }
 
     private void clickOnWaze() {
@@ -266,6 +313,12 @@ public class ShowActivity extends AppCompatActivity {
             finish();
         }
 
+        if (mode.equals("Welcome")) {
+            intent = new Intent(this, WelcomeActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        }
     }
 
 

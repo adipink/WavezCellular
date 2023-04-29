@@ -33,17 +33,17 @@
     </string-array>
 
     <string-array name="categories">
-        <item>distance from the beach</item>
-        <item>name of the Beach</item>
-        <item>review of the beach</item>
-        <item>warmth rating</item>
-        <item>wind rating</item>
-        <item>danger at sea rating</item>
-        <item>accessible rating</item>
-        <item>density rating</item>
-        <item>hygiene rating</item>
-        <item>jellyfish rating</item>
-        <item>dog friendly rating</item>
+        <item>Distance from the beach</item>
+        <item>Name of the Beach</item>
+        <item>Review of the beach</item>
+        <item>Warmth rating</item>
+        <item>Wind rating</item>
+        <item>Danger at sea rating</item>
+        <item>Accessible rating</item>
+        <item>Density rating</item>
+        <item>Hygiene rating</item>
+        <item>Jellyfish rating</item>
+        <item>Dog friendly rating</item>
     </string-array>
 
     <string name="user_change_name">Change Name</string>
@@ -56,7 +56,7 @@
     <string name="report_temperature">Temperature</string>
     <string name="report_wind">Wind</string>
     <string name="report_cancel">Cancel</string>
-    <string name="report_ok">Ok Report</string>
+    <string name="report_ok">OK Report</string>
 
 
 </resources>

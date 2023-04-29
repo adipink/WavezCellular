@@ -100,7 +100,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     Toast.makeText(WelcomeActivity.this, "success", Toast.LENGTH_LONG).show();
                     replaceActivityEnter();
                 } else {
-                    Toast.makeText(WelcomeActivity.this, "Failed to login! please cheak your credentials", Toast.LENGTH_LONG).show();
+                    Toast.makeText(WelcomeActivity.this, "Failed to login! please check your credentials", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -256,6 +256,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void replaceActivityEnter() {
         Intent intent = new Intent(this, HomeActivity.class);
+        //String user = mAuth.getCurrentUser().getDisplayName();
         startActivity(intent);
         finish();
     }

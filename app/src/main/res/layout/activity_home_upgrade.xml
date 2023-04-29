@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.HomeActivity"
-    android:background="@color/water">
+    android:background="@color/water"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +15,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+       >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -53,26 +55,29 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.8"
-            android:background="@drawable/shapes"
-            android:orientation="horizontal">
+            android:background="#202323"
+            android:orientation="horizontal"
+            android:layout_marginHorizontal="10dp">
 
 
             <Spinner
                 android:id="@+id/home_SP_listOfBeaches"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="2">
+                android:layout_weight="2"
+                android:layout_centerInParent="true"
+                >
 
             </Spinner>
 
-            <ImageView
+           <!-- <ImageView
                 android:id="@+id/home_IMG_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="7"
                 android:src="@drawable/ic_search">
 
-            </ImageView>
+            </ImageView>-->
 
         </LinearLayout>
 
@@ -81,8 +86,11 @@
             android:id="@+id/home_TXT_parameterTXT"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Beaches near you (5 best results)"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="Beaches near you"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -105,7 +113,8 @@
                 android:textColor="@color/white"
                 android:textSize="25sp"
                 android:visibility="visible"
-                app:backgroundTint="@color/sea" />
+                app:backgroundTint="@color/sea"
+                android:layout_marginHorizontal="10dp"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/home_TXT_result"
@@ -126,8 +135,8 @@
             android:id="@+id/home_RecyclerView_rec"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="6">
-
+            android:layout_weight="6"
+            android:layout_marginHorizontal="10dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
