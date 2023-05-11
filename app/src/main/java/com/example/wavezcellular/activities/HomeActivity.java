@@ -58,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     //private MaterialButton home_BTN_show;
     private MaterialButton home_BTN_switch;
     private MaterialButton home_BTN_name;
+    private MaterialButton home_BTN_back;
     private MaterialButton[] home_BTN_searches;
     private MaterialButton[] home_BTN_results;
     private RecyclerView home_RecyclerView_beachData;
@@ -301,6 +302,12 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             }
         });
+        home_BTN_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceActivity("Menu");
+            }
+        });
         home_BTN_switch.setOnClickListener(view -> switchMode());
         home_BTN_name.setOnClickListener(view -> getBeaches("name"));
     }
@@ -337,7 +344,12 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
-        } else {
+        } else if (mode.equals("Menu")) {
+            intent = new Intent(this, MenuActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        }else {
             /*intent = new Intent(this, ShowActivity.class);
             bundle.putString("BEACH_NAME", beachName);
             intent.putExtras(bundle);
@@ -363,6 +375,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         home_IMG_profile = findViewById(R.id.home_IMG_profile);
 //        home_BTN_show = findViewById(R.id.home_BTN_show);
         home_BTN_switch = findViewById(R.id.home_BTN_switch);
+        home_BTN_back = findViewById(R.id.home_BTN_back);
         home_SP_listOfBeaches = findViewById(R.id.home_SP_listOfBeaches);
         home_RecyclerView_beachData = findViewById(R.id.home_RecyclerView_rec);
         home_EditTXT_byName = findViewById(R.id.home_EditTXT_byName);

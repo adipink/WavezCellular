@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.wavezcellular.R;
+import com.example.wavezcellular.utils.ActivityManager;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
@@ -38,23 +39,19 @@ import java.util.Map;
 
 public class MenuActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    public static String distance = "";
-    public static String maxBeach = "";
+
+    private ActivityManager activityManager;
+    public static String distance = "", maxBeach = "";
     private final double DEF_REVIEW_VAL = 3.0;
-    private MaterialButton menu_BTN_beachFound;
-    private MaterialButton menu_BTN_beachdetails;
-    private MaterialButton menu_BTN_searchBeach;
-    private MaterialButton menu_BTN_signIn;
-    private ArrayAdapter<CharSequence> adapter;
+    private MaterialButton menu_BTN_beachFound, menu_BTN_beachdetails, menu_BTN_searchBeach, menu_BTN_signIn;
     private TextView menu_TXT_Distance;
+    private ArrayAdapter<CharSequence> adapter;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private boolean hasPremission;
-    private double longi = 0;
-    private double lati = 0;
+    private double longi = 0, lati = 0;
     private Bundle bundle = null;
     private final int open = 0;
-    private Double x;
-    private Double y;
+    private Double x, y;
     private String guest;
     private LocationManager locationManager;
     private final int firstTime = 1;
@@ -66,6 +63,7 @@ public class MenuActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        activityManager = new ActivityManager(this);
         checkPermission();
         findViews();
         setListeners();
@@ -73,7 +71,6 @@ public class MenuActivity extends AppCompatActivity {
         if (bundle == null) {
             bundle = new Bundle();
         }
-
         firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
 
         myRef = FirebaseDatabase.getInstance().getReference("Beaches");
@@ -166,11 +163,12 @@ public class MenuActivity extends AppCompatActivity {
 
     private void replaceActivitySearch() {
         getUser();
-        Intent intent;
-        intent = new Intent(this, HomeActivity.class);
-        intent.putExtras(bundle);
-        startActivity(intent);
-        finish();
+       // Intent intent;
+        //intent = new Intent(this, HomeActivity.class);
+        //intent.putExtras(bundle);
+        //startActivity(intent);
+        activityManager.startActivity(HomeActivity.class, bundle);
+        //finish();
     }
 
 

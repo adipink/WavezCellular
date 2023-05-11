@@ -90,7 +90,9 @@
                     android:textAllCaps="false"
                     android:text="View Beach details"
                     app:backgroundTint="@color/sea"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    app:cornerRadius="40dp"/>
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/menu_BTN_searchBeach"
                     android:layout_width="300dp"
@@ -101,7 +103,8 @@
                     android:text="Search Another"
                     app:backgroundTint="@color/sea"
                     app:icon="@drawable/looking_glass"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    app:cornerRadius="40dp"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -122,10 +125,8 @@
                     android:textColor="@color/white"
                     android:textSize="18sp"
                     app:backgroundTint="@color/sea"
+                    app:cornerRadius="40dp"
                     />
-
-
-
             </LinearLayout>
         </LinearLayout>
 

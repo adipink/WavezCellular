@@ -268,7 +268,6 @@ public class ShowActivity extends AppCompatActivity {
 
     private void clickOnWaze() {
         try {
-
             String url = "https://waze.com/ul?q=" + BeachName + "&ll=" + latitude + "," + longitude + "&navigate=yes" + BeachName.replace(" ", "%20");
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
