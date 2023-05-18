@@ -1,6 +1,6 @@
 package com.example.wavezcellular.utils;
 
-import android.os.Bundle;
+
 
 public class User {
     private String name;
@@ -31,13 +31,8 @@ public class User {
         this.email = email;
     }
 
-    public static String getGuest(Bundle bundle) {
-        Object guest = bundle.get("guest");
-        if(guest == null) {
+    public static String generateGuest() {
             long id = System.currentTimeMillis();
-            guest = "Guest" + id;
-            bundle.putString("guest", (String) guest);
-        }
-        return (String) guest;
+        return "Guest" + id;
     }
 }

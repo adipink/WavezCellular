@@ -32,7 +32,7 @@ public class ReportActivityLegacy extends AppCompatActivity {
     private String BeachName;
 
 
-    private FirebaseUser firebaseUserUser;
+    private FirebaseUser firebaseUser;
     private DatabaseReference myRef;
 
     private AlertDialog alertDialog;
@@ -62,7 +62,7 @@ public class ReportActivityLegacy extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
 
-        firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         myRef = FirebaseDatabase.getInstance().getReference("Beaches");
 
         bundle = getIntent().getExtras();

@@ -1,12 +1,9 @@
 package com.example.wavezcellular.activities;
 
-import static com.example.wavezcellular.utils.User.getGuest;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,7 +35,7 @@ public class UserReportsActivity extends AppCompatActivity {
     private TextView userReports_TXT_headline;
     private Bundle bundle;
     private String BeachName;
-    private FirebaseUser firebaseUserUser;
+    private FirebaseUser firebaseUser;
     private DatabaseReference myRef;
     private String user;
 
@@ -54,11 +51,7 @@ public class UserReportsActivity extends AppCompatActivity {
             this.bundle = new Bundle();
             BeachName = "";
         }
-        firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (firebaseUserUser == null) {
-            user = getGuest(bundle);
-        } else
-            user = firebaseUserUser.getDisplayName();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         myRef = FirebaseDatabase.getInstance().getReference("Beaches").child(BeachName).child("Reports");
 
         findViews();

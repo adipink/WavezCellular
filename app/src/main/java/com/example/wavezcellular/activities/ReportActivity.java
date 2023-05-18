@@ -1,6 +1,6 @@
 package com.example.wavezcellular.activities;
 
-import static com.example.wavezcellular.utils.User.getGuest;
+import static com.example.wavezcellular.utils.User.generateGuest;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,7 +34,7 @@ public class ReportActivity extends AppCompatActivity {
     private ImageView report_IMG_profile;
     private Bundle bundle;
     private String BeachName;
-    private FirebaseUser firebaseUserUser;
+    private FirebaseUser firebaseUser;
     private DatabaseReference myRef;
     private String guest;
     private String userID;
@@ -92,13 +92,13 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     public void getCurrentUsersData() {
-        firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (firebaseUserUser == null) {
-            String guest = getGuest(bundle);
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser == null) {
+            String guest = generateGuest();
             user = new User(guest, "No Email Available");
         } else {
             myRef = FirebaseDatabase.getInstance().getReference("Users");
-            userID = firebaseUserUser.getUid();
+            userID = firebaseUser.getUid();
             myRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
