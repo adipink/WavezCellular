@@ -31,7 +31,7 @@ public class ShowActivityLegacy extends AppCompatActivity {
     private String BeachName;
 
 
-    private FirebaseUser firebaseUserUser;
+    private FirebaseUser firebaseUser;
     private DatabaseReference myRef;
 
     @Override
@@ -39,7 +39,7 @@ public class ShowActivityLegacy extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show);
 
-        firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         myRef = FirebaseDatabase.getInstance().getReference("Beaches");
 
         bundle = getIntent().getExtras();

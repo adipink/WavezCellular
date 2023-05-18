@@ -86,7 +86,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_weight="4.5"
                 android:gravity="center"
-                android:text="Gils Beach"
+                android:text=""
                 android:textColor="@color/sand"
                 android:textColorHighlight="@color/white"
                 android:textSize="30sp"
@@ -382,8 +382,8 @@
                 android:text="Go To Reports"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                app:backgroundTint="@color/blue_text_card"
-                app:cornerRadius="15dp"
+                app:backgroundTint="@color/sea"
+                app:cornerRadius="40dp"
 
                 />
         </LinearLayout>

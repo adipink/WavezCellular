@@ -18,7 +18,12 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -28,13 +33,16 @@ public class WelcomeActivity extends AppCompatActivity {
     private EditText welcome_EDT_name, welcome_EDT_email, welcome_EDT_password;
     private MaterialButton welcome_BTN_signIn, welcome_BTN_signUp, welcome_BTN_forgotPassword, welcome_BTN_enterApp, welcome_BTN_back,
             welcome_BTN_registerApp;
-
+    private Bundle bundle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         mAuth = FirebaseAuth.getInstance();
-
+        bundle = getIntent().getExtras();
+        if (bundle == null) {
+            bundle = new Bundle();
+        }
         findViews();
         createListeners();
     }
@@ -96,14 +104,36 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    //redirect to rest of application
-                    Toast.makeText(WelcomeActivity.this, "success", Toast.LENGTH_LONG).show();
-                    replaceActivityEnter();
+                    // Sign-in was successful
+
+                    // Fetch the user's data from the Realtime Database
+                    String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+                    databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                Toast.makeText(WelcomeActivity.this, "Welcome " + dataSnapshot.child("name").getValue(String.class), Toast.LENGTH_LONG).show();
+                                replaceActivityEnter();
+                            } else {
+                                // User data doesn't exist in the database
+                                Toast.makeText(WelcomeActivity.this, "Failed to fetch user data", Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            // Handle any errors that occur during the retrieval
+                            Toast.makeText(WelcomeActivity.this, "Error fetching user data: " + databaseError.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
                 } else {
+                    // Sign-in failed
                     Toast.makeText(WelcomeActivity.this, "Failed to login! please check your credentials", Toast.LENGTH_LONG).show();
                 }
             }
         });
+
     }
 
     private void signUpUser() {
@@ -143,8 +173,6 @@ public class WelcomeActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             User user = new User(name, email);
-
-
                             FirebaseDatabase.getInstance().getReference("Users")
                                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                                     .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -256,7 +284,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void replaceActivityEnter() {
         Intent intent = new Intent(this, HomeActivity.class);
-        //String user = mAuth.getCurrentUser().getDisplayName();
+        intent.putExtras(bundle);
         startActivity(intent);
         finish();
     }
@@ -266,4 +294,5 @@ public class WelcomeActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 }

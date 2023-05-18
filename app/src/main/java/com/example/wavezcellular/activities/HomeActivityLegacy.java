@@ -55,7 +55,7 @@ public class HomeActivityLegacy extends AppCompatActivity implements OnMapReadyC
     private ArrayAdapter<CharSequence> adapter;
 
     //firebase
-    private FirebaseUser firebaseUserUser;
+    private FirebaseUser firebaseUser;
     private DatabaseReference myRef;
 
     //map
@@ -82,7 +82,7 @@ public class HomeActivityLegacy extends AppCompatActivity implements OnMapReadyC
         findViews();
 
 
-        firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         myRef = FirebaseDatabase.getInstance().getReference("Beaches");
 
         loadMapFragment();

@@ -1,7 +1,6 @@
 package com.example.wavezcellular.activities;
 
 import static com.example.wavezcellular.activities.ShowActivity.getDouble;
-import static com.example.wavezcellular.utils.User.getGuest;
 
 import android.Manifest;
 import android.content.Intent;
@@ -26,6 +25,7 @@ import com.example.wavezcellular.Interfaces.BeachListener;
 import com.example.wavezcellular.R;
 import com.example.wavezcellular.adapters_holders.BeachHomeAdapter;
 import com.example.wavezcellular.adapters_holders.UserReportAdapter;
+import com.example.wavezcellular.utils.User;
 import com.example.wavezcellular.utils.UserReport;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -58,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     //private MaterialButton home_BTN_show;
     private MaterialButton home_BTN_switch;
     private MaterialButton home_BTN_name;
+    private MaterialButton home_BTN_back;
     private MaterialButton[] home_BTN_searches;
     private MaterialButton[] home_BTN_results;
     private RecyclerView home_RecyclerView_beachData;
@@ -103,20 +104,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_home_upgrade);
         findViews();
 
-        String name = bundle.getString("UserName");
-        if(name.contains("Guest")){
-            isGuest = true;
-            //Toast.makeText(ShowActivity.this, "guest", Toast.LENGTH_SHORT).show();
-        }else{
-            isGuest = false;
-            //Toast.makeText(ShowActivity.this, "user", Toast.LENGTH_SHORT).show();
-            firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        }
-       /*
-        if (firebaseUserUser.getDisplayName().equals("")) {
-            getGuest(bundle);
-        }
-        */
+        firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
+        isGuest = firebaseUserUser == null;
         myRef = FirebaseDatabase.getInstance().getReference("Beaches");
         //setItemsForDemo();
         createSpinner();
@@ -301,6 +290,12 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
             }
         });
+        home_BTN_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceActivity("Menu");
+            }
+        });
         home_BTN_switch.setOnClickListener(view -> switchMode());
         home_BTN_name.setOnClickListener(view -> getBeaches("name"));
     }
@@ -337,7 +332,12 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
-        } else {
+        } else if (mode.equals("Menu")) {
+            intent = new Intent(this, MenuActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        }else {
             /*intent = new Intent(this, ShowActivity.class);
             bundle.putString("BEACH_NAME", beachName);
             intent.putExtras(bundle);
@@ -363,6 +363,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         home_IMG_profile = findViewById(R.id.home_IMG_profile);
 //        home_BTN_show = findViewById(R.id.home_BTN_show);
         home_BTN_switch = findViewById(R.id.home_BTN_switch);
+        home_BTN_back = findViewById(R.id.home_BTN_back);
         home_SP_listOfBeaches = findViewById(R.id.home_SP_listOfBeaches);
         home_RecyclerView_beachData = findViewById(R.id.home_RecyclerView_rec);
         home_EditTXT_byName = findViewById(R.id.home_EditTXT_byName);
@@ -437,6 +438,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }
         return score;
+    }
+
+    public String getName(String displayName){
+        return displayName;
     }
 
 //    public void setItemsForDemo() {
