@@ -3,7 +3,6 @@ package com.example.wavezcellular.activities;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.VideoView;
@@ -32,16 +31,13 @@ public class VideoTransitionActivity extends AppCompatActivity {
         videoView.setVideoURI(videoUri);
 
         // Set loop behavior for the video
-        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                if (hasPermission) {
-                    // Video playback finished and permission is granted, start the next activity
-                    startNextActivity();
-                } else {
-                    // Request location permission
-                    requestLocationPermission();
-                }
+        videoView.setOnCompletionListener(mp -> {
+            if (hasPermission) {
+                // Video playback finished and permission is granted, start the next activity
+                startNextActivity();
+            } else {
+                // Request location permission
+                requestLocationPermission();
             }
         });
 

@@ -3,6 +3,8 @@ package com.example.wavezcellular.utils;
 
 
 public class User {
+    public static final double DEFAULTLAT = 32.120998;
+    public static final double DEFAULTLON = 34.805779;
     private String name;
     private String email;
 

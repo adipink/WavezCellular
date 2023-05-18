@@ -100,8 +100,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                    userLat = 0;
-                    userLon = 0;
+                userLat = User.DEFAULTLAT;
+                userLon = User.DEFAULTLON;
             }
         });
         setContentView(R.layout.activity_home_upgrade);

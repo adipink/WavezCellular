@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.wavezcellular.R;
 import com.example.wavezcellular.utils.ActivityManager;
+import com.example.wavezcellular.utils.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
@@ -38,6 +39,7 @@ import java.util.Map;
 
 public class MenuActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+
 
     private ActivityManager activityManager;
     public static String distance = "", closestBeach = "";
@@ -87,9 +89,9 @@ public class MenuActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                closestBeach = "Location Services not working";
-                userLat = 0;
-                userLon = 0;
+                closestBeach = "Location Services not working using default location";
+                userLat = User.DEFAULTLAT;
+                userLon = User.DEFAULTLON;
             }
         });
     }

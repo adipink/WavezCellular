@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import com.example.wavezcellular.R;
+import com.example.wavezcellular.utils.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
@@ -97,8 +98,8 @@ public class ShowActivity extends AppCompatActivity{
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                    userLat = 0;
-                    userLon = 0;
+                userLat = User.DEFAULTLAT;
+                userLon = User.DEFAULTLON;
             }
         });
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
