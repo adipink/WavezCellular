@@ -1,7 +1,8 @@
 package com.example.wavezcellular.activities;
 
 import static com.example.wavezcellular.activities.ShowActivity.getDouble;
-import static com.example.wavezcellular.utils.User.getGuest;
+import static com.example.wavezcellular.utils.User.generateGuest;
+import static com.example.wavezcellular.utils.User.getUserName;
 
 import android.Manifest;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import com.example.wavezcellular.Interfaces.BeachListener;
 import com.example.wavezcellular.R;
 import com.example.wavezcellular.adapters_holders.BeachHomeAdapter;
 import com.example.wavezcellular.adapters_holders.UserReportAdapter;
+import com.example.wavezcellular.utils.User;
 import com.example.wavezcellular.utils.UserReport;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -104,20 +106,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_home_upgrade);
         findViews();
 
-        String name = bundle.getString("UserName");
-        if(name.contains("Guest")){
-            isGuest = true;
-            //Toast.makeText(ShowActivity.this, "guest", Toast.LENGTH_SHORT).show();
-        }else{
-            isGuest = false;
-            //Toast.makeText(ShowActivity.this, "user", Toast.LENGTH_SHORT).show();
-            firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        }
-       /*
-        if (firebaseUserUser.getDisplayName().equals("")) {
-            getGuest(bundle);
-        }
-        */
+        firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
+        isGuest = firebaseUserUser == null;
         myRef = FirebaseDatabase.getInstance().getReference("Beaches");
         //setItemsForDemo();
         createSpinner();
@@ -450,6 +440,10 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }
         return score;
+    }
+
+    public String getName(String displayName){
+        return displayName;
     }
 
 //    public void setItemsForDemo() {

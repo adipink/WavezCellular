@@ -1,6 +1,5 @@
 package com.example.wavezcellular.activities;
 
-import static com.example.wavezcellular.utils.User.getGuest;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -8,11 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -39,7 +36,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class ShowActivity extends AppCompatActivity {
+public class ShowActivity extends AppCompatActivity{
 
     public static final String TEMPKEY = "1253b9205d89a2d8816242c6d731489f";
     private final double HIGH_VALUE = 3.5;
@@ -54,7 +51,7 @@ public class ShowActivity extends AppCompatActivity {
     private String BeachName;
     private double latitude;
     private double longitude;
-    private FirebaseUser firebaseUserUser;
+    private FirebaseUser firebaseUser;
     private DatabaseReference myRef;
     private Context context;
     private double x;
@@ -78,26 +75,9 @@ public class ShowActivity extends AppCompatActivity {
             this.bundle = new Bundle();
             BeachName = "";
         }
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        String name = bundle.getString("UserName");
-        if(name.contains("Guest")){
-            isGuest = true;
-            //Toast.makeText(ShowActivity.this, "guest", Toast.LENGTH_SHORT).show();
-            user = name;
-        }else{
-            isGuest = false;
-            //Toast.makeText(ShowActivity.this, "user", Toast.LENGTH_SHORT).show();
-            firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-            user = firebaseUserUser.getDisplayName();
-        }
-       // firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        // String name = firebaseUserUser.getDisplayName();
-
-        /*if (name.equals("")) {
-            user = getGuest(bundle);
-        }else{
-            user = firebaseUserUser.getDisplayName();
-        }*/
+        isGuest = firebaseUser == null;
         myRef = FirebaseDatabase.getInstance().getReference("Beaches");
 
         findViews();
@@ -244,7 +224,7 @@ public class ShowActivity extends AppCompatActivity {
     private void clickOnReports(){
         if(isGuest){ // user who are not registered cannot report
             AlertDialog.Builder builder = new AlertDialog.Builder(ShowActivity.this);
-            builder.setTitle("Do you want to add report to this beach ?");
+            builder.setTitle("Do you want to add a report to this beach ?");
             builder.setMessage("You need to register or login first");
             builder.setCancelable(false);
             builder.setPositiveButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {

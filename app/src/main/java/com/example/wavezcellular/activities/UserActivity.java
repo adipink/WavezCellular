@@ -1,6 +1,6 @@
 package com.example.wavezcellular.activities;
 
-import static com.example.wavezcellular.utils.User.getGuest;
+import static com.example.wavezcellular.utils.User.generateGuest;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -30,7 +30,7 @@ public class UserActivity extends AppCompatActivity {
     private MaterialTextView user_TXT_name, user_TXT_email;
 
     //fireBase
-    private FirebaseUser firebaseUserUser;
+    private FirebaseUser firebaseUser;
     private DatabaseReference myRef;
     private String userID;
     private User user;
@@ -109,14 +109,14 @@ public class UserActivity extends AppCompatActivity {
 
 
     public void getCurrentUsersData() {
-        firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (firebaseUserUser.getDisplayName().equals("")) {
-            String guest = getGuest(bundle);
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (firebaseUser == null) {
+            String guest = generateGuest();
             user = new User(guest, "No Email Available");
             setUserInfo();
         } else {
             myRef = FirebaseDatabase.getInstance().getReference("Users");
-            userID = firebaseUserUser.getUid();
+            userID = firebaseUser.getUid();
             myRef.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {

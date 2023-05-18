@@ -1,7 +1,6 @@
 package com.example.wavezcellular.activities;
 
 import static com.example.wavezcellular.activities.ShowActivity.getDouble;
-import static com.example.wavezcellular.utils.User.getGuest;
 
 import android.Manifest;
 import android.content.Intent;
@@ -55,7 +54,7 @@ public class MenuActivity extends AppCompatActivity {
     private String guest;
     private LocationManager locationManager;
     private final int firstTime = 1;
-    private FirebaseUser firebaseUserUser;
+    private FirebaseUser firebaseUser;
     private DatabaseReference myRef;
     private String userName;
 
@@ -71,7 +70,7 @@ public class MenuActivity extends AppCompatActivity {
         if (bundle == null) {
             bundle = new Bundle();
         }
-        firebaseUserUser = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         myRef = FirebaseDatabase.getInstance().getReference("Beaches");
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -140,15 +139,6 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
-    private void getUser(){
-        if (firebaseUserUser == null) {
-            userName = getGuest(bundle);
-        }else{
-            userName = firebaseUserUser.getDisplayName();
-        }
-        bundle.putString("UserName",userName);
-    }
-
     private void setListeners() {
         menu_BTN_beachdetails.setOnClickListener(view -> {
             replaceActivityShow();
@@ -162,7 +152,6 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void replaceActivitySearch() {
-        getUser();
        // Intent intent;
         //intent = new Intent(this, HomeActivity.class);
         //intent.putExtras(bundle);
@@ -173,7 +162,6 @@ public class MenuActivity extends AppCompatActivity {
 
 
     private void replaceActivityShow() {
-        getUser();
         Intent intent;
         bundle.putString("BEACH_NAME", menu_BTN_beachFound.getText().toString());
         intent = new Intent(this, ShowActivity.class);
