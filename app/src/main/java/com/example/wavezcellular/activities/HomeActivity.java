@@ -1,8 +1,6 @@
 package com.example.wavezcellular.activities;
 
 import static com.example.wavezcellular.activities.ShowActivity.getDouble;
-import static com.example.wavezcellular.utils.User.generateGuest;
-import static com.example.wavezcellular.utils.User.getUserName;
 
 import android.Manifest;
 import android.content.Intent;
