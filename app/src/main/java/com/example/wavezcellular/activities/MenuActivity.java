@@ -40,14 +40,14 @@ public class MenuActivity extends AppCompatActivity {
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
 
     private ActivityManager activityManager;
-    public static String distance = "", maxBeach = "";
+    public static String distance = "", closestBeach = "";
     private final double DEF_REVIEW_VAL = 3.0;
     private MaterialButton menu_BTN_beachFound, menu_BTN_beachdetails, menu_BTN_searchBeach, menu_BTN_signIn;
     private TextView menu_TXT_Distance;
     private ArrayAdapter<CharSequence> adapter;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private boolean hasPremission;
-    private double longi = 0, lati = 0;
+    private double userLon = 0, userLat = 0;
     private Bundle bundle = null;
     private final int open = 0;
     private Double x, y;
@@ -78,19 +78,18 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                    lati = location.getLatitude();
-                    longi = location.getLongitude();
-                    findNearestBeach(lati, longi);
-                    bundle.putDouble("x", lati);
-                    bundle.putDouble("y", longi);
+                    userLat = location.getLatitude();
+                    userLon = location.getLongitude();
+                    findNearestBeach(userLat, userLon);
 
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                maxBeach = "Location Services not working";
-                distance = "" + 0 + "," + 0;
+                closestBeach = "Location Services not working";
+                userLat = 0;
+                userLon = 0;
             }
         });
     }
@@ -118,7 +117,7 @@ public class MenuActivity extends AppCompatActivity {
                     currDistance = getDistance(user, location);
                     if (currDistance < minDistance) {
                         minDistance = currDistance;
-                        maxBeach = beachName;
+                        closestBeach = beachName;
                     }
 
                 }
@@ -126,7 +125,7 @@ public class MenuActivity extends AppCompatActivity {
                 distance = "Beach is " + format + "km from you";
 
                 menu_TXT_Distance.setText(distance);
-                menu_BTN_beachFound.setText(maxBeach);
+                menu_BTN_beachFound.setText(closestBeach);
 
             }
 
