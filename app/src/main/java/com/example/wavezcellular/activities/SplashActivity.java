@@ -1,6 +1,7 @@
 package com.example.wavezcellular.activities;
 
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Path;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.wavezcellular.R;
 
+@SuppressLint("CustomSplashScreen")
 public class SplashActivity extends AppCompatActivity {
     private final int ANIM_DURATION = 2000;
     private final int VIEW_SHOW_DELAY = 5000;
@@ -90,7 +92,7 @@ public class SplashActivity extends AppCompatActivity {
      * Starts the MenuActivity and finishes this activity.
      */
     private void replaceActivity() {
-        Intent intent = new Intent(this, MenuActivity.class);
+        Intent intent = new Intent(this, VideoTransitionActivity.class);
         startActivity(intent);
         finish();
     }

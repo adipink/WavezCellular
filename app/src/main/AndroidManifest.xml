@@ -54,6 +54,10 @@
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
         <activity
+            android:name=".activities.VideoTransitionActivity"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+        <activity
             android:name=".activities.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.MaterialComponents.NoActionBar">
