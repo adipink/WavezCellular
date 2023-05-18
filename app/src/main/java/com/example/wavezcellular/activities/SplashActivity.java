@@ -79,13 +79,10 @@ public class SplashActivity extends AppCompatActivity {
         animator.setDuration(ANIM_DURATION);
         animator.start();
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                animator.cancel();
-                player.stop();
-                replaceActivity();
-            }
+        handler.postDelayed(() -> {
+            animator.cancel();
+            player.stop();
+            replaceActivity();
         }, VIEW_SHOW_DELAY);
     }
     /**

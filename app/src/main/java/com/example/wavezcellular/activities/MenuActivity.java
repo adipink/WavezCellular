@@ -38,8 +38,7 @@ import java.util.Map;
 
 
 public class MenuActivity extends AppCompatActivity {
-    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-
+    private static final int MAXDISTANCE = 100000;
 
     private ActivityManager activityManager;
     public static String distance = "", closestBeach = "";
@@ -51,11 +50,6 @@ public class MenuActivity extends AppCompatActivity {
     private boolean hasPremission;
     private double userLon = 0, userLat = 0;
     private Bundle bundle = null;
-    private final int open = 0;
-    private Double x, y;
-    private String guest;
-    private LocationManager locationManager;
-    private final int firstTime = 1;
     private FirebaseUser firebaseUser;
     private DatabaseReference myRef;
     private String userName;
@@ -104,8 +98,8 @@ public class MenuActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                double minDistance = 100000;
-                double currDistance = 100000;
+                double minDistance = MAXDISTANCE;
+                double currDistance;
                 HashMap<String, HashMap<String, HashMap<String, Object>>> beaches = (HashMap) dataSnapshot.getValue(Object.class);
                 System.out.println("Stop");
                 for (Map.Entry<String, HashMap<String, HashMap<String, Object>>> set : beaches.entrySet()) {
@@ -153,12 +147,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void replaceActivitySearch() {
-       // Intent intent;
-        //intent = new Intent(this, HomeActivity.class);
-        //intent.putExtras(bundle);
-        //startActivity(intent);
         activityManager.startActivity(HomeActivity.class, bundle);
-        //finish();
     }
 
 
