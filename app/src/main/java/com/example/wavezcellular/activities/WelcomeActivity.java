@@ -31,7 +31,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private MaterialTextView welcome_TXT_title;
     private EditText welcome_EDT_name, welcome_EDT_email, welcome_EDT_password;
-    private MaterialButton welcome_BTN_signIn, welcome_BTN_signUp, welcome_BTN_forgotPassword, welcome_BTN_enterApp, welcome_BTN_back,
+    private MaterialButton /*welcome_BTN_signIn, welcome_BTN_signUp,*/ welcome_BTN_forgotPassword, welcome_BTN_enterApp, welcome_BTN_back,
             welcome_BTN_registerApp;
     private Bundle bundle;
     @Override
@@ -40,10 +40,16 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
         mAuth = FirebaseAuth.getInstance();
         bundle = getIntent().getExtras();
-        if (bundle == null) {
+        String state ;
+        if (bundle != null) {
+            state = bundle.getString("LOGIN_STATE");
+
+        }else{
             bundle = new Bundle();
+            state = "login";
         }
         findViews();
+        createEnterMode(state);
         createListeners();
     }
 
@@ -201,7 +207,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 resetPassword();
             }
         });
-        welcome_BTN_signIn.setOnClickListener(new View.OnClickListener() {
+        /*welcome_BTN_signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 createEnterMode("signin");
@@ -213,7 +219,7 @@ public class WelcomeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 createEnterMode("signup");
             }
-        });
+        });*/
 
         welcome_BTN_back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,8 +245,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
 
     private void openingMode() {
-        welcome_BTN_signIn.setVisibility(View.VISIBLE);
-        welcome_BTN_signUp.setVisibility(View.VISIBLE);
+       // welcome_BTN_signIn.setVisibility(View.VISIBLE);
+       // welcome_BTN_signUp.setVisibility(View.VISIBLE);
         welcome_EDT_email.setVisibility(View.INVISIBLE);
         welcome_EDT_password.setVisibility(View.INVISIBLE);
         welcome_BTN_enterApp.setVisibility(View.INVISIBLE);
@@ -251,13 +257,13 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     private void createEnterMode(String mode) {
-        welcome_BTN_signIn.setVisibility(View.INVISIBLE);
-        welcome_BTN_signUp.setVisibility(View.INVISIBLE);
+       // welcome_BTN_signIn.setVisibility(View.INVISIBLE);
+       // welcome_BTN_signUp.setVisibility(View.INVISIBLE);
         welcome_EDT_email.setVisibility(View.VISIBLE);
         welcome_EDT_password.setVisibility(View.VISIBLE);
         welcome_BTN_enterApp.setVisibility(View.VISIBLE);
         welcome_BTN_back.setVisibility(View.VISIBLE);
-        if (mode.equals("signin")) { //sign in
+        if (mode.equals("login")) { //sign in/login
             welcome_BTN_forgotPassword.setVisibility(View.VISIBLE);
             welcome_BTN_registerApp.setVisibility(View.INVISIBLE);
             welcome_BTN_enterApp.setVisibility(View.VISIBLE);
@@ -274,8 +280,8 @@ public class WelcomeActivity extends AppCompatActivity {
         welcome_EDT_name = findViewById(R.id.welcome_EDT_name);
         welcome_EDT_email = findViewById(R.id.welcome_EDT_email);
         welcome_EDT_password = findViewById(R.id.welcome_EDT_password);
-        welcome_BTN_signIn = findViewById(R.id.welcome_BTN_signIn);
-        welcome_BTN_signUp = findViewById(R.id.welcome_BTN_signUp);
+       // welcome_BTN_signIn = findViewById(R.id.welcome_BTN_signIn);
+       // welcome_BTN_signUp = findViewById(R.id.welcome_BTN_signUp);
         welcome_BTN_forgotPassword = findViewById(R.id.welcome_BTN_forgotPassword);
         welcome_BTN_enterApp = findViewById(R.id.welcome_BTN_enterApp);
         welcome_BTN_back = findViewById(R.id.welcome_BTN_back);

@@ -20,7 +20,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="10dp"
             android:layout_weight="1"
             android:background="@color/water"
             android:orientation="horizontal">
@@ -43,7 +43,7 @@
                 android:scaleX=".5"
                 android:scaleY=".5"
                 android:isIndicator="true"
-                android:progressTint="@color/white"
+                android:progressTint="@color/sand"
                 app:layout_constraintStart_toEndOf="@+id/welcome_LOGO_wavez"
                 app:layout_constraintEnd_toStartOf="@+id/show_IMG_profile"
                 tools:ignore="MissingConstraints"></RatingBar>
@@ -87,7 +87,7 @@
                 android:layout_weight="4.5"
                 android:gravity="center"
                 android:text=""
-                android:textColor="@color/sand"
+                android:textColor="@color/beach_name"
                 android:textColorHighlight="@color/white"
                 android:textSize="30sp"
                 android:textStyle="bold"></com.google.android.material.textview.MaterialTextView>
@@ -177,7 +177,7 @@
                     android:text="Density:"
                     android:textAllCaps="false"
                     app:backgroundTint="@color/white"
-                    app:cornerRadius="15dp"
+                    app:cornerRadius="10dp"
                     app:icon="@drawable/ic_empty"
                     app:iconSize="25dp"
                     app:iconTint="@null" />
@@ -203,12 +203,14 @@
                     android:text="Warmth:"
                     android:textAllCaps="false"
                     app:backgroundTint="@color/white"
-                    app:cornerRadius="15dp"
+                    app:cornerRadius="10dp"
                     app:icon="@drawable/ic_temperatures"
                     app:iconGravity="textTop"
                     app:iconSize="40dp"
                     app:iconTint="@null" />
-                <com.google.android.material.button.MaterialButton
+
+
+                <!--<com.google.android.material.button.MaterialButton
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="10 - 20 cm"
@@ -220,7 +222,7 @@
                     app:iconSize="40dp"
                     app:iconTint="@null"
                     android:visibility="invisible"
-                    />
+                    />-->
 
 
 
@@ -231,16 +233,13 @@
                     android:layout_weight="1.5"
                     android:text="Jellyfish:"
                     android:layout_margin="5dp"
-
                     android:textAllCaps="false"
                     app:backgroundTint="@color/white"
-                    app:cornerRadius="15dp"
+                    app:cornerRadius="10dp"
                     app:icon="@drawable/ic_jellyfish"
                     app:iconGravity="textTop"
                     app:iconSize="40dp"
-                    app:iconTint="@null"
-
-                    />
+                    app:iconTint="@null" />
 
             </LinearLayout>
 
@@ -261,14 +260,11 @@
                     android:text="Wind:"
                     android:textAllCaps="false"
                     app:backgroundTint="@color/white"
-                    app:cornerRadius="15dp"
+                    app:cornerRadius="10dp"
                     app:icon="@drawable/ic_wind"
                     app:iconGravity="textTop"
                     app:iconSize="40dp"
-                    app:iconTint="@null"
-
-
-                    />
+                    app:iconTint="@null" />
 
 
                 <com.google.android.material.button.MaterialButton
@@ -280,7 +276,7 @@
                     android:layout_margin="5dp"
                     android:textAllCaps="false"
                     app:backgroundTint="@color/white"
-                    app:cornerRadius="15dp"
+                    app:cornerRadius="10dp"
                     app:icon="@drawable/ic_redflag"
                     app:iconGravity="textTop"
                     app:iconSize="40dp"
@@ -307,7 +303,7 @@
                     android:text="Accessibility: not accessible"
                     android:textAllCaps="false"
                     app:backgroundTint="@color/white"
-                    app:cornerRadius="15dp"
+                    app:cornerRadius="10dp"
                     app:icon="@drawable/accessible"
                     app:iconGravity="textTop"
                     app:iconSize="40dp"
@@ -326,7 +322,7 @@
                     android:layout_margin="5dp"
                     android:textAllCaps="false"
                     app:backgroundTint="@color/white"
-                    app:cornerRadius="15dp"
+                    app:cornerRadius="10dp"
                     app:icon="@drawable/toilet"
                     app:iconGravity="textTop"
                     app:iconSize="40dp"
@@ -347,26 +343,16 @@
                     android:id="@+id/show_TXT_dogs"
                     android:layout_width="0dp"
                     android:layout_height="120dp"
-
                     android:layout_weight="1"
                     android:text="Pet-Friendly:"
                     android:textAllCaps="false"
                     app:backgroundTint="@color/white"
-                    app:cornerRadius="15dp"
+                    app:cornerRadius="10dp"
                     app:icon="@drawable/dog"
                     app:iconGravity="textTop"
                     app:iconSize="40dp"
-                    app:iconTint="@null"
-
-                    />
-
-
+                    app:iconTint="@null" />
             </LinearLayout>
-
-
-
-
-
         </LinearLayout>
         </ScrollView>
         <LinearLayout
@@ -376,9 +362,9 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/show_BTN_reports"
-                android:layout_width="match_parent"
+                android:layout_width="170dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginStart="115dp"
                 android:text="Go To Reports"
                 android:textAllCaps="false"
                 android:textColor="@color/white"

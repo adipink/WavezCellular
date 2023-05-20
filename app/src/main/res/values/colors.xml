@@ -17,5 +17,8 @@
     <color name="water">#3fdaff</color>
     <color name="sea">#1D75C6</color>
     <color name="sand">#FFC978</color>
+    <color name="beach_name">#FFD89C</color>
+    <color name="spinner_text">#007988</color>
+    <color name="layout_back">#80DAFFFF</color>
     <color name="transparent">#00000000</color>
 </resources>

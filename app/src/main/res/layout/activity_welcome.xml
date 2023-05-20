@@ -119,7 +119,7 @@
         </LinearLayout>
 
 
-        <com.google.android.material.button.MaterialButton
+        <!--<com.google.android.material.button.MaterialButton
             android:id="@+id/welcome_BTN_signIn"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
@@ -149,7 +149,7 @@
             android:visibility="visible">
 
         </com.google.android.material.button.MaterialButton>
-
+-->
         <LinearLayout
             android:id="@+id/welcome_LinLay_finalAction"
             android:layout_width="wrap_content"
