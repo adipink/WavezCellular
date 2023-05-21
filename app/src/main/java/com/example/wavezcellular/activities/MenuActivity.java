@@ -43,7 +43,7 @@ public class MenuActivity extends AppCompatActivity {
     private ActivityManager activityManager;
     public static String distance = "", closestBeach = "";
     private final double DEF_REVIEW_VAL = 3.0;
-    private MaterialButton menu_BTN_beachFound, menu_BTN_beachdetails, menu_BTN_searchBeach, menu_BTN_signIn;
+    private MaterialButton menu_BTN_beachFound, menu_BTN_beachdetails, menu_BTN_searchBeach, menu_BTN_signIn,menu_BTN_signUp;
     private TextView menu_TXT_Distance;
     private ArrayAdapter<CharSequence> adapter;
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -142,7 +142,10 @@ public class MenuActivity extends AppCompatActivity {
             replaceActivitySearch();
         });
         menu_BTN_signIn.setOnClickListener(view -> {
-            replaceActivityWelcome();
+            replaceActivityWelcome("login");
+        });
+        menu_BTN_signUp.setOnClickListener(view -> {
+            replaceActivityWelcome("signup");
         });
     }
 
@@ -159,8 +162,11 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-    private void replaceActivityWelcome() {
-        Intent intent = new Intent(this, WelcomeActivity.class);
+    private void replaceActivityWelcome(String state) {
+        Intent intent;
+        bundle.putString("LOGIN_STATE", state);
+        intent = new Intent(this, WelcomeActivity.class);
+        intent.putExtras(bundle);
         startActivity(intent);
         finish();
     }
@@ -170,6 +176,7 @@ public class MenuActivity extends AppCompatActivity {
         menu_BTN_beachdetails = findViewById(R.id.menu_BTN_beachdetails);
         menu_BTN_searchBeach = findViewById(R.id.menu_BTN_searchBeach);
         menu_BTN_signIn = findViewById(R.id.menu_BTN_signIn);
+        menu_BTN_signUp = findViewById(R.id.menu_BTN_signUp);
         menu_TXT_Distance = findViewById(R.id.menu_TXT_Distance);
     }
 

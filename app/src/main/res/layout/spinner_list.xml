@@ -7,6 +7,7 @@
     android:padding="10dp"
     app:circularflow_radiusInDP="10dp"
     android:text="true"
-    android:textColor="@color/blue_card"
+    android:textColor="@color/spinner_text"
+    android:background="@color/transparent"
     android:textSize="20sp"
-    android:textStyle="bold|italic" />
+    android:textStyle="bold" />
