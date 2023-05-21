@@ -1,9 +1,11 @@
 package com.example.wavezcellular.activities;
 
+import android.Manifest;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Path;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.example.wavezcellular.R;
@@ -30,6 +33,7 @@ public class SplashActivity extends AppCompatActivity {
     private final float VIEW_ANIMATION_VOLUME = 1.0f;
     private final boolean VIEW_ARC_LARGE = true;
 
+    private boolean hasPermission;
     private Context context;
     private ImageView logo;
     private LottieAnimationView lottie, lottie2;
@@ -50,9 +54,10 @@ public class SplashActivity extends AppCompatActivity {
         lottie2 = findViewById(R.id.lottie2);
         showViewSlideDown(logo);
     }
+
     /**
      * Animates a view sliding down from the top of the screen along an arc path.
-     * After the animation finishes, starts the MenuActivity.
+     * After the animation finishes, checks for permission and starts the MenuActivity if permission is granted.
      */
     public void showViewSlideDown(final View v) {
         v.setVisibility(View.VISIBLE);
@@ -65,7 +70,7 @@ public class SplashActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
-// Calculate the arc path based on the screen size
+        // Calculate the arc path based on the screen size
         path.arcTo(
                 VIEW_ARC_X_START,
                 VIEW_ARC_Y_START,
@@ -82,17 +87,44 @@ public class SplashActivity extends AppCompatActivity {
         handler.postDelayed(() -> {
             animator.cancel();
             player.stop();
-            replaceActivity();
+            checkPermission();
         }, VIEW_SHOW_DELAY);
     }
+
     /**
      * Starts the MenuActivity and finishes this activity.
      */
-    private void replaceActivity() {
-        Intent intent = new Intent(this, VideoTransitionActivity.class);
+    private void startMenuActivity() {
+        Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
         finish();
     }
 
+    private void checkPermission() {
+        int fineLocationStatus = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
+        int coarseLocationStatus = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION);
 
+        if ((fineLocationStatus != PackageManager.PERMISSION_GRANTED) || (coarseLocationStatus != PackageManager.PERMISSION_GRANTED)) {
+            hasPermission = false;
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 101);
+        } else {
+            hasPermission = true;
+            startMenuActivity(); // Permission is already granted, replace the activity
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 101) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                hasPermission = true;
+                startMenuActivity(); // Start the MenuActivity after permission is granted
+            } else {
+                hasPermission = false;
+                finish();
+            }
+        }
+    }
 }
