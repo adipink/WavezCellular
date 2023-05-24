@@ -110,7 +110,8 @@ public class ShowActivity extends AppCompatActivity{
                 LatLng user = new LatLng((Double) bundle.get("x"), (Double) bundle.get("y"));
                 double distance = getDistance(user, loc);
                 String format = String.format("%.01f", distance);
-                show_TXT_distance.setText(format + "km away from you");
+                //show_TXT_distance.setText(format  + "km away from you");
+                show_TXT_distance.setText(format  + getResources().getString(R.string.show_km));
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
