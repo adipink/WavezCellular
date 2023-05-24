@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.ShowActivity"
-    android:background="@color/water">
+    android:background="@color/water"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,40 +54,38 @@
                             android:layout_height="50dp"
                             android:src="@drawable/ic_user"
                             app:layout_constraintEnd_toEndOf="parent"
-                            tools:ignore="MissingConstraints" />
+                            tools:ignore="MissingConstraints"
+                            android:contentDescription="@string/report_review" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:background="@color/water"
-            android:orientation="horizontal"
-            android:weightSum="5">
+            android:orientation="horizontal">
 
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/show_BTN_back"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="0.5"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
                 android:textAlignment="viewStart"
                 android:textAllCaps="false"
                 app:backgroundTint="@color/water"
-                android:background="@color/transparent"
                 app:icon="@drawable/ic_baseline_arrow_back_24"
                 app:iconTint="@color/white"
-                />
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/show_TXT_nameBeach"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_weight="4.5"
-                android:gravity="center"
                 android:text=""
+                android:textAlignment="center"
                 android:textColor="@color/beach_name"
                 android:textColorHighlight="@color/white"
                 android:textSize="30sp"
@@ -109,8 +108,9 @@
                 android:id="@+id/show_TXT_distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2.7km from you"
+                android:text="@string/show_km"
                 android:textColor="@color/black"
+                android:textAlignment="center"
                 android:textSize="18sp" />
 
             <LinearLayout
@@ -152,7 +152,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="10"
+            android:layout_weight="9"
             >
         <LinearLayout
             android:layout_width="match_parent"
@@ -164,19 +164,19 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.5"
+                android:layout_height="50dp"
                 android:gravity="center"
-
                 >
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/show_TXT_density"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Density:"
+                    android:layout_height="50dp"
+                    android:text="@string/report_density"
+                    android:textSize="14sp"
+                    android:layout_margin="5dp"
                     android:textAllCaps="false"
-                    app:backgroundTint="@color/white"
+                    app:backgroundTint="#E6E6E6"
                     app:cornerRadius="10dp"
                     app:icon="@drawable/ic_empty"
                     app:iconSize="25dp"
@@ -186,8 +186,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.2"
+                android:layout_height="120dp"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="3"
@@ -200,7 +199,8 @@
                     android:layout_height="120dp"
                     android:layout_weight="1.5"
                     android:layout_margin="5dp"
-                    android:text="Warmth:"
+                    android:text="@string/report_warmth"
+                    android:textSize="14sp"
                     android:textAllCaps="false"
                     app:backgroundTint="@color/white"
                     app:cornerRadius="10dp"
@@ -210,31 +210,18 @@
                     app:iconTint="@null" />
 
 
-                <!--<com.google.android.material.button.MaterialButton
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="10 - 20 cm"
-                    android:textAllCaps="false"
-                    app:backgroundTint="@color/white"
-                    app:cornerRadius="15dp"
-                    app:icon="@drawable/ic_wave"
-                    app:iconGravity="textTop"
-                    app:iconSize="40dp"
-                    app:iconTint="@null"
-                    android:visibility="invisible"
-                    />-->
-
-
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/show_TXT_jellyfish"
                     android:layout_width="0dp"
                     android:layout_height="120dp"
                     android:layout_weight="1.5"
-                    android:text="Jellyfish:"
                     android:layout_margin="5dp"
+                    android:text="@string/report_jellyfish"
+                    android:textSize="14sp"
                     android:textAllCaps="false"
-                    app:backgroundTint="@color/white"
+                    app:backgroundTint="#99FFFFFF"
+                    app:strokeWidth="0dp"
                     app:cornerRadius="10dp"
                     app:icon="@drawable/ic_jellyfish"
                     app:iconGravity="textTop"
@@ -257,9 +244,9 @@
                     android:layout_height="120dp"
                     android:layout_weight="1.5"
                     android:layout_margin="5dp"
-                    android:text="Wind:"
+                    android:text="@string/report_wind"
                     android:textAllCaps="false"
-                    app:backgroundTint="@color/white"
+                    app:backgroundTint="#99FFFFFF"
                     app:cornerRadius="10dp"
                     app:icon="@drawable/ic_wind"
                     app:iconGravity="textTop"
@@ -272,10 +259,10 @@
                     android:layout_width="0dp"
                     android:layout_height="120dp"
                     android:layout_weight="1.5"
-                    android:text="Dangerous:"
+                    android:text="@string/report_danger"
                     android:layout_margin="5dp"
                     android:textAllCaps="false"
-                    app:backgroundTint="@color/white"
+                    app:backgroundTint="#99FFFFFF"
                     app:cornerRadius="10dp"
                     app:icon="@drawable/ic_redflag"
                     app:iconGravity="textTop"
@@ -300,9 +287,9 @@
                     android:layout_height="120dp"
                     android:layout_weight="1.5"
                     android:layout_margin="5dp"
-                    android:text="Accessibility: not accessible"
+                    android:text="@string/report_accessibility"
                     android:textAllCaps="false"
-                    app:backgroundTint="@color/white"
+                    app:backgroundTint="#99FFFFFF"
                     app:cornerRadius="10dp"
                     app:icon="@drawable/accessible"
                     app:iconGravity="textTop"
@@ -318,10 +305,10 @@
                     android:layout_width="0dp"
                     android:layout_height="120dp"
                     android:layout_weight="1.5"
-                    android:text="Hygiene:"
+                    android:text="@string/report_hygiene"
                     android:layout_margin="5dp"
                     android:textAllCaps="false"
-                    app:backgroundTint="@color/white"
+                    app:backgroundTint="#99FFFFFF"
                     app:cornerRadius="10dp"
                     app:icon="@drawable/toilet"
                     app:iconGravity="textTop"
@@ -344,9 +331,9 @@
                     android:layout_width="0dp"
                     android:layout_height="120dp"
                     android:layout_weight="1"
-                    android:text="Pet-Friendly:"
+                    android:text="@string/report_pet"
                     android:textAllCaps="false"
-                    app:backgroundTint="@color/white"
+                    app:backgroundTint="#99FFFFFF"
                     app:cornerRadius="10dp"
                     app:icon="@drawable/dog"
                     app:iconGravity="textTop"
@@ -358,14 +345,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:orientation="vertical"
+            android:layout_weight="1.2">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/show_BTN_reports"
                 android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="115dp"
-                android:text="Go To Reports"
+                android:layout_height="50dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="@string/show_go_reports"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 app:backgroundTint="@color/sea"
@@ -377,16 +366,17 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:layout_weight="1.5"
+            android:layout_margin="20dp"
+            android:layout_weight="1.3"
             android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/show_BTN_waze"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.75"
+                android:layout_weight="0.65"
                 android:textAllCaps="false"
+                android:text="@string/show_waze"
                 app:backgroundTint="@color/water"
                 app:cornerRadius="15dp"
                 app:icon="@drawable/waze"
@@ -400,8 +390,9 @@
                 android:id="@+id/show_BTN_moovit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.75"
+                android:layout_weight="0.65"
                 android:textAllCaps="false"
+                android:text="@string/show_moovit"
                 app:cornerRadius="15dp"
                 app:icon="@drawable/moovit"
                 app:iconGravity="textTop"

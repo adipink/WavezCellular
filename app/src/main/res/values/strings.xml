@@ -15,6 +15,12 @@
     <string name="home_report">Report</string>
     <string name="home_search">Search</string>
 
+
+    <string name="show_km">KM from you</string>
+    <string name="show_go_reports">Go To Reports</string>
+    <string name="show_moovit">Moovit</string>
+    <string name="show_waze">Waze</string>
+
     <string-array name="beaches">
         <item>Mei Ami beach Ashdod</item>
         <item>Lido beach Ashdod</item>
@@ -49,12 +55,18 @@
     <string name="user_change_name">Change Name</string>
     <string name="user_signout">Sign Out</string>
 
-    <string name="report_density">Density</string>
-    <string name="report_jellyfish">JellyFish</string>
-    <string name="report_flag">Flag</string>
-    <string name="report_wave">Wave</string>
-    <string name="report_temperature">Temperature</string>
-    <string name="report_wind">Wind</string>
+    <string name="report_density">Density:</string>
+    <string name="report_jellyfish">JellyFish:</string>
+    <string name="report_flag">Flag:</string>
+    <string name="report_wave">Wave:</string>
+    <string name="report_temperature">Temperature:</string>
+    <string name="report_wind">Wind:</string>
+    <string name="report_warmth">Warmth:</string>
+    <string name="report_accessibility">Accessibility:</string>
+    <string name="report_danger">Dangerous:</string>
+    <string name="report_pet">Pet-Friendly:</string>
+    <string name="report_hygiene">Hygiene:</string>
+    <string name="report_review">Review:</string>
     <string name="report_cancel">Cancel</string>
     <string name="report_ok">OK Report</string>
 

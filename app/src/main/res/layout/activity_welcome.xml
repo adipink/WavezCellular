@@ -8,33 +8,26 @@
     android:background="@color/water">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:orientation="vertical">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/water"
-            android:orientation="horizontal">
-
-            <View
-                android:id="@+id/welcome_LOGO_wavez"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/wave_icon"
-                tools:ignore="MissingConstraints" />
+        android:orientation="vertical"
+        >
+        <View
+            android:id="@+id/welcome_LOGO_wavez"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/wave_icon"
+             />
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/welcome_BTN_back"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
-            android:layout_weight="0.5"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@color/transparent"
+            android:text="@string/welcome_back"
             android:textAlignment="viewStart"
             android:textAllCaps="false"
             app:backgroundTint="@color/water"
@@ -44,6 +37,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/welcome_LinLay_entire"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"
@@ -62,7 +56,7 @@
             android:text="@string/welcome_title"
             android:layout_margin="10dp"
             android:textColor="@color/sand"
-            android:textSize="36sp"
+            android:textSize="40sp"
             android:textStyle="bold"></com.google.android.material.textview.MaterialTextView>
 
 
@@ -82,8 +76,11 @@
                 android:inputType="textWebEditText"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="invisible">
+                android:visibility="visible"
+                android:importantForAutofill="no">
+
             </EditText>
 
 
@@ -97,8 +94,10 @@
                 android:inputType="textWebEmailAddress"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="invisible">
+                android:visibility="visible"
+                android:importantForAutofill="no">
 
             </EditText>
 
@@ -112,9 +111,10 @@
                 android:inputType="textWebPassword"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="invisible"
-                ></EditText>
+                android:visibility="visible"
+                android:importantForAutofill="no"></EditText>
 
         </LinearLayout>
 
@@ -164,12 +164,12 @@
                     android:id="@+id/welcome_BTN_enterApp"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
+                   android:layout_gravity="center"
                     android:backgroundTint="@color/sea"
                     android:text="@string/welcome_login"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="15dp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     app:cornerRadius="40dp"
                     android:visibility="invisible">
@@ -181,26 +181,27 @@
                     android:id="@+id/welcome_BTN_registerApp"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center"
                     android:backgroundTint="@color/sea"
                     android:text="@string/welcome_register"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="15dp"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     app:cornerRadius="40dp"
-                    android:visibility="invisible">
+                    android:visibility="visible">
                 </com.google.android.material.button.MaterialButton>
             </FrameLayout>
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/welcome_BTN_forgotPassword"
                 android:layout_width="wrap_content"
+                android:layout_gravity="center"
                 android:layout_height="50dp"
                 android:backgroundTint="@color/sea"
                 android:text="@string/welcome_forgot_password"
                 android:textColor="@color/white"
                 android:textAllCaps="false"
-                android:textSize="15dp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 app:cornerRadius="40dp"
                 android:visibility="invisible"

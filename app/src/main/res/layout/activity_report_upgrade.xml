@@ -88,6 +88,7 @@
         android:layout_height="0dp"
         android:layout_weight="7"
         android:background="@drawable/shapes"
+        android:layout_marginHorizontal="10dp"
         android:backgroundTint="@color/blue_text_card"
         >
 
@@ -168,7 +169,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Review"
+                    android:text="@string/report_review"
                     android:textStyle="bold">
 
                 </com.google.android.material.textview.MaterialTextView>
@@ -238,7 +239,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Density"
+                    android:text="@string/report_density"
                     android:textStyle="bold">
 
                 </com.google.android.material.textview.MaterialTextView>
@@ -328,7 +329,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Warmth"
+                    android:text="@string/report_warmth"
                     android:textStyle="bold">
 
                 </com.google.android.material.textview.MaterialTextView>
