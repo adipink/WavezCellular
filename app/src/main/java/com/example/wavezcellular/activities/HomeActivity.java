@@ -70,6 +70,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     //firebase
     private FirebaseUser firebaseUserUser;
 
+    private double userLat;
+    private double userLon;
     //map
     private DatabaseReference myRef;
     private int orderBy = 1;
@@ -90,15 +92,16 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                    bundle.putDouble("x", location.getLatitude());
-                    bundle.putDouble("y", location.getLongitude());
+                    userLat = location.getLatitude();
+                    userLon = location.getLongitude();
 
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
+                userLat = User.DEFAULTLAT;
+                userLon = User.DEFAULTLON;
             }
         });
         setContentView(R.layout.activity_home_upgrade);
@@ -202,8 +205,6 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
                 HashMap<String, Double> beachesSort = new HashMap<>();
                 HashMap<String, HashMap<String, HashMap<String, Object>>> beaches = (HashMap) dataSnapshot.getValue(Object.class);
                 if (value.equalsIgnoreCase("distance")) {
-                    double userLat = (double) bundle.get("x");
-                    double userLon = (double) bundle.get("y");
                     LatLng user = new LatLng(userLat, userLon);
                     for (Map.Entry<String, HashMap<String, HashMap<String, Object>>> set :
                             beaches.entrySet()) {

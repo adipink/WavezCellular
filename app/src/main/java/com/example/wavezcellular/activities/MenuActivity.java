@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.example.wavezcellular.R;
 import com.example.wavezcellular.utils.ActivityManager;
+import com.example.wavezcellular.utils.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
@@ -37,23 +38,18 @@ import java.util.Map;
 
 
 public class MenuActivity extends AppCompatActivity {
-    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+    private static final int MAXDISTANCE = 100000;
 
     private ActivityManager activityManager;
-    public static String distance = "", maxBeach = "";
+    public static String distance = "", closestBeach = "";
     private final double DEF_REVIEW_VAL = 3.0;
     private MaterialButton menu_BTN_beachFound, menu_BTN_beachdetails, menu_BTN_searchBeach, menu_BTN_signIn,menu_BTN_signUp;
     private TextView menu_TXT_Distance;
     private ArrayAdapter<CharSequence> adapter;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private boolean hasPremission;
-    private double longi = 0, lati = 0;
+    private double userLon = 0, userLat = 0;
     private Bundle bundle = null;
-    private final int open = 0;
-    private Double x, y;
-    private String guest;
-    private LocationManager locationManager;
-    private final int firstTime = 1;
     private FirebaseUser firebaseUser;
     private DatabaseReference myRef;
     private String userName;
@@ -78,19 +74,18 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Location location) {
                 if (location != null) {
-                    lati = location.getLatitude();
-                    longi = location.getLongitude();
-                    findNearestBeach(lati, longi);
-                    bundle.putDouble("x", lati);
-                    bundle.putDouble("y", longi);
+                    userLat = location.getLatitude();
+                    userLon = location.getLongitude();
+                    findNearestBeach(userLat, userLon);
 
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                maxBeach = "Location Services not working";
-                distance = "" + 0 + "," + 0;
+                closestBeach = "Location Services not working using default location";
+                userLat = User.DEFAULTLAT;
+                userLon = User.DEFAULTLON;
             }
         });
     }
@@ -103,8 +98,8 @@ public class MenuActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                double minDistance = 100000;
-                double currDistance = 100000;
+                double minDistance = MAXDISTANCE;
+                double currDistance;
                 HashMap<String, HashMap<String, HashMap<String, Object>>> beaches = (HashMap) dataSnapshot.getValue(Object.class);
                 System.out.println("Stop");
                 for (Map.Entry<String, HashMap<String, HashMap<String, Object>>> set : beaches.entrySet()) {
@@ -118,7 +113,7 @@ public class MenuActivity extends AppCompatActivity {
                     currDistance = getDistance(user, location);
                     if (currDistance < minDistance) {
                         minDistance = currDistance;
-                        maxBeach = beachName;
+                        closestBeach = beachName;
                     }
 
                 }
@@ -126,7 +121,7 @@ public class MenuActivity extends AppCompatActivity {
                 distance = "Beach is " + format + "km from you";
 
                 menu_TXT_Distance.setText(distance);
-                menu_BTN_beachFound.setText(maxBeach);
+                menu_BTN_beachFound.setText(closestBeach);
 
             }
 
@@ -155,12 +150,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     private void replaceActivitySearch() {
-       // Intent intent;
-        //intent = new Intent(this, HomeActivity.class);
-        //intent.putExtras(bundle);
-        //startActivity(intent);
         activityManager.startActivity(HomeActivity.class, bundle);
-        //finish();
     }
 
 

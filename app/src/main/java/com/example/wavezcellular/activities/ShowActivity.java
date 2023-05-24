@@ -1,10 +1,13 @@
 package com.example.wavezcellular.activities;
 
 
+import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -14,9 +17,15 @@ import android.widget.RatingBar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.example.wavezcellular.R;
+import com.example.wavezcellular.utils.User;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,27 +63,45 @@ public class ShowActivity extends AppCompatActivity{
     private FirebaseUser firebaseUser;
     private DatabaseReference myRef;
     private Context context;
-    private double x;
-    private double y;
+    private double userLat;
+    private double userLon;
     private String user;
     private boolean isGuest;
+    private boolean hasPremission;
 
+    private FusedLocationProviderClient fusedLocationProviderClient;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkPermission();
         setContentView(R.layout.activity_show);
         this.context = this.getApplicationContext();
         bundle = getIntent().getExtras();
-        if (bundle != null) {
+        if (bundle != null)
             BeachName = bundle.getString("BEACH_NAME");
-            x = (double) bundle.get("x");
-            y = (double) bundle.get("y");
-        } else {
+         else {
             this.bundle = new Bundle();
             BeachName = "";
         }
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if (location != null) {
+                    userLat = location.getLatitude();
+                    userLon = location.getLongitude();
+
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                userLat = User.DEFAULTLAT;
+                userLon = User.DEFAULTLON;
+            }
+        });
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         isGuest = firebaseUser == null;
@@ -107,7 +134,7 @@ public class ShowActivity extends AppCompatActivity{
                 latitude = getDouble(beach, "latitude");
                 longitude = getDouble(beach, "longitude");
                 LatLng loc = new LatLng(latitude, longitude);
-                LatLng user = new LatLng((Double) bundle.get("x"), (Double) bundle.get("y"));
+                LatLng user = new LatLng(userLat, userLon);
                 double distance = getDistance(user, loc);
                 String format = String.format("%.01f", distance);
                 //show_TXT_distance.setText(format  + "km away from you");
@@ -373,6 +400,25 @@ public class ShowActivity extends AppCompatActivity{
         } catch (Exception e) {
             e.printStackTrace();
             return Double.NaN;
+        }
+    }
+
+    private void checkPermission() {
+        int fineLocationStatus = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        int coarseLocationStatus = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        if ((fineLocationStatus != PackageManager.PERMISSION_GRANTED) &&
+                (coarseLocationStatus != PackageManager.PERMISSION_GRANTED)) {
+            hasPremission = true;
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION,
+                            android.Manifest.permission.ACCESS_COARSE_LOCATION},
+                    101);
+        } else {
+            hasPremission = true;
         }
     }
 }
