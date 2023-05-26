@@ -34,7 +34,6 @@
                 tools:ignore="MissingConstraints" />
 
 
-
             <RatingBar
                 android:id="@+id/show_RB_review"
                 android:layout_width="wrap_content"
@@ -47,7 +46,7 @@
                 android:progressTint="@color/sand"
                 app:layout_constraintStart_toEndOf="@+id/welcome_LOGO_wavez"
                 app:layout_constraintEnd_toStartOf="@+id/show_IMG_profile"
-                tools:ignore="MissingConstraints"></RatingBar>
+                tools:ignore="MissingConstraints" />
                         <ImageView
                             android:id="@+id/show_IMG_profile"
                             android:layout_width="50dp"
