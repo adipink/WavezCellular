@@ -1,148 +1,202 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:weightSum="6"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
-            android:orientation="vertical"
-            >
-            <View
-                android:layout_width="220dp"
-                android:layout_height="180dp"
-                android:background="@drawable/logo5"
-                android:layout_gravity="center"
-                android:layout_margin="50dp"></View>
-        </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/logo_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/wave_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_weight="2">
 
-        <LinearLayout
+        <View
+            android:id="@+id/logo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/logo5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            app:layout_constraintWidth_percent="0.5"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/wave_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/logo_layout"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_weight="1"
+        >
+
+        <View
+            android:id="@+id/wave_background"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:weightSum="6"
-            >
-            <View
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
             android:background="@drawable/wave"
-                android:layout_weight="1">
-            </View>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="3"
-                android:background="@color/water"
-                android:orientation="vertical"
-                >
-                <TextView
-                    android:id="@+id/welcome_TXT_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="We found the best beach for you:"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textSize="24sp"
-                    >
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                </TextView>
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/menu_BTN_beachFound"
-                    android:layout_width="350dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_gravity="center_horizontal"
-                    android:textAllCaps="false"
-                    android:text=" "
-                    app:backgroundTint="@color/white"
-                    android:textColor="@color/black"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
-                <TextView
-                    android:id="@+id/menu_TXT_Distance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Beach is   km from you"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:textSize="24sp"
-                    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/rest_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/water"
+        app:layout_constraintTop_toBottomOf="@id/guideline"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-                </TextView>
+        <TextView
+            android:id="@+id/welcome_TXT_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="We found the best beach for you:"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/menu_BTN_beachdetails"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_gravity="center_horizontal"
-                    android:textAllCaps="false"
-                    android:text="View Beach details"
-                    app:backgroundTint="@color/sea"
-                    android:textColor="@color/white"
-                    app:cornerRadius="40dp"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/menu_BTN_beachFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_gravity="center_horizontal"
+            android:textAllCaps="false"
+            android:text="Searching"
+            app:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/welcome_TXT_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/menu_BTN_searchBeach"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_gravity="center_horizontal"
-                    android:textAllCaps="false"
-                    android:text="Search Another"
-                    app:backgroundTint="@color/sea"
-                    app:icon="@drawable/looking_glass"
-                    android:textColor="@color/white"
-                    app:cornerRadius="40dp"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:background="@color/water"
-                android:orientation="vertical"
-                >
+        <TextView
+            android:id="@+id/menu_TXT_Distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Beach is   km from you"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="24sp"
+            android:textColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/menu_BTN_beachFound"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/menu_BTN_signIn"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Login"
-                    android:layout_marginTop="20dp"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    app:backgroundTint="@color/sea"
-                    app:cornerRadius="40dp"
-                    />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/menu_BTN_beachdetails"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_gravity="center_horizontal"
+            android:textAllCaps="false"
+            android:text="View Beach details"
+            app:backgroundTint="@color/sea"
+            android:textColor="@color/white"
+            app:cornerRadius="40dp"
+            app:layout_constraintTop_toBottomOf="@id/menu_TXT_Distance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="32dp"
+            app:layout_constraintWidth_percent="0.65"
+            />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/menu_BTN_signUp"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Sign Up"
-                    android:textAllCaps="false"
-                    android:textColor="@color/black"
-                    android:textSize="18sp"
-                    app:backgroundTint="@color/sand"
-                    app:cornerRadius="40dp"
-                    />
-            </LinearLayout>
-        </LinearLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/menu_BTN_searchBeach"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_gravity="center_horizontal"
+            android:textAllCaps="false"
+            android:text="Search Another"
+            app:backgroundTint="@color/sea"
+            app:icon="@drawable/looking_glass"
+            android:textColor="@color/white"
+            app:cornerRadius="40dp"
+            app:layout_constraintTop_toBottomOf="@id/menu_BTN_beachdetails"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.65"
+            />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/sign_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/menu_BTN_searchBeach"
+            app:layout_constraintStart_toStartOf="@+id/menu_BTN_searchBeach"
+            app:layout_constraintEnd_toEndOf="@+id/menu_BTN_searchBeach"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/menu_BTN_signIn"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:backgroundTint="@color/sea"
+                app:cornerRadius="40dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/menu_BTN_signUp"
+                app:layout_constraintHorizontal_bias="0.5"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/menu_BTN_signUp"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Sign Up"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:backgroundTint="@color/sand"
+                app:cornerRadius="40dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/menu_BTN_signIn"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="8dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </LinearLayout>
-</RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
