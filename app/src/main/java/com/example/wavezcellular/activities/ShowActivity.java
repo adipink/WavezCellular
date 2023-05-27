@@ -82,6 +82,7 @@ public class ShowActivity extends AppCompatActivity{
         bundle = getIntent().getExtras();
         if (bundle != null)
             BeachName = bundle.getString("BEACH_NAME");
+
          else {
             this.bundle = new Bundle();
             BeachName = "";
@@ -302,7 +303,7 @@ public class ShowActivity extends AppCompatActivity{
     private void replaceActivity(String mode) {
         Intent intent;
         if (mode.equals("Profile")) {
-            intent = new Intent(this, UserActivity.class);
+            intent = new Intent(this, UserActivityUpgrade.class);
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
@@ -323,6 +324,7 @@ public class ShowActivity extends AppCompatActivity{
 
         if (mode.equals("Welcome")) {
             intent = new Intent(this, WelcomeActivity.class);
+            bundle.putString("LOGIN_STATE", "login");
             intent.putExtras(bundle);
             startActivity(intent);
             finish();

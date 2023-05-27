@@ -13,50 +13,55 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WavezCellular">
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/secret_google_api" />
+
         <activity
             android:name=".activities.ShowActivity"
             android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
         <activity
             android:name=".activities.ReportActivityLegacy"
             android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
         <activity
             android:name=".activities.ReportActivity"
             android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
         <activity
             android:name=".activities.UserReportsActivity"
             android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
         <activity
             android:name=".activities.UserActivity"
             android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
+        <activity
+            android:name=".activities.UserActivityUpgrade"
+            android:exported="true"
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
+
         <activity
             android:name=".activities.MapActivity"
             android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
         <activity
             android:name=".activities.HomeActivity"
             android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
         <activity
             android:name=".activities.HomeActivityLegacy"
             android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
         <activity
             android:name=".activities.MenuActivity"
             android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
         <activity
             android:name=".activities.VideoTransitionActivity"
             android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
         <activity
             android:name=".activities.SplashActivity"
             android:exported="true"
@@ -70,7 +75,7 @@
         <activity
             android:name=".activities.WelcomeActivity"
             android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.NoActionBar"/>
+            android:theme="@style/Theme.MaterialComponents.NoActionBar" />
     </application>
 
 </manifest>

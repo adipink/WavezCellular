@@ -23,4 +23,12 @@
     <color name="card_show_background">#80FFFFFF</color>
     <color name="layout_back">#80DAFFFF</color>
     <color name="transparent">#00000000</color>
+
+
+
+    <color name="profile_background">#B4EFFD</color>
+    <color name="profile_photo">#00ACFA</color>
+    <color name="personal_title">#B0DAFF</color>
+    <color name="personal_text">#1D267D</color>
+    <color name="personal_info">#0B2447</color>
 </resources>

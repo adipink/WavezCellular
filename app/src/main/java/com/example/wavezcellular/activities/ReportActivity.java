@@ -72,7 +72,7 @@ public class ReportActivity extends AppCompatActivity {
         report_IMG_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ReportActivity.this, UserActivity.class);
+                Intent intent = new Intent(ReportActivity.this, UserActivityUpgrade.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 finish();

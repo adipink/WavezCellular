@@ -317,7 +317,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private void replaceActivity(String mode) {
         Intent intent;
         if (mode.equals("Profile")) {
-            intent = new Intent(this, UserActivity.class);
+            intent = new Intent(this, UserActivityUpgrade.class);
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
