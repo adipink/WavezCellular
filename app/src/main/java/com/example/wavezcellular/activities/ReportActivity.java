@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wavezcellular.Interfaces.testActionsListener;
 import com.example.wavezcellular.R;
 import com.example.wavezcellular.utils.User;
 import com.google.android.material.button.MaterialButton;
@@ -25,7 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class ReportActivity extends AppCompatActivity {
+public class ReportActivity extends AppCompatActivity implements testActionsListener {
     private TextView report_TXT_nameBeach;
     private MaterialButton report_BTN_back, report_BTN_submit;
     private RatingBar report_RB_review;
@@ -63,7 +64,7 @@ public class ReportActivity extends AppCompatActivity {
         report_BTN_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ReportActivity.this, HomeActivity.class);
+                Intent intent = new Intent(ReportActivity.this, ShowActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
@@ -159,5 +160,11 @@ public class ReportActivity extends AppCompatActivity {
         report_SB_wind = findViewById(R.id.report_SB_wind);
         report_BTN_submit = findViewById(R.id.report_BTN_submit);
         report_EditTXT_comment = findViewById(R.id.report_EditTXT_comment);
+    }
+
+    public void testAction(){
+        user = new User("Test", "No Email Available");
+        BeachName = "Bugrashov beach Tel Aviv";
+        bundle.putString("BEACH_NAME", BeachName);
     }
 }
