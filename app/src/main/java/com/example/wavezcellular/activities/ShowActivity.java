@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -52,9 +53,9 @@ public class ShowActivity extends AppCompatActivity{
     private final double LOW_VALUE = 1.5;
     private MaterialButton show_BTN_back, show_BTN_reports, show_BTN_waze, show_BTN_moovit;
     private ImageView show_IMG_profile;
-    private MaterialButton show_TXT_density, show_TXT_jellyfish,
-            show_TXT_danger, show_TXT_wind, show_TXT_accessible, show_TXT_dog, show_TXT_warmth, show_TXT_hygiene;
     private MaterialTextView show_TXT_nameBeach, show_TXT_temperature, show_TXT_distance;
+
+    private TextView show_TXT_jellyfish, show_TXT_density, show_TXT_danger, show_TXT_wind, show_TXT_accessible, show_TXT_dog, show_TXT_warmth, show_TXT_hygiene;
     private RatingBar show_RB_review;
     private Bundle bundle;
     private String BeachName;
@@ -341,7 +342,7 @@ public class ShowActivity extends AppCompatActivity{
         show_TXT_wind = findViewById(R.id.show_TXT_wind);
         show_RB_review = findViewById(R.id.show_RB_review);
         show_TXT_accessible = findViewById(R.id.show_TXT_accessible);
-        show_TXT_dog = findViewById(R.id.show_TXT_dogs);
+        show_TXT_dog = findViewById(R.id.show_TXT_dog);
         show_BTN_waze = findViewById(R.id.show_BTN_waze);
         show_BTN_moovit = findViewById(R.id.show_BTN_moovit);
         show_TXT_distance = findViewById(R.id.show_TXT_distance);
