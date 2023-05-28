@@ -22,11 +22,9 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginBottom="675dp"
-        android:background="@drawable/wave21"
+        android:layout_height="300dp"
+        android:background="@drawable/pattern__3_"
         android:rotation="180"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -34,14 +32,12 @@
     </ImageView>
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginTop="670dp"
-        android:background="@drawable/wave20"
+        android:layout_height="300dp"
+        android:background="@drawable/pattern__4_"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.473">
     </ImageView>
 

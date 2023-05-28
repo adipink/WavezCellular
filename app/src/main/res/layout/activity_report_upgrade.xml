@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ReportActivityLegacy"
+    tools:context=".activities.ReportActivity"
     android:background="@color/water">
 
     <LinearLayout
@@ -82,6 +82,7 @@
             android:layout_gravity="center"
             android:text="Report"
             android:textColor="@color/black"
+            android:textStyle="bold"
             android:textSize="20sp" />
     <ScrollView
         android:layout_width="match_parent"

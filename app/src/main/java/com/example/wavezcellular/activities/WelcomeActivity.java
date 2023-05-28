@@ -101,7 +101,7 @@ public class WelcomeActivity extends AppCompatActivity {
             return;
         }
         if (password.length() < 6) {
-            welcome_EDT_password.setError("Minmum password lenght should be 6 characters");
+            welcome_EDT_password.setError("Minimum password length should be 6 characters");
             welcome_EDT_password.requestFocus();
             return;
         }
@@ -139,7 +139,6 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void signUpUser() {
@@ -186,7 +185,7 @@ public class WelcomeActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
                                                 Toast.makeText(WelcomeActivity.this, "User has been registered successfully!", Toast.LENGTH_LONG).show();
-                                                createEnterMode("signin");
+                                                createEnterMode("login");
                                             } else {
                                                 Toast.makeText(WelcomeActivity.this, "Failed to register! Try again!", Toast.LENGTH_LONG).show();
                                             }
@@ -198,7 +197,6 @@ public class WelcomeActivity extends AppCompatActivity {
                     }
                 });
     }
-
 
     private void createListeners() {
         welcome_BTN_forgotPassword.setOnClickListener(new View.OnClickListener() {

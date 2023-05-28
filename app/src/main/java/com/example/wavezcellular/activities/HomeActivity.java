@@ -317,7 +317,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
     private void replaceActivity(String mode) {
         Intent intent;
         if (mode.equals("Profile")) {
-            intent = new Intent(this, UserActivity.class);
+            intent = new Intent(this, UserActivityUpgrade.class);
             intent.putExtras(bundle);
             startActivity(intent);
             finish();
@@ -339,12 +339,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             startActivity(intent);
             finish();
         }else {
-            /*intent = new Intent(this, ShowActivity.class);
-            bundle.putString("BEACH_NAME", beachName);
-            intent.putExtras(bundle);
-            startActivity(intent);
-            finish();*/
             intent = new Intent(this, WelcomeActivity.class);
+            bundle.putString("LOGIN_STATE", "login");
             intent.putExtras(bundle);
             startActivity(intent);
             finish();

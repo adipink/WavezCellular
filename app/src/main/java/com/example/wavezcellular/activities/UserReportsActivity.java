@@ -1,12 +1,14 @@
 package com.example.wavezcellular.activities;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,7 +39,7 @@ public class UserReportsActivity extends AppCompatActivity {
     private String BeachName;
     private FirebaseUser firebaseUser;
     private DatabaseReference myRef;
-    private String user;
+    private boolean isGuest;
 
 
     @Override
@@ -52,6 +54,7 @@ public class UserReportsActivity extends AppCompatActivity {
             BeachName = "";
         }
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        isGuest = firebaseUser == null;
         myRef = FirebaseDatabase.getInstance().getReference("Beaches").child(BeachName).child("Reports");
 
         findViews();
@@ -76,12 +79,38 @@ public class UserReportsActivity extends AppCompatActivity {
         userReports_BTN_report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(UserReportsActivity.this, ReportActivity.class);
+                clickOnReports();
+                /*Intent intent = new Intent(UserReportsActivity.this, ReportActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent);
-                finish();
+                finish();*/
             }
         });
+    }
+
+    private void clickOnReports() {
+        if(isGuest){ // user who are not registered cannot report
+            AlertDialog.Builder builder = new AlertDialog.Builder(UserReportsActivity.this);
+            builder.setTitle("Do you want to add a report to this beach ?");
+            builder.setMessage("You need to register or login first");
+            builder.setCancelable(false);
+            builder.setPositiveButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+                // If user click no then dialog box is canceled.
+                dialog.cancel();
+            });
+            builder.setNegativeButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
+                // When the user click yes button then app will take it to the register/login page
+                replaceActivity("Welcome");
+
+            });
+
+            // Create the Alert dialog
+            AlertDialog alertDialog = builder.create();
+            // Show the Alert Dialog box
+            alertDialog.show();
+        }else{
+            replaceActivity("Report");
+        }
     }
 
     private void getReports() {
@@ -113,6 +142,37 @@ public class UserReportsActivity extends AppCompatActivity {
     private void createReportsRec(ArrayList<UserReport> list) {
         userReports_RecycleView_reports.setLayoutManager(new LinearLayoutManager(this));
         userReports_RecycleView_reports.setAdapter(new UserReportAdapter(getApplicationContext(), list));
+    }
+
+    private void replaceActivity(String mode) {
+        Intent intent;
+        if (mode.equals("Profile")) {
+            intent = new Intent(this, UserActivityUpgrade.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        }
+        if (mode.equals("Report")) {
+            intent = new Intent(this, UserReportsActivity.class);
+            bundle.putString("BEACH_NAME", BeachName);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        }
+        if (mode.equals("Home")) {
+            intent = new Intent(this, HomeActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        }
+
+        if (mode.equals("Welcome")) {
+            intent = new Intent(this, WelcomeActivity.class);
+            bundle.putString("LOGIN_STATE", "login");
+            intent.putExtras(bundle);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void findViews() {
