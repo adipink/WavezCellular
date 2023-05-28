@@ -18,6 +18,12 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.example.wavezcellular.activities.ReportActivity;
 import com.example.wavezcellular.activities.ShowActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -74,6 +80,7 @@ public class ReportActivityTest {
                 .perform(ViewActions.click());
         Espresso.onView(ViewMatchers.withText(comment))
                 .check(matches(isDisplayed()));
+        removeUserReportByComment(comment);
         FirebaseAuth.getInstance().signOut();
         // Close the activity scenario
         activityScenario.close();
@@ -141,6 +148,26 @@ public class ReportActivityTest {
         Espresso.onView(ViewMatchers.withId(R.id.user_TXT_name))
                 .check(matches(isDisplayed()));
 
+    }
+
+    public void removeUserReportByComment(String commentValue) {
+        DatabaseReference reportsRef;
+        reportsRef = FirebaseDatabase.getInstance().getReference().child("Beaches").child("Bugrashov beach Tel Aviv").child("Reports");
+        Query query = reportsRef.orderByChild("comment").equalTo(commentValue);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    userSnapshot.getRef().removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle the cancellation or throw an exception
+            }
+        });
     }
 
 

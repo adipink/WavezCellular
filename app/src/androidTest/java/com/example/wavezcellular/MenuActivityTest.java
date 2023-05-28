@@ -55,9 +55,9 @@ public class MenuActivityTest {
         // Launch the HomeActivity
         ActivityScenario<MenuActivity> activityScenario = activityScenarioRule.getScenario();
 
-        activityScenario.onActivity(reportActivity -> {
+        activityScenario.onActivity(menuActivity -> {
             // Call the clearUser method on the main application thread if needed
-            reportActivity.runOnUiThread(reportActivity::testAction);
+            menuActivity.runOnUiThread(menuActivity::testAction);
         });
 
         // Click the "Search Another" button
@@ -102,7 +102,7 @@ public class MenuActivityTest {
 
         onView(withId(R.id.home_IMG_profile)).perform(ViewActions.click());
 
-        onView(withId(R.id.user_TXT_name)).check(matches(isDisplayed()));
+        onView(withId(R.id.user_BTN_signout)).check(matches(isDisplayed()));
         // Close the ActivityScenario
         activityScenario.close();
     }

@@ -124,7 +124,7 @@ public class MenuActivity extends AppCompatActivity implements testActionsListen
 
                 menu_TXT_Distance.setText(distance);
                 menu_BTN_beachFound.setText(closestBeach);
-
+                BeachName = closestBeach;
             }
 
             @Override
@@ -158,7 +158,6 @@ public class MenuActivity extends AppCompatActivity implements testActionsListen
 
     private void replaceActivityShow() {
         Intent intent;
-        BeachName = menu_BTN_beachFound.getText().toString();
         bundle.putString("BEACH_NAME", BeachName);
         intent = new Intent(this, ShowActivity.class);
         intent.putExtras(bundle);
