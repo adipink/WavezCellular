@@ -26,6 +26,12 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.example.wavezcellular.activities.MenuActivity;
 import com.example.wavezcellular.activities.SplashActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -91,7 +97,6 @@ public class MenuActivityTest {
         onView(ViewMatchers.withId(R.id.welcome_BTN_enterApp))
                 .perform(ViewActions.click());
 
-        // Introduce a delay to allow the application to process the navigation
         try {
             Thread.sleep(2000); // Delay of 1 second (adjust as needed)
         } catch (InterruptedException e) {
@@ -101,8 +106,9 @@ public class MenuActivityTest {
         onView(withId(R.id.home_LOGO_wavez)).check(matches(isDisplayed()));
 
         onView(withId(R.id.home_IMG_profile)).perform(ViewActions.click());
+        // Introduce a delay to allow the application to process the navigation
 
-        onView(withId(R.id.user_BTN_signout)).check(matches(isDisplayed()));
+        onView(withId(R.id.profile_BTN_change)).check(matches(isDisplayed()));
         // Close the ActivityScenario
         activityScenario.close();
     }
@@ -130,8 +136,35 @@ public class MenuActivityTest {
                 .perform(ViewActions.typeText("Test123456"));
 
         onView(withId(R.id.welcome_BTN_registerApp)).perform(click());
+        try {
+            Thread.sleep(2000); // Delay of 1 second (adjust as needed)
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        removeUserByName("Test");
+        onView(withId(R.id.welcome_BTN_enterApp)).check(matches(isDisplayed()));
         // Close the ActivityScenario
         activityScenario.close();
+    }
+
+    public void removeUserByName(String name) {
+        DatabaseReference reportsRef;
+        reportsRef = FirebaseDatabase.getInstance().getReference().child("Users");
+        Query query = reportsRef.orderByChild("name").equalTo(name);
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                    userSnapshot.getRef().removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                // Handle the cancellation or throw an exception
+            }
+        });
     }
 
 }

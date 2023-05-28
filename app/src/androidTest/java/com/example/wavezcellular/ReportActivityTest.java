@@ -74,7 +74,11 @@ public class ReportActivityTest {
         // Submit the report
         Espresso.onView(ViewMatchers.withId(R.id.report_BTN_submit))
                 .perform(ViewActions.click());
-
+        try {
+            Thread.sleep(2000); // Delay of 1 second (adjust as needed)
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         // Verify that the report was submitted successfully
         Espresso.onView(ViewMatchers.withId(R.id.show_BTN_reports))
                 .perform(ViewActions.click());
