@@ -120,7 +120,7 @@
             android:id="@+id/userReports_BTN_report"
             android:layout_width="wrap_content"
             android:layout_height="75dp"
-            android:text="Create Report"
+            android:text="@string/create_report"
             android:textAllCaps="false"
             app:backgroundTint="@color/sea"
             android:textColor="@color/white"

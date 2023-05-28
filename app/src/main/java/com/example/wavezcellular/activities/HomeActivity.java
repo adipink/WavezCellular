@@ -339,12 +339,8 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
             startActivity(intent);
             finish();
         }else {
-            /*intent = new Intent(this, ShowActivity.class);
-            bundle.putString("BEACH_NAME", beachName);
-            intent.putExtras(bundle);
-            startActivity(intent);
-            finish();*/
             intent = new Intent(this, WelcomeActivity.class);
+            bundle.putString("LOGIN_STATE", "login");
             intent.putExtras(bundle);
             startActivity(intent);
             finish();

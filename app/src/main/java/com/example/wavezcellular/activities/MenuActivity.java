@@ -77,7 +77,6 @@ public class MenuActivity extends AppCompatActivity {
                     userLat = location.getLatitude();
                     userLon = location.getLongitude();
                     findNearestBeach(userLat, userLon);
-
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -105,7 +104,6 @@ public class MenuActivity extends AppCompatActivity {
                 for (Map.Entry<String, HashMap<String, HashMap<String, Object>>> set : beaches.entrySet()) {
                     double x, y;
                     String beachName = (String) set.getValue().get("Data").get("name");
-
                     x = getDouble(set.getValue().get("Data").get("latitude"));
                     y = getDouble(set.getValue().get("Data").get("longitude"));
 
@@ -115,14 +113,12 @@ public class MenuActivity extends AppCompatActivity {
                         minDistance = currDistance;
                         closestBeach = beachName;
                     }
-
                 }
                 String format = String.format("%.01f", minDistance);
                 distance = "Beach is " + format + "km from you";
 
                 menu_TXT_Distance.setText(distance);
                 menu_BTN_beachFound.setText(closestBeach);
-
             }
 
             @Override
@@ -130,8 +126,6 @@ public class MenuActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     private void setListeners() {

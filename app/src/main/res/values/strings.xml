@@ -70,7 +70,9 @@
     <string name="report_cancel">Cancel</string>
     <string name="report_ok">OK Report</string>
 
-    <string name="personal">Personal Information</string>
+
+    <string name="create_report">Create Report</string>
+
 
 
 </resources>

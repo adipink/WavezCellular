@@ -159,7 +159,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="25dp">
+            android:layout_marginLeft="25dp"
+            android:visibility="invisible">
             <ImageView
                 android:id="@+id/profile_IMG_location"
                 android:layout_width="45dp"
@@ -181,7 +182,8 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="20dp"
-            android:layout_marginLeft="25dp">
+            android:layout_marginLeft="25dp"
+            android:visibility="invisible">
             <ImageView
                 android:id="@+id/profile_IMG_favorite"
                 android:layout_width="45dp"

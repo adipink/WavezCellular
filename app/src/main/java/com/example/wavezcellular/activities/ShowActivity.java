@@ -51,7 +51,7 @@ public class ShowActivity extends AppCompatActivity{
     public static final String TEMPKEY = "1253b9205d89a2d8816242c6d731489f";
     private final double HIGH_VALUE = 3.5;
     private final double LOW_VALUE = 1.5;
-    private MaterialButton show_BTN_back, show_BTN_reports, show_BTN_waze, show_BTN_moovit;
+    private MaterialButton show_BTN_back, show_BTN_reports,show_BTN_create_report, show_BTN_waze, show_BTN_moovit;
     private ImageView show_IMG_profile;
     private MaterialTextView show_TXT_nameBeach, show_TXT_temperature, show_TXT_distance;
 
@@ -252,7 +252,7 @@ public class ShowActivity extends AppCompatActivity{
     }
 
     private void clickOnReports(){
-        if(isGuest){ // user who are not registered cannot report
+        /*if(isGuest){ // user who are not registered cannot report
             AlertDialog.Builder builder = new AlertDialog.Builder(ShowActivity.this);
             builder.setTitle("Do you want to add a report to this beach ?");
             builder.setMessage("You need to register or login first");
@@ -273,7 +273,8 @@ public class ShowActivity extends AppCompatActivity{
             alertDialog.show();
         }else{
             replaceActivity("Report");
-        }
+        }*/
+        replaceActivity("Report");
     }
 
     private void clickOnWaze() {
@@ -334,6 +335,7 @@ public class ShowActivity extends AppCompatActivity{
 
     private void findViews() {
         show_BTN_reports = findViewById(R.id.show_BTN_reports);
+        show_BTN_create_report = findViewById(R.id.show_BTN_create_report);
         show_BTN_back = findViewById(R.id.show_BTN_back);
         show_IMG_profile = findViewById(R.id.show_IMG_profile);
         show_TXT_nameBeach = findViewById(R.id.show_TXT_nameBeach);
