@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,8 +49,6 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class ShowActivity extends AppCompatActivity implements testActionsListener {
-
-    public static final String TEMPKEY = "1253b9205d89a2d8816242c6d731489f";
     private final double HIGH_VALUE = 3.5;
     private final double LOW_VALUE = 1.5;
     private MaterialButton show_BTN_back, show_BTN_reports,show_BTN_create_report, show_BTN_waze, show_BTN_moovit;
@@ -70,6 +69,7 @@ public class ShowActivity extends AppCompatActivity implements testActionsListen
     private String user;
     private boolean isGuest;
     private boolean hasPremission;
+    private Resources resources;
 
     private FusedLocationProviderClient fusedLocationProviderClient;
 
@@ -80,6 +80,7 @@ public class ShowActivity extends AppCompatActivity implements testActionsListen
         checkPermission();
         setContentView(R.layout.activity_show);
         this.context = this.getApplicationContext();
+        resources = context.getResources();
         bundle = getIntent().getExtras();
         if (bundle != null)
             BeachName = bundle.getString("BEACH_NAME");
@@ -145,8 +146,8 @@ public class ShowActivity extends AppCompatActivity implements testActionsListen
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String apiKey = "YOUR_API_KEY";
-                        String urlString = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + TEMPKEY;
+                        String apiKey = resources.getString(R.string.secret_openweathermap_api);
+                        String urlString = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey;
 
                         try {
                             URL url = new URL(urlString);
