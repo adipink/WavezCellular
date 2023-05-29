@@ -82,6 +82,11 @@ public class ReportActivityTest {
         // Verify that the report was submitted successfully
         Espresso.onView(ViewMatchers.withId(R.id.show_BTN_reports))
                 .perform(ViewActions.click());
+        try {
+            Thread.sleep(2000); // Delay of 1 second (adjust as needed)
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Espresso.onView(ViewMatchers.withText(comment))
                 .check(matches(isDisplayed()));
         removeUserReportByComment(comment);

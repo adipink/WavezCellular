@@ -52,4 +52,8 @@ public class BeachHomeAdapter extends RecyclerView.Adapter<BeachHomeHolder> {
     public int getItemCount() {
         return entries.size();
     }
+
+    public List<Map.Entry<String, String>> getEntries(){
+        return entries;
+    };
 }
