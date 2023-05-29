@@ -311,7 +311,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         else
             home_BTN_switch.setText("Ascending");
 
-        getBeaches(value);
+        getBeaches(value.toLowerCase());
     }
 
     private void replaceActivity(String mode) {
@@ -374,7 +374,7 @@ public class HomeActivity extends AppCompatActivity implements AdapterView.OnIte
         int i = parameter.indexOf(' ');
         String word = parameter.substring(0, i);
         value = word;
-        getBeaches(word);
+        getBeaches(word.toLowerCase());
     }
 
     @Override
