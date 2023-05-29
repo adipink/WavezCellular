@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wavezcellular.R;
+import com.example.wavezcellular.activities.ShowActivity;
 import com.example.wavezcellular.utils.UserReport;
 
 import java.util.List;
@@ -31,8 +32,9 @@ public class UserReportAdapter extends RecyclerView.Adapter<UserReportHolder> {
     public void onBindViewHolder(@NonNull UserReportHolder holder, int position) {
         holder.name.setText(userReports.get(position).getName());
         holder.comment.setText(userReports.get(position).getComment());
-        double review = (double) userReports.get(position).getValue("review");
-        holder.rating.setRating((float) review);
+        Object o = userReports.get(position).getValue("review");
+        double reviewDouble = ShowActivity.getDouble(o);
+        holder.rating.setRating((float) reviewDouble);
     }
 
     @Override
@@ -40,3 +42,5 @@ public class UserReportAdapter extends RecyclerView.Adapter<UserReportHolder> {
         return userReports.size();
     }
 }
+
+

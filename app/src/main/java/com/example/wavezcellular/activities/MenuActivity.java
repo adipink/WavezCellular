@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.wavezcellular.Interfaces.testActionsListener;
 import com.example.wavezcellular.R;
 import com.example.wavezcellular.utils.ActivityManager;
 import com.example.wavezcellular.utils.User;
@@ -37,7 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class MenuActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity implements testActionsListener {
     private static final int MAXDISTANCE = 100000;
 
     private ActivityManager activityManager;
@@ -53,6 +54,7 @@ public class MenuActivity extends AppCompatActivity {
     private FirebaseUser firebaseUser;
     private DatabaseReference myRef;
     private String userName;
+    private String BeachName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,7 @@ public class MenuActivity extends AppCompatActivity {
                     userLat = location.getLatitude();
                     userLon = location.getLongitude();
                     findNearestBeach(userLat, userLon);
+
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -104,6 +107,7 @@ public class MenuActivity extends AppCompatActivity {
                 for (Map.Entry<String, HashMap<String, HashMap<String, Object>>> set : beaches.entrySet()) {
                     double x, y;
                     String beachName = (String) set.getValue().get("Data").get("name");
+
                     x = getDouble(set.getValue().get("Data").get("latitude"));
                     y = getDouble(set.getValue().get("Data").get("longitude"));
 
@@ -113,12 +117,14 @@ public class MenuActivity extends AppCompatActivity {
                         minDistance = currDistance;
                         closestBeach = beachName;
                     }
+
                 }
                 String format = String.format("%.01f", minDistance);
                 distance = "Beach is " + format + "km from you";
 
                 menu_TXT_Distance.setText(distance);
                 menu_BTN_beachFound.setText(closestBeach);
+                BeachName = closestBeach;
             }
 
             @Override
@@ -126,6 +132,8 @@ public class MenuActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
     private void setListeners() {
@@ -150,7 +158,7 @@ public class MenuActivity extends AppCompatActivity {
 
     private void replaceActivityShow() {
         Intent intent;
-        bundle.putString("BEACH_NAME", menu_BTN_beachFound.getText().toString());
+        bundle.putString("BEACH_NAME", BeachName);
         intent = new Intent(this, ShowActivity.class);
         intent.putExtras(bundle);
         startActivity(intent);
@@ -214,4 +222,9 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void testAction() {
+        BeachName = "Bugrashov beach Tel Aviv";
+        bundle.putString("BEACH_NAME", BeachName);
+    }
 }

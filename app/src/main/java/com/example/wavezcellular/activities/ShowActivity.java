@@ -20,6 +20,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.wavezcellular.Interfaces.testActionsListener;
 import com.example.wavezcellular.R;
 import com.example.wavezcellular.utils.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -46,7 +47,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class ShowActivity extends AppCompatActivity{
+public class ShowActivity extends AppCompatActivity implements testActionsListener {
 
     public static final String TEMPKEY = "1253b9205d89a2d8816242c6d731489f";
     private final double HIGH_VALUE = 3.5;
@@ -425,5 +426,11 @@ public class ShowActivity extends AppCompatActivity{
         } else {
             hasPremission = true;
         }
+    }
+
+    @Override
+    public void testAction() {
+        BeachName = "Bugrashov beach Tel Aviv";
+        bundle.putString("BEACH_NAME", BeachName);
     }
 }
