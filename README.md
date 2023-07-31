@@ -1,7 +1,8 @@
-Wavez:
-Wavez is an app for reports on the beach.
+# Wavez:
+Wavez is a location-based mobile application designed to address the needs of beachgoers by providing real-time and non-formal data about various aspects of beaches.
+Our app allows users to learn important information about the beach they plan to visit, such as how clean it is, how crowded it is, how cold the water is etc.
 
-Patch Features:
+## Patch Features:
 1. Updated UI and Graphics
 
 2. Letting the user know how far he is from the nearest beach
@@ -26,9 +27,7 @@ Patch Features:
 11. Fixed splashActivity to work generically
 
 
-
-
-Past Features:
+## Past Features:
 1. The ability to login with an existing user
 
 2. The ability to register in case that one does not have an application user
@@ -39,13 +38,13 @@ Past Features:
 
 5. Signing out from your user
 
-6. Reporting about diffrent events about chosen beach such as flag,jellyfish,wave ,etc.
+6. Reporting about diffrent events about chosen beach such as flag, jellyfish, wave, etc.
 
 7. Watching the latest report about the beach you want to go
 
 8. Reset your passward in case you forgot
 
-Appearance's features:
+## Appearance's features:
 
 1. New icon for the app
 
@@ -53,3 +52,4 @@ Appearance's features:
 
 3. Lottie animation
 
+4. User's profile picture
