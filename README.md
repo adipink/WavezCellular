@@ -71,6 +71,10 @@ Our app allows users to learn important information about the beach they plan to
 
 <img width="249" alt="search" src="https://github.com/adipink/WavezCellular/assets/64596451/73e5d673-c5cd-45d3-b4e6-343e190c9c1b">
 
+### Report on beach: 
+
+<img width="249" alt="report" src="https://github.com/adipink/WavezCellular/assets/64596451/db30f9dc-8234-4924-982f-6ab4ea5edc5c">
+
 ### Write comment: 
 
 <img width="249" alt="comment" src="https://github.com/adipink/WavezCellular/assets/64596451/31a5647b-add9-42f9-988c-e428b81b60a2">
