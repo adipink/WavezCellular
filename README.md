@@ -57,10 +57,30 @@ Our app allows users to learn important information about the beach they plan to
 ## Screens:
 ### Opening Screen: 
 
-![start](https://github.com/adipink/SafeMedia/assets/64596451/1576bfc0-dec9-495a-bd59-d9c10c7387fa)
+<img width="249" alt="start" src="https://github.com/adipink/WavezCellular/assets/64596451/4ebd2660-1ffb-4b30-bc8f-25c4913f0cad">
 
 ### Suggested beach: 
 
-![opening](https://github.com/adipink/SafeMedia/assets/64596451/ec97aa99-db5d-4074-9f94-40f2b643e287)
+<img width="249" alt="opening" src="https://github.com/adipink/WavezCellular/assets/64596451/ebf8f41b-24f4-4c23-b08d-65c36bbbc3dc">
+
+### Beach's info: 
+
+<img width="249" alt="show" src="https://github.com/adipink/WavezCellular/assets/64596451/75af27e3-730a-4ff2-9861-cc4c5b2d29ac">
+
+### Search beach: 
+
+<img width="249" alt="search" src="https://github.com/adipink/WavezCellular/assets/64596451/73e5d673-c5cd-45d3-b4e6-343e190c9c1b">
+
+### Write comment: 
+
+<img width="249" alt="comment" src="https://github.com/adipink/WavezCellular/assets/64596451/31a5647b-add9-42f9-988c-e428b81b60a2">
+
+### Profile: 
+
+<img width="249" alt="profile" src="https://github.com/adipink/WavezCellular/assets/64596451/f91a38c8-25e1-4e57-8f4e-7ecd4cca8bd0">
+
+### Profile's icon: 
+
+<img width="249" alt="profilePic" src="https://github.com/adipink/WavezCellular/assets/64596451/b4a6e282-0527-4e44-a0d9-9f3f079415b3">
 
 
