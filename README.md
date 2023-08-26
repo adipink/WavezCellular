@@ -53,3 +53,14 @@ Our app allows users to learn important information about the beach they plan to
 3. Lottie animation
 
 4. User's profile picture
+
+## Screens:
+### Opening Screen: 
+
+![start](https://github.com/adipink/SafeMedia/assets/64596451/1576bfc0-dec9-495a-bd59-d9c10c7387fa)
+
+### Suggested beach: 
+
+![opening](https://github.com/adipink/SafeMedia/assets/64596451/ec97aa99-db5d-4074-9f94-40f2b643e287)
+
+
